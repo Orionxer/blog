@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,11 +22,11 @@
     <meta name="description" content="SolidWorks演示【转换实体引用】功能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3.A-SW-转换实体引用">
-<meta property="og:url" content="https://blog.gogo.uno/2024/01/14/sw-3-A-conver-entities/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/01/14/sw-3-A-conver-entities/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="SolidWorks演示【转换实体引用】功能">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/sw-3-A-conver-entities.png">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/sw-3-A-conver-entities.png">
 <meta property="article:published_time" content="2024-01-13T17:29:48.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.858Z">
 <meta property="article:author" content="Orionxer">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="3D">
 <meta property="article:tag" content="结构">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/sw-3-A-conver-entities.png">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/sw-3-A-conver-entities.png">
   
   
   
@@ -62,12 +62,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -76,15 +76,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -114,7 +114,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -133,7 +133,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -211,7 +211,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/sw-3-A-conver-entities.png') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/sw-3-A-conver-entities.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -306,23 +306,23 @@
             <p><strong>转换实体引用</strong>简单理解为<strong>投影</strong>，将需要使用的到线段(或者其他几何图形)投影到需要的平面上继续使用。以画出俄罗斯方块的<strong>L</strong>和<strong>凸</strong>形状为例去演示转换实体引用的用法。</p>
           </div>
 
-<h2 id="1-绘制缺口方块"><a href="#1-绘制缺口方块" class="headerlink" title="1.绘制缺口方块"></a>1.绘制缺口方块</h2><h3 id="1-1-绘制带缺口的正方形"><a href="#1-1-绘制带缺口的正方形" class="headerlink" title="1.1 绘制带缺口的正方形"></a>1.1 绘制带缺口的正方形</h3><p><img src="/2024/01/14/sw-3-A-conver-entities/rect_gap.gif" srcset="/img/loading.gif" lazyload alt="绘制带缺口的正方形"></p>
-<h3 id="1-2-设置尺寸"><a href="#1-2-设置尺寸" class="headerlink" title="1.2 设置尺寸"></a>1.2 设置尺寸</h3><p>正方形边长为100mm,缺口为50mm<br><img src="/2024/01/14/sw-3-A-conver-entities/rect_gap_straint.gif" srcset="/img/loading.gif" lazyload alt="设置尺寸"></p>
-<h3 id="1-3-拉伸凸台基体"><a href="#1-3-拉伸凸台基体" class="headerlink" title="1.3 拉伸凸台基体"></a>1.3 拉伸凸台基体</h3><p>设置深度为50mm<br><img src="/2024/01/14/sw-3-A-conver-entities/rect_gap_depth.gif" srcset="/img/loading.gif" lazyload alt="设置深度"></p>
+<h2 id="1-绘制缺口方块"><a href="#1-绘制缺口方块" class="headerlink" title="1.绘制缺口方块"></a>1.绘制缺口方块</h2><h3 id="1-1-绘制带缺口的正方形"><a href="#1-1-绘制带缺口的正方形" class="headerlink" title="1.1 绘制带缺口的正方形"></a>1.1 绘制带缺口的正方形</h3><p><img src="/blog/2024/01/14/sw-3-A-conver-entities/rect_gap.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制带缺口的正方形"></p>
+<h3 id="1-2-设置尺寸"><a href="#1-2-设置尺寸" class="headerlink" title="1.2 设置尺寸"></a>1.2 设置尺寸</h3><p>正方形边长为100mm,缺口为50mm<br><img src="/blog/2024/01/14/sw-3-A-conver-entities/rect_gap_straint.gif" srcset="/blog/img/loading.gif" lazyload alt="设置尺寸"></p>
+<h3 id="1-3-拉伸凸台基体"><a href="#1-3-拉伸凸台基体" class="headerlink" title="1.3 拉伸凸台基体"></a>1.3 拉伸凸台基体</h3><p>设置深度为50mm<br><img src="/blog/2024/01/14/sw-3-A-conver-entities/rect_gap_depth.gif" srcset="/blog/img/loading.gif" lazyload alt="设置深度"></p>
 <h2 id="2-绘制成L形状"><a href="#2-绘制成L形状" class="headerlink" title="2.绘制成L形状"></a>2.绘制成L形状</h2><ul>
 <li>点击顶面(靠左侧)</li>
 <li>点击<strong>转换实体引用</strong></li>
 <li>拉伸凸台基体为50mm</li>
 </ul>
-<p><img src="/2024/01/14/sw-3-A-conver-entities/convert_entitis_L.gif" srcset="/img/loading.gif" lazyload alt="绘制L形状"></p>
-<h2 id="3-删除的凸台拉伸和草图"><a href="#3-删除的凸台拉伸和草图" class="headerlink" title="3.删除的凸台拉伸和草图"></a>3.删除的凸台拉伸和草图</h2><p><img src="/2024/01/14/sw-3-A-conver-entities/convert_entitis_delete.gif" srcset="/img/loading.gif" lazyload alt="删除的凸台拉伸和草图"></p>
+<p><img src="/blog/2024/01/14/sw-3-A-conver-entities/convert_entitis_L.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制L形状"></p>
+<h2 id="3-删除的凸台拉伸和草图"><a href="#3-删除的凸台拉伸和草图" class="headerlink" title="3.删除的凸台拉伸和草图"></a>3.删除的凸台拉伸和草图</h2><p><img src="/blog/2024/01/14/sw-3-A-conver-entities/convert_entitis_delete.gif" srcset="/blog/img/loading.gif" lazyload alt="删除的凸台拉伸和草图"></p>
 <h2 id="4-绘制成凸形状"><a href="#4-绘制成凸形状" class="headerlink" title="4.绘制成凸形状"></a>4.绘制成凸形状</h2><ul>
 <li>点击左侧面，进入草图编辑</li>
 <li>鼠标<strong>中键</strong>旋转视图到右侧，单击右侧面</li>
 <li>点击<strong>转换实体引用</strong>，此时观察到右侧面的正方形投影到左侧面的草图</li>
 <li>拉伸凸台基体为50mm</li>
 </ul>
-<p><img src="/2024/01/14/sw-3-A-conver-entities/convert_entitis_bulge.gif" srcset="/img/loading.gif" lazyload alt="绘制凸形状"></p>
+<p><img src="/blog/2024/01/14/sw-3-A-conver-entities/convert_entitis_bulge.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制凸形状"></p>
 
                 
               </div>
@@ -341,7 +341,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Solidworks/" class="category-chain-item">Solidworks</a>
+  <a href="/blog/categories/Solidworks/" class="category-chain-item">Solidworks</a>
   
   
 
@@ -356,11 +356,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Solidworks/" class="print-no-link">#Solidworks</a>
+        <a href="/blog/tags/Solidworks/" class="print-no-link">#Solidworks</a>
       
-        <a href="/tags/3D/" class="print-no-link">#3D</a>
+        <a href="/blog/tags/3D/" class="print-no-link">#3D</a>
       
-        <a href="/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
+        <a href="/blog/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
       
     </div>
   
@@ -373,7 +373,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>3.A-SW-转换实体引用</div>
-      <div>https://blog.gogo.uno/2024/01/14/sw-3-A-conver-entities/</div>
+      <div>https://orionxer.github.io/blog/2024/01/14/sw-3-A-conver-entities/</div>
     </div>
     <div class="license-meta">
       
@@ -428,7 +428,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/17/sw-4-mirror-array/" title="4.SW-草图镜像与阵列">
+                      <a href="/blog/2024/01/17/sw-4-mirror-array/" title="4.SW-草图镜像与阵列">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">4.SW-草图镜像与阵列</span>
                         <span class="visible-mobile">上一篇</span>
@@ -438,7 +438,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/11/sw-3-draft-geometry/" title="3.SW-草图几何关系与编辑">
+                      <a href="/blog/2024/01/11/sw-3-draft-geometry/" title="3.SW-草图几何关系与编辑">
                         <span class="hidden-mobile">3.SW-草图几何关系与编辑</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -614,8 +614,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -637,7 +637,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -779,9 +779,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -789,7 +789,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

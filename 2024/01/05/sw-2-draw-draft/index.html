@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,11 +22,11 @@
     <meta name="description" content="SolidWorks绘制草图工具,包括直线&#x2F;矩形&#x2F;圆&#x2F;槽&#x2F;圆弧&#x2F;圆角&#x2F;点">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2.SW-绘制草图">
-<meta property="og:url" content="https://blog.gogo.uno/2024/01/05/sw-2-draw-draft/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/01/05/sw-2-draw-draft/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="SolidWorks绘制草图工具,包括直线&#x2F;矩形&#x2F;圆&#x2F;槽&#x2F;圆弧&#x2F;圆角&#x2F;点">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/sw-2-draw-draft.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/sw-2-draw-draft.jpg">
 <meta property="article:published_time" content="2024-01-05T14:58:08.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.814Z">
 <meta property="article:author" content="Orionxer">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="3D">
 <meta property="article:tag" content="结构">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/sw-2-draw-draft.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/sw-2-draw-draft.jpg">
   
   
   
@@ -62,12 +62,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -76,15 +76,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -114,7 +114,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -133,7 +133,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -211,7 +211,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/sw-2-draw-draft.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/sw-2-draw-draft.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -312,31 +312,31 @@
 <li>拖动绘制直线</li>
 <li><strong>Esc</strong>退出绘制直线</li>
 </ul>
-<p><img src="/2024/01/05/sw-2-draw-draft/new_line.gif" srcset="/img/loading.gif" lazyload alt="绘制直线"></p>
-<h3 id="1-2-添加约束"><a href="#1-2-添加约束" class="headerlink" title="1.2 添加约束"></a>1.2 添加约束</h3><p><img src="/2024/01/05/sw-2-draw-draft/line_straint.gif" srcset="/img/loading.gif" lazyload alt="添加约束"><br>如果<strong>几何关系</strong>存在冲突的规则，则删除冲突的规则即可。</p>
+<p><img src="/blog/2024/01/05/sw-2-draw-draft/new_line.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制直线"></p>
+<h3 id="1-2-添加约束"><a href="#1-2-添加约束" class="headerlink" title="1.2 添加约束"></a>1.2 添加约束</h3><p><img src="/blog/2024/01/05/sw-2-draw-draft/line_straint.gif" srcset="/blog/img/loading.gif" lazyload alt="添加约束"><br>如果<strong>几何关系</strong>存在冲突的规则，则删除冲突的规则即可。</p>
 <div class="note note-info">
             <p>确保草图完成编辑时处于<strong>完全定义</strong>的状态，此时所有草图应该确保为<strong>黑色</strong>(包括点)，如果<em>未完全约束</em>则显示为<em>蓝色</em></p>
           </div>
-<p><img src="/2024/01/05/sw-2-draw-draft/all_straint.png" srcset="/img/loading.gif" lazyload alt="完全定义"></p>
+<p><img src="/blog/2024/01/05/sw-2-draw-draft/all_straint.png" srcset="/blog/img/loading.gif" lazyload alt="完全定义"></p>
 <h2 id="2-矩形"><a href="#2-矩形" class="headerlink" title="2.矩形"></a>2.矩形</h2><h3 id="2-1-绘制矩形"><a href="#2-1-绘制矩形" class="headerlink" title="2.1 绘制矩形"></a>2.1 绘制矩形</h3><ul>
 <li>选择并绘制<strong>边角矩形</strong></li>
 </ul>
-<p><img src="/2024/01/05/sw-2-draw-draft/draw_rect.gif" srcset="/img/loading.gif" lazyload alt="绘制矩形"></p>
+<p><img src="/blog/2024/01/05/sw-2-draw-draft/draw_rect.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制矩形"></p>
 <h3 id="2-2-添加约束"><a href="#2-2-添加约束" class="headerlink" title="2.2 添加约束"></a>2.2 添加约束</h3><ul>
 <li>选择<strong>智能尺寸</strong></li>
 <li>点击矩形的边长设置尺寸</li>
 </ul>
-<p><img src="/2024/01/05/sw-2-draw-draft/rect_straint.gif" srcset="/img/loading.gif" lazyload alt="矩形添加约束"></p>
+<p><img src="/blog/2024/01/05/sw-2-draw-draft/rect_straint.gif" srcset="/blog/img/loading.gif" lazyload alt="矩形添加约束"></p>
 <div class="note note-info">
             <p>进入<strong>尺寸标注</strong>功能的另一种方法：鼠标按住<strong>右键</strong>向上移动</p>
           </div>
-<p><img src="/2024/01/05/sw-2-draw-draft/size_label.png" srcset="/img/loading.gif" lazyload alt="尺寸标注"></p>
-<h2 id="3-圆"><a href="#3-圆" class="headerlink" title="3.圆"></a>3.圆</h2><h3 id="3-1-中心圆"><a href="#3-1-中心圆" class="headerlink" title="3.1 中心圆"></a>3.1 中心圆</h3><p><img src="/2024/01/05/sw-2-draw-draft/draw_circle_center.gif" srcset="/img/loading.gif" lazyload alt="绘制中心圆"></p>
-<h3 id="3-2-周边圆"><a href="#3-2-周边圆" class="headerlink" title="3.2 周边圆"></a>3.2 周边圆</h3><p><strong>周边圆</strong>即三点绘制一个圆<br><img src="/2024/01/05/sw-2-draw-draft/draw_circle_side.gif" srcset="/img/loading.gif" lazyload alt="绘制周边圆"></p>
-<h2 id="4-槽"><a href="#4-槽" class="headerlink" title="4.槽"></a>4.槽</h2><p><img src="/2024/01/05/sw-2-draw-draft/draw_tank.gif" srcset="/img/loading.gif" lazyload alt="绘制槽"></p>
-<h2 id="5-圆弧"><a href="#5-圆弧" class="headerlink" title="5.圆弧"></a>5.圆弧</h2><p><img src="/2024/01/05/sw-2-draw-draft/draw_arc.gif" srcset="/img/loading.gif" lazyload alt="绘制切线弧"></p>
-<h2 id="6-圆角与倒角"><a href="#6-圆角与倒角" class="headerlink" title="6.圆角与倒角"></a>6.圆角与倒角</h2><p><img src="/2024/01/05/sw-2-draw-draft/draw_corners.gif" srcset="/img/loading.gif" lazyload alt="绘制圆角与倒角"></p>
-<h2 id="7-点"><a href="#7-点" class="headerlink" title="7.点"></a>7.点</h2><p><img src="/2024/01/05/sw-2-draw-draft/point.png" srcset="/img/loading.gif" lazyload alt="点"></p>
+<p><img src="/blog/2024/01/05/sw-2-draw-draft/size_label.png" srcset="/blog/img/loading.gif" lazyload alt="尺寸标注"></p>
+<h2 id="3-圆"><a href="#3-圆" class="headerlink" title="3.圆"></a>3.圆</h2><h3 id="3-1-中心圆"><a href="#3-1-中心圆" class="headerlink" title="3.1 中心圆"></a>3.1 中心圆</h3><p><img src="/blog/2024/01/05/sw-2-draw-draft/draw_circle_center.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制中心圆"></p>
+<h3 id="3-2-周边圆"><a href="#3-2-周边圆" class="headerlink" title="3.2 周边圆"></a>3.2 周边圆</h3><p><strong>周边圆</strong>即三点绘制一个圆<br><img src="/blog/2024/01/05/sw-2-draw-draft/draw_circle_side.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制周边圆"></p>
+<h2 id="4-槽"><a href="#4-槽" class="headerlink" title="4.槽"></a>4.槽</h2><p><img src="/blog/2024/01/05/sw-2-draw-draft/draw_tank.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制槽"></p>
+<h2 id="5-圆弧"><a href="#5-圆弧" class="headerlink" title="5.圆弧"></a>5.圆弧</h2><p><img src="/blog/2024/01/05/sw-2-draw-draft/draw_arc.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制切线弧"></p>
+<h2 id="6-圆角与倒角"><a href="#6-圆角与倒角" class="headerlink" title="6.圆角与倒角"></a>6.圆角与倒角</h2><p><img src="/blog/2024/01/05/sw-2-draw-draft/draw_corners.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制圆角与倒角"></p>
+<h2 id="7-点"><a href="#7-点" class="headerlink" title="7.点"></a>7.点</h2><p><img src="/blog/2024/01/05/sw-2-draw-draft/point.png" srcset="/blog/img/loading.gif" lazyload alt="点"></p>
 
                 
               </div>
@@ -355,7 +355,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Solidworks/" class="category-chain-item">Solidworks</a>
+  <a href="/blog/categories/Solidworks/" class="category-chain-item">Solidworks</a>
   
   
 
@@ -370,11 +370,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Solidworks/" class="print-no-link">#Solidworks</a>
+        <a href="/blog/tags/Solidworks/" class="print-no-link">#Solidworks</a>
       
-        <a href="/tags/3D/" class="print-no-link">#3D</a>
+        <a href="/blog/tags/3D/" class="print-no-link">#3D</a>
       
-        <a href="/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
+        <a href="/blog/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
       
     </div>
   
@@ -387,7 +387,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>2.SW-绘制草图</div>
-      <div>https://blog.gogo.uno/2024/01/05/sw-2-draw-draft/</div>
+      <div>https://orionxer.github.io/blog/2024/01/05/sw-2-draw-draft/</div>
     </div>
     <div class="license-meta">
       
@@ -442,7 +442,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/11/sw-3-draft-geometry/" title="3.SW-草图几何关系与编辑">
+                      <a href="/blog/2024/01/11/sw-3-draft-geometry/" title="3.SW-草图几何关系与编辑">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">3.SW-草图几何关系与编辑</span>
                         <span class="visible-mobile">上一篇</span>
@@ -452,7 +452,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/01/24-01-english/" title="24/Jan 每日英语">
+                      <a href="/blog/2024/01/01/24-01-english/" title="24/Jan 每日英语">
                         <span class="hidden-mobile">24/Jan 每日英语</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -628,8 +628,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -651,7 +651,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -793,9 +793,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -803,7 +803,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

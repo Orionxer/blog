@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,11 +22,11 @@
     <meta name="description" content="搭建VSCode + CubeMX +  STM32开发环境">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows搭建STM32开发环境(基础篇)">
-<meta property="og:url" content="https://blog.gogo.uno/2024/02/13/vscode-stm32-develop/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/02/13/vscode-stm32-develop/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="搭建VSCode + CubeMX +  STM32开发环境">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/vscode-stm32-develop.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/vscode-stm32-develop.jpg">
 <meta property="article:published_time" content="2024-02-12T16:00:00.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:18.932Z">
 <meta property="article:author" content="Orionxer">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="STM32">
 <meta property="article:tag" content="VSCode">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/vscode-stm32-develop.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/vscode-stm32-develop.jpg">
   
   
   
@@ -62,12 +62,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -76,15 +76,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -114,7 +114,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -133,7 +133,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -211,7 +211,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/vscode-stm32-develop.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/vscode-stm32-develop.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -315,15 +315,15 @@
 <li>安装Keil MDK，自行确保软件安装成功<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[安装Keil MDK软件](https://blog.csdn.net/Mculover666/article/details/89469764)">[2]</span></a></sup></li>
 <li>安装STM32CubeMX（如果STM32CubeMX无法生成MDK-ARM的代码，可以尝试安装旧版的CubeMX）</li>
 </ul>
-<h3 id="1-3-VSCode插件"><a href="#1-3-VSCode插件" class="headerlink" title="1.3 VSCode插件"></a>1.3 VSCode插件</h3><h4 id="1-3-1-安装Keil-Assistant插件"><a href="#1-3-1-安装Keil-Assistant插件" class="headerlink" title="1.3.1 安装Keil Assistant插件"></a>1.3.1 安装Keil Assistant插件</h4><p><img src="/2024/02/13/vscode-stm32-develop/keil_assistant.png" srcset="/img/loading.gif" lazyload alt="Keil Assistant插件"></p>
-<h4 id="1-3-2-Keil-Assistant配置"><a href="#1-3-2-Keil-Assistant配置" class="headerlink" title="1.3.2 Keil Assistant配置"></a>1.3.2 Keil Assistant配置</h4><p><code>Keil Assistant.MDK: Uv4 Path</code>处填入Keil的安装路径,也可以顺便把<code>C51</code>的路径填了。<br><img src="/2024/02/13/vscode-stm32-develop/keil_assistant_setting.gif" srcset="/img/loading.gif" lazyload alt="Keil Assistant配置"></p>
+<h3 id="1-3-VSCode插件"><a href="#1-3-VSCode插件" class="headerlink" title="1.3 VSCode插件"></a>1.3 VSCode插件</h3><h4 id="1-3-1-安装Keil-Assistant插件"><a href="#1-3-1-安装Keil-Assistant插件" class="headerlink" title="1.3.1 安装Keil Assistant插件"></a>1.3.1 安装Keil Assistant插件</h4><p><img src="/blog/2024/02/13/vscode-stm32-develop/keil_assistant.png" srcset="/blog/img/loading.gif" lazyload alt="Keil Assistant插件"></p>
+<h4 id="1-3-2-Keil-Assistant配置"><a href="#1-3-2-Keil-Assistant配置" class="headerlink" title="1.3.2 Keil Assistant配置"></a>1.3.2 Keil Assistant配置</h4><p><code>Keil Assistant.MDK: Uv4 Path</code>处填入Keil的安装路径,也可以顺便把<code>C51</code>的路径填了。<br><img src="/blog/2024/02/13/vscode-stm32-develop/keil_assistant_setting.gif" srcset="/blog/img/loading.gif" lazyload alt="Keil Assistant配置"></p>
 <h2 id="2-CubeMX生成MDK工程"><a href="#2-CubeMX生成MDK工程" class="headerlink" title="2.CubeMX生成MDK工程"></a>2.CubeMX生成MDK工程</h2><p>生成一个闪灯程序<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="[STM32CubeMX生成闪灯工程](https://blog.csdn.net/h568630659/article/details/121404155)">[3]</span></a></sup>，可以按照以下步骤生成一个STM32的最小工程</p>
-<h3 id="2-1-新建工程"><a href="#2-1-新建工程" class="headerlink" title="2.1 新建工程"></a>2.1 新建工程</h3><p><img src="/2024/02/13/vscode-stm32-develop/new_project.png" srcset="/img/loading.gif" lazyload alt="新建工程"></p>
-<h3 id="2-2-选择目标芯片"><a href="#2-2-选择目标芯片" class="headerlink" title="2.2 选择目标芯片"></a>2.2 选择目标芯片</h3><p><code>PartNumber</code>处填入<strong>STM32F103C8</strong>，然后选择目标芯片，再点击<code>Start Project</code><br><img src="/2024/02/13/vscode-stm32-develop/target_chip.png" srcset="/img/loading.gif" lazyload alt="选择目标芯片"></p>
-<h3 id="2-3-时钟配置"><a href="#2-3-时钟配置" class="headerlink" title="2.3 时钟配置"></a>2.3 时钟配置</h3><p>展开<code>System Core</code>选项卡，选择<code>RCC</code>，<code>High Speed Clock(HSE)</code>下拉框选择<code>Crystal/Ceramic REsonator</code><br><img src="/2024/02/13/vscode-stm32-develop/rcc.png" srcset="/img/loading.gif" lazyload alt="选择外部时钟"></p>
-<h3 id="2-4-Debug配置"><a href="#2-4-Debug配置" class="headerlink" title="2.4 Debug配置"></a>2.4 Debug配置</h3><p>展开<code>System Core</code>选项卡，选择<code>SYS</code>，<code>Debug</code>下拉框选择<code>Serial Wire</code><br><img src="/2024/02/13/vscode-stm32-develop/sys_debug.png" srcset="/img/loading.gif" lazyload alt="Debug配置"></p>
-<h3 id="2-5-配置外设"><a href="#2-5-配置外设" class="headerlink" title="2.5 配置外设"></a>2.5 配置外设</h3><p>在此处配置一个GPIO的输出，即PC13<br><img src="/2024/02/13/vscode-stm32-develop/gpio_config.gif" srcset="/img/loading.gif" lazyload alt="GPIO配置"></p>
-<h3 id="2-6-配置时钟树"><a href="#2-6-配置时钟树" class="headerlink" title="2.6 配置时钟树"></a>2.6 配置时钟树</h3><p>点击<code>Clock Configuration</code>选项卡，先选择<code>PLLCLK</code>，再选择<code>HSE</code>，最后在HCLK(MHz)中填入72并<strong>回车确认</strong><br><img src="/2024/02/13/vscode-stm32-develop/clock_tree.gif" srcset="/img/loading.gif" lazyload alt="时钟树配置"></p>
+<h3 id="2-1-新建工程"><a href="#2-1-新建工程" class="headerlink" title="2.1 新建工程"></a>2.1 新建工程</h3><p><img src="/blog/2024/02/13/vscode-stm32-develop/new_project.png" srcset="/blog/img/loading.gif" lazyload alt="新建工程"></p>
+<h3 id="2-2-选择目标芯片"><a href="#2-2-选择目标芯片" class="headerlink" title="2.2 选择目标芯片"></a>2.2 选择目标芯片</h3><p><code>PartNumber</code>处填入<strong>STM32F103C8</strong>，然后选择目标芯片，再点击<code>Start Project</code><br><img src="/blog/2024/02/13/vscode-stm32-develop/target_chip.png" srcset="/blog/img/loading.gif" lazyload alt="选择目标芯片"></p>
+<h3 id="2-3-时钟配置"><a href="#2-3-时钟配置" class="headerlink" title="2.3 时钟配置"></a>2.3 时钟配置</h3><p>展开<code>System Core</code>选项卡，选择<code>RCC</code>，<code>High Speed Clock(HSE)</code>下拉框选择<code>Crystal/Ceramic REsonator</code><br><img src="/blog/2024/02/13/vscode-stm32-develop/rcc.png" srcset="/blog/img/loading.gif" lazyload alt="选择外部时钟"></p>
+<h3 id="2-4-Debug配置"><a href="#2-4-Debug配置" class="headerlink" title="2.4 Debug配置"></a>2.4 Debug配置</h3><p>展开<code>System Core</code>选项卡，选择<code>SYS</code>，<code>Debug</code>下拉框选择<code>Serial Wire</code><br><img src="/blog/2024/02/13/vscode-stm32-develop/sys_debug.png" srcset="/blog/img/loading.gif" lazyload alt="Debug配置"></p>
+<h3 id="2-5-配置外设"><a href="#2-5-配置外设" class="headerlink" title="2.5 配置外设"></a>2.5 配置外设</h3><p>在此处配置一个GPIO的输出，即PC13<br><img src="/blog/2024/02/13/vscode-stm32-develop/gpio_config.gif" srcset="/blog/img/loading.gif" lazyload alt="GPIO配置"></p>
+<h3 id="2-6-配置时钟树"><a href="#2-6-配置时钟树" class="headerlink" title="2.6 配置时钟树"></a>2.6 配置时钟树</h3><p>点击<code>Clock Configuration</code>选项卡，先选择<code>PLLCLK</code>，再选择<code>HSE</code>，最后在HCLK(MHz)中填入72并<strong>回车确认</strong><br><img src="/blog/2024/02/13/vscode-stm32-develop/clock_tree.gif" srcset="/blog/img/loading.gif" lazyload alt="时钟树配置"></p>
 <h3 id="2-7-生成MDK工程"><a href="#2-7-生成MDK工程" class="headerlink" title="2.7 生成MDK工程"></a>2.7 生成MDK工程</h3><ul>
 <li>选择<code>Project Manager</code>选项卡</li>
 <li>侧边栏<code>Project</code><ul>
@@ -338,38 +338,38 @@
 </li>
 <li>最后点击顶部<code>GENERATE CODE</code>按钮生成MDK工程</li>
 </ul>
-<p><img src="/2024/02/13/vscode-stm32-develop/generate_mdk.gif" srcset="/img/loading.gif" lazyload alt="生成MDK工程"></p>
-<h2 id="3-MDK编译下载"><a href="#3-MDK编译下载" class="headerlink" title="3.MDK编译下载"></a>3.MDK编译下载</h2><h3 id="3-1-打开MDK工程"><a href="#3-1-打开MDK工程" class="headerlink" title="3.1 打开MDK工程"></a>3.1 打开MDK工程</h3><p>可以在CubeMX生成工程后，点击<code>Open Project</code>打开工程，也可以找到实际存储该工程的路径并打开。<br><img src="/2024/02/13/vscode-stm32-develop/open_mdk.png" srcset="/img/loading.gif" lazyload alt="打开MDK工程"></p>
-<h3 id="3-2-选择JLink为下载调试工具"><a href="#3-2-选择JLink为下载调试工具" class="headerlink" title="3.2 选择JLink为下载调试工具"></a>3.2 选择JLink为下载调试工具</h3><p>需要确保JLink的下载方式为<strong>SWD</strong><br><img src="/2024/02/13/vscode-stm32-develop/choose_jlink.gif" srcset="/img/loading.gif" lazyload alt="选择JLink"></p>
-<h3 id="3-3-设置下载完自动重启"><a href="#3-3-设置下载完自动重启" class="headerlink" title="3.3 设置下载完自动重启"></a>3.3 设置下载完自动重启</h3><p><img src="/2024/02/13/vscode-stm32-develop/auto_reset.gif" srcset="/img/loading.gif" lazyload alt="下载完自动重启"></p>
+<p><img src="/blog/2024/02/13/vscode-stm32-develop/generate_mdk.gif" srcset="/blog/img/loading.gif" lazyload alt="生成MDK工程"></p>
+<h2 id="3-MDK编译下载"><a href="#3-MDK编译下载" class="headerlink" title="3.MDK编译下载"></a>3.MDK编译下载</h2><h3 id="3-1-打开MDK工程"><a href="#3-1-打开MDK工程" class="headerlink" title="3.1 打开MDK工程"></a>3.1 打开MDK工程</h3><p>可以在CubeMX生成工程后，点击<code>Open Project</code>打开工程，也可以找到实际存储该工程的路径并打开。<br><img src="/blog/2024/02/13/vscode-stm32-develop/open_mdk.png" srcset="/blog/img/loading.gif" lazyload alt="打开MDK工程"></p>
+<h3 id="3-2-选择JLink为下载调试工具"><a href="#3-2-选择JLink为下载调试工具" class="headerlink" title="3.2 选择JLink为下载调试工具"></a>3.2 选择JLink为下载调试工具</h3><p>需要确保JLink的下载方式为<strong>SWD</strong><br><img src="/blog/2024/02/13/vscode-stm32-develop/choose_jlink.gif" srcset="/blog/img/loading.gif" lazyload alt="选择JLink"></p>
+<h3 id="3-3-设置下载完自动重启"><a href="#3-3-设置下载完自动重启" class="headerlink" title="3.3 设置下载完自动重启"></a>3.3 设置下载完自动重启</h3><p><img src="/blog/2024/02/13/vscode-stm32-develop/auto_reset.gif" srcset="/blog/img/loading.gif" lazyload alt="下载完自动重启"></p>
 <h3 id="3-4-编译"><a href="#3-4-编译" class="headerlink" title="3.4 编译"></a>3.4 编译</h3><p>在<code>main.c</code>的while循环中增加一个切换高低电平输出，并延迟500ms。点击编译。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// LED灯以500毫秒的间隔闪烁</span><br>HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);<br>HAL_Delay(<span class="hljs-number">500</span>);<br></code></pre></td></tr></table></figure>
-<p><img src="/2024/02/13/vscode-stm32-develop/mdk_compile.png" srcset="/img/loading.gif" lazyload alt="MDK编译"></p>
-<h3 id="3-5-下载"><a href="#3-5-下载" class="headerlink" title="3.5 下载"></a>3.5 下载</h3><p><img src="/2024/02/13/vscode-stm32-develop/mdk_flash.png" srcset="/img/loading.gif" lazyload alt="MDK下载"><br><img src="/2024/02/13/vscode-stm32-develop/flash_to_stm32.gif" srcset="/img/loading.gif" lazyload alt="下载运行结果"></p>
+<p><img src="/blog/2024/02/13/vscode-stm32-develop/mdk_compile.png" srcset="/blog/img/loading.gif" lazyload alt="MDK编译"></p>
+<h3 id="3-5-下载"><a href="#3-5-下载" class="headerlink" title="3.5 下载"></a>3.5 下载</h3><p><img src="/blog/2024/02/13/vscode-stm32-develop/mdk_flash.png" srcset="/blog/img/loading.gif" lazyload alt="MDK下载"><br><img src="/blog/2024/02/13/vscode-stm32-develop/flash_to_stm32.gif" srcset="/blog/img/loading.gif" lazyload alt="下载运行结果"></p>
 <h2 id="4-Keil-Assistant编译下载"><a href="#4-Keil-Assistant编译下载" class="headerlink" title="4.Keil Assistant编译下载"></a>4.Keil Assistant编译下载</h2><h3 id="4-1-打开MDK工程"><a href="#4-1-打开MDK工程" class="headerlink" title="4.1 打开MDK工程"></a>4.1 打开MDK工程</h3><ul>
 <li>点击<code>Keil UVISION PROJECT</code>最右侧的按钮: <code>Open keil uvision project</code></li>
 <li>找到<code>blink.uvprojx</code>文件并导入</li>
 <li>右下角点击<code>Ok</code>切换工作区</li>
 </ul>
-<p><img src="/2024/02/13/vscode-stm32-develop/keil_assistant_open_mdk.gif" srcset="/img/loading.gif" lazyload alt="Keil_Assistant-打开MDK工程"></p>
+<p><img src="/blog/2024/02/13/vscode-stm32-develop/keil_assistant_open_mdk.gif" srcset="/blog/img/loading.gif" lazyload alt="Keil_Assistant-打开MDK工程"></p>
 <div class="note note-warning">
             <p>切换工作区后，Keil Assistant插件可能需要花几秒的时间才会把工程加载出来。</p>
           </div>
 
 <h3 id="4-2-编译"><a href="#4-2-编译" class="headerlink" title="4.2 编译"></a>4.2 编译</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 修改为100ms，LED灯以100毫秒的间隔闪烁</span><br>HAL_Delay(<span class="hljs-number">100</span>);<br></code></pre></td></tr></table></figure>
-<p><img src="/2024/02/13/vscode-stm32-develop/keil_assistant_compile.png" srcset="/img/loading.gif" lazyload alt="Keil_Assistant-编译"></p>
-<h3 id="4-3-下载"><a href="#4-3-下载" class="headerlink" title="4.3 下载"></a>4.3 下载</h3><p><img src="/2024/02/13/vscode-stm32-develop/keil_assistant_flash.png" srcset="/img/loading.gif" lazyload alt="Keil_Assistant-下载"></p>
+<p><img src="/blog/2024/02/13/vscode-stm32-develop/keil_assistant_compile.png" srcset="/blog/img/loading.gif" lazyload alt="Keil_Assistant-编译"></p>
+<h3 id="4-3-下载"><a href="#4-3-下载" class="headerlink" title="4.3 下载"></a>4.3 下载</h3><p><img src="/blog/2024/02/13/vscode-stm32-develop/keil_assistant_flash.png" srcset="/blog/img/loading.gif" lazyload alt="Keil_Assistant-下载"></p>
 <h2 id="5-注意事项"><a href="#5-注意事项" class="headerlink" title="5.注意事项"></a>5.注意事项</h2><h3 id="5-1-无法烧录问题排查"><a href="#5-1-无法烧录问题排查" class="headerlink" title="5.1 无法烧录问题排查"></a>5.1 无法烧录问题排查</h3><div class="note note-warning">
             <p>如果编译正确却无法烧录程序，说明没有正确建立SWD连接。先判断电脑是否与JLink建立连接，如果电脑识别不到JLink可以尝试更换USB数据线(尽可能选择质量好的USB数据线)。如果电脑可以检测到JLink，但是Keil里无法识别SW设备，则检查SWD的接线是否正确，以及接线是否牢固。<strong>切记不要接错VCC和GND</strong></p>
           </div>
 
-<p><img src="/2024/02/13/vscode-stm32-develop/jlink_computer.png" srcset="/img/loading.gif" lazyload alt="JLink与电脑正确连接"><br><img src="/2024/02/13/vscode-stm32-develop/jlink_stm32.png" srcset="/img/loading.gif" lazyload alt="JLink与STM32正确连接"></p>
+<p><img src="/blog/2024/02/13/vscode-stm32-develop/jlink_computer.png" srcset="/blog/img/loading.gif" lazyload alt="JLink与电脑正确连接"><br><img src="/blog/2024/02/13/vscode-stm32-develop/jlink_stm32.png" srcset="/blog/img/loading.gif" lazyload alt="JLink与STM32正确连接"></p>
 <h3 id="5-2-VSCode头文件错误问题"><a href="#5-2-VSCode头文件错误问题" class="headerlink" title="5.2 VSCode头文件错误问题"></a>5.2 VSCode头文件错误问题</h3><div class="note note-warning">
             <p>在VSCode如果出现头文件报错等问题，记得先检查<code>c_cpp_properties.json</code>文件的<code>includePath</code>是否包含了正确以及完整的库（虽然并不影响编译），解决此问题的方法可以全局搜索具体报错的头文件，找到其位置。请不要在VSCode里手动添加路径到<code>c_cpp_properties.json</code>文件，因为每编译一次就会此文件就会被覆盖掉。正确的做法是<strong>打开Keil</strong>去添加<strong>C&#x2F;C++选项卡</strong>的<code>includePath</code>，然后再编译一下就可以自动加载到正确的库文件（因为VSCode每次编译都会读取一遍Keil的配置）</p>
           </div>
 
-<p><img src="/2024/02/13/vscode-stm32-develop/path_not_found.gif" srcset="/img/loading.gif" lazyload alt="增加includePath以正常跳转"></p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a href="https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/">Windows搭建STM32开发环境-进阶篇</a>
+<p><img src="/blog/2024/02/13/vscode-stm32-develop/path_not_found.gif" srcset="/blog/img/loading.gif" lazyload alt="增加includePath以正常跳转"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/">Windows搭建STM32开发环境-进阶篇</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mculover666/article/details/89469764">安装Keil MDK软件</a>
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/h568630659/article/details/121404155">STM32CubeMX生成闪灯工程</a>
 <a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/acDaKenu6yZU_INZQ0NhZw">VS Code环境下编辑、编译、下载Keil工程代码</a>
@@ -392,7 +392,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/STM32/" class="category-chain-item">STM32</a>
+  <a href="/blog/categories/STM32/" class="category-chain-item">STM32</a>
   
   
 
@@ -407,11 +407,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-C/" class="print-no-link">#C/C++</a>
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
       
-        <a href="/tags/STM32/" class="print-no-link">#STM32</a>
+        <a href="/blog/tags/STM32/" class="print-no-link">#STM32</a>
       
-        <a href="/tags/VSCode/" class="print-no-link">#VSCode</a>
+        <a href="/blog/tags/VSCode/" class="print-no-link">#VSCode</a>
       
     </div>
   
@@ -424,7 +424,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Windows搭建STM32开发环境(基础篇)</div>
-      <div>https://blog.gogo.uno/2024/02/13/vscode-stm32-develop/</div>
+      <div>https://orionxer.github.io/blog/2024/02/13/vscode-stm32-develop/</div>
     </div>
     <div class="license-meta">
       
@@ -479,7 +479,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/02/14/vscode-stm32-develop-pro/" title="Windows搭建STM32开发环境(进阶篇)">
+                      <a href="/blog/2024/02/14/vscode-stm32-develop-pro/" title="Windows搭建STM32开发环境(进阶篇)">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">Windows搭建STM32开发环境(进阶篇)</span>
                         <span class="visible-mobile">上一篇</span>
@@ -489,7 +489,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/12/c-color-print/" title="终端彩色打印">
+                      <a href="/blog/2024/02/12/c-color-print/" title="终端彩色打印">
                         <span class="hidden-mobile">终端彩色打印</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -665,8 +665,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -688,7 +688,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -830,9 +830,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -840,7 +840,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

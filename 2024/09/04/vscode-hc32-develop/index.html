@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,18 +22,18 @@
     <meta name="description" content="通过VSCode插件EIDE以及Cortex-Debug实现华大HC32F460x芯片编译烧录调试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VSCode编译烧录调试HC32F460x">
-<meta property="og:url" content="https://blog.gogo.uno/2024/09/04/vscode-hc32-develop/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/09/04/vscode-hc32-develop/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="通过VSCode插件EIDE以及Cortex-Debug实现华大HC32F460x芯片编译烧录调试">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/vscode-hc32-develop.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/vscode-hc32-develop.jpg">
 <meta property="article:published_time" content="2024-09-03T17:29:01.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:18.792Z">
 <meta property="article:author" content="Orionxer">
 <meta property="article:tag" content="VSCode">
 <meta property="article:tag" content="HC32">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/vscode-hc32-develop.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/vscode-hc32-develop.jpg">
   
   
   
@@ -61,12 +61,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -75,15 +75,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -113,7 +113,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -132,7 +132,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -144,7 +144,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -156,7 +156,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -168,7 +168,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -180,7 +180,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -210,7 +210,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/vscode-hc32-develop.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/vscode-hc32-develop.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -308,9 +308,9 @@
 <blockquote>
 <p>华大HC32F460x使用的是ARM Cortex M4架构，因此只要配置了正确的芯片支持包，就能够实现与STM32系列芯片一致的开发效果。如果不熟悉EIDE和Cortex Debug的使用方法，建议先阅读<strong>Windows搭建STM32开发环境-进阶篇</strong><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Windows搭建STM32开发环境-进阶篇](https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/)">[1]</span></a></sup>和<strong>cortex-debug 用法</strong><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[cortex-debug 用法](https://discuss.em-ide.com/blog/67-cortex-debug)">[2]</span></a></sup>。</p>
 </blockquote>
-<h2 id="1-编译"><a href="#1-编译" class="headerlink" title="1.编译"></a>1.编译</h2><h3 id="1-1-导入Keil项目"><a href="#1-1-导入Keil项目" class="headerlink" title="1.1 导入Keil项目"></a>1.1 导入Keil项目</h3><p>准备好能够编译成功的Keil项目，VSCode工作区下点击<code>Import Project</code>，选择<strong>MDK</strong>，选择Keil项目。<br><img src="/2024/09/04/vscode-hc32-develop/import_project.gif" srcset="/img/loading.gif" lazyload alt="导入Keil项目"></p>
-<h3 id="1-2-加载芯片支持包"><a href="#1-2-加载芯片支持包" class="headerlink" title="1.2 加载芯片支持包"></a>1.2 加载芯片支持包</h3><p>点击<strong>Chip Support Package</strong>，选择<strong>From Disk</strong>，选择华大提供的芯片支持包(.pack后缀)，再根据自己的芯片选择具体的型号，比如我这里是<code>HC32F460KEUA</code><br><img src="/2024/09/04/vscode-hc32-develop/install_package.gif" srcset="/img/loading.gif" lazyload alt="加载芯片支持包"></p>
-<h3 id="1-3-编译"><a href="#1-3-编译" class="headerlink" title="1.3 编译"></a>1.3 编译</h3><p>点击<strong>Build</strong>，快捷键<strong>F7</strong>，编译成功后会输出已使用的静态RAM&#x2F;ROM信息。其他编译输出信息参考EIDE官方文档<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Embedded IDE官方文档](https://em-ide.com/zh-cn/docs/intro/)">[3]</span></a></sup>说明。<br><img src="/2024/09/04/vscode-hc32-develop/compile.png" srcset="/img/loading.gif" lazyload alt="编译结果"></p>
+<h2 id="1-编译"><a href="#1-编译" class="headerlink" title="1.编译"></a>1.编译</h2><h3 id="1-1-导入Keil项目"><a href="#1-1-导入Keil项目" class="headerlink" title="1.1 导入Keil项目"></a>1.1 导入Keil项目</h3><p>准备好能够编译成功的Keil项目，VSCode工作区下点击<code>Import Project</code>，选择<strong>MDK</strong>，选择Keil项目。<br><img src="/blog/2024/09/04/vscode-hc32-develop/import_project.gif" srcset="/blog/img/loading.gif" lazyload alt="导入Keil项目"></p>
+<h3 id="1-2-加载芯片支持包"><a href="#1-2-加载芯片支持包" class="headerlink" title="1.2 加载芯片支持包"></a>1.2 加载芯片支持包</h3><p>点击<strong>Chip Support Package</strong>，选择<strong>From Disk</strong>，选择华大提供的芯片支持包(.pack后缀)，再根据自己的芯片选择具体的型号，比如我这里是<code>HC32F460KEUA</code><br><img src="/blog/2024/09/04/vscode-hc32-develop/install_package.gif" srcset="/blog/img/loading.gif" lazyload alt="加载芯片支持包"></p>
+<h3 id="1-3-编译"><a href="#1-3-编译" class="headerlink" title="1.3 编译"></a>1.3 编译</h3><p>点击<strong>Build</strong>，快捷键<strong>F7</strong>，编译成功后会输出已使用的静态RAM&#x2F;ROM信息。其他编译输出信息参考EIDE官方文档<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Embedded IDE官方文档](https://em-ide.com/zh-cn/docs/intro/)">[3]</span></a></sup>说明。<br><img src="/blog/2024/09/04/vscode-hc32-develop/compile.png" srcset="/blog/img/loading.gif" lazyload alt="编译结果"></p>
 <h2 id="2-JLink烧录调试"><a href="#2-JLink烧录调试" class="headerlink" title="2.JLink烧录调试"></a>2.JLink烧录调试</h2><h3 id="2-1-添加新设备"><a href="#2-1-添加新设备" class="headerlink" title="2.1 添加新设备"></a>2.1 添加新设备</h3><div class="note note-info">
             <p>JLink默认的设备列表不包含HC32F460x，因此需要手动添加新设备给JLink的设备列表。</p>
           </div>
@@ -333,16 +333,16 @@
         </div>
       </div>
     </div>
-<p><img src="/2024/09/04/vscode-hc32-develop/add_new_device.png" srcset="/img/loading.gif" lazyload alt="添加新设备到JLink设备列表"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/add_new_device.png" srcset="/blog/img/loading.gif" lazyload alt="添加新设备到JLink设备列表"></p>
 </li>
-<li><p>VSCode重新加载JLink设备：<code>Ctrl + Shift + P</code>打开命令面板，输入<strong>Reload Jlink Devices List</strong>即可<br><img src="/2024/09/04/vscode-hc32-develop/reload_jlink_devices.png" srcset="/img/loading.gif" lazyload alt="重新加载JLink设备列表"></p>
+<li><p>VSCode重新加载JLink设备：<code>Ctrl + Shift + P</code>打开命令面板，输入<strong>Reload Jlink Devices List</strong>即可<br><img src="/blog/2024/09/04/vscode-hc32-develop/reload_jlink_devices.png" srcset="/blog/img/loading.gif" lazyload alt="重新加载JLink设备列表"></p>
 </li>
 </ul>
 <div class="note note-warning">
             <p>如果JLink弹窗提示选择设备，注意华大的缩写是HDSC，输入HC32是找不到的</p>
           </div>
 
-<h3 id="2-2-烧录"><a href="#2-2-烧录" class="headerlink" title="2.2 烧录"></a>2.2 烧录</h3><p>点击<strong>Flasher Configurations</strong>的切换按钮，确保烧录方式为<strong>JLink</strong>，选择<strong>CPU Name</strong>为<strong>HC32F460x</strong>，点击<strong>Program Flash</strong>按钮尝试烧录<br><img src="/2024/09/04/vscode-hc32-develop/jlink_flash.gif" srcset="/img/loading.gif" lazyload alt="JLink烧录"></p>
+<h3 id="2-2-烧录"><a href="#2-2-烧录" class="headerlink" title="2.2 烧录"></a>2.2 烧录</h3><p>点击<strong>Flasher Configurations</strong>的切换按钮，确保烧录方式为<strong>JLink</strong>，选择<strong>CPU Name</strong>为<strong>HC32F460x</strong>，点击<strong>Program Flash</strong>按钮尝试烧录<br><img src="/blog/2024/09/04/vscode-hc32-develop/jlink_flash.gif" srcset="/blog/img/loading.gif" lazyload alt="JLink烧录"></p>
 <h3 id="2-3-调试"><a href="#2-3-调试" class="headerlink" title="2.3 调试"></a>2.3 调试</h3><h4 id="2-3-1-Cortex-Debug配置"><a href="#2-3-1-Cortex-Debug配置" class="headerlink" title="2.3.1 Cortex Debug配置"></a>2.3.1 Cortex Debug配置</h4><p>自行确保Cortex Debug插件配置正确，以下提供一个示例配置，请根据自己的实际情况进行修改</p>
 
     <div class="fold">
@@ -361,14 +361,14 @@
 <li>一般默认参数不需要修改，点击<strong>Create</strong></li>
 <li><strong>F5</strong>启动调试，调试启动较慢，大概耗时10-20秒不等</li>
 </ul>
-<p><img src="/2024/09/04/vscode-hc32-develop/jlink_debug.gif" srcset="/img/loading.gif" lazyload alt="JLink调试"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/jlink_debug.gif" srcset="/blog/img/loading.gif" lazyload alt="JLink调试"></p>
 <p>关于调试的更多用法，可以参考Linux搭建C开发环境的<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Linux搭建C开发环境](https://blog.gogo.uno/2024/02/04/vscode-develop-c/)">[4]</span></a></sup><strong>第4点-调试入门</strong>，详细介绍了各类断点、监控变量、调用堆栈以及常用快捷键说明。</p>
 <blockquote>
 <p>由于EIDE独立安装了JLink，如果Cortex Debug使用的JLink-GDBServer不是EIDE的JLink，因此添加新设备的操作可能需要在其他JLink的安装路径再操作一遍。</p>
 </blockquote>
 <h2 id="3-DapLink烧录调试"><a href="#3-DapLink烧录调试" class="headerlink" title="3.DapLink烧录调试"></a>3.DapLink烧录调试</h2><h3 id="3-1-安装pyOCD"><a href="#3-1-安装pyOCD" class="headerlink" title="3.1 安装pyOCD"></a>3.1 安装pyOCD</h3><p>注意：<strong>Python3.12无法安装pyOCD</strong><sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Python3.12无法安装pyOCD](https://www.ezurio.com/support/faqs/i-am-having-problems-installing-pyocd-for-python)">[5]</span></a></sup>。Python3.10.x满足要求。pyOCD安装命令：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">python -m pip install -U pyocd<br></code></pre></td></tr></table></figure>
-<p><img src="/2024/09/04/vscode-hc32-develop/py_version.png" srcset="/img/loading.gif" lazyload alt="Python以及pyOCD的版本"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/py_version.png" srcset="/blog/img/loading.gif" lazyload alt="Python以及pyOCD的版本"></p>
 <h3 id="3-2-烧录"><a href="#3-2-烧录" class="headerlink" title="3.2 烧录"></a>3.2 烧录</h3><div class="note note-info">
             <p>使用<strong>pyOCD</strong>烧录固件，理论上兼容所有的DapLink。</p>
           </div>
@@ -378,8 +378,8 @@
 <li>修改<strong>Download Speed</strong>为<strong>8M</strong></li>
 <li>点击<strong>Program Flash</strong>按钮尝试烧录，实测烧录速度比JLink快；同等硬件下也比Keil烧录快。</li>
 </ul>
-<p><img src="/2024/09/04/vscode-hc32-develop/daplink_flash.gif" srcset="/img/loading.gif" lazyload alt="DapLink烧录"></p>
-<h3 id="3-3-调试"><a href="#3-3-调试" class="headerlink" title="3.3 调试"></a>3.3 调试</h3><h4 id="3-3-1-安装OpenOCD"><a href="#3-3-1-安装OpenOCD" class="headerlink" title="3.3.1 安装OpenOCD"></a>3.3.1 安装OpenOCD</h4><p>点击<strong>Setup Utility Tools</strong>，选择<strong>OpenOCD</strong>，点击安装<br><img src="/2024/09/04/vscode-hc32-develop/install_openocd.png" srcset="/img/loading.gif" lazyload alt="安装OpenOCD"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/daplink_flash.gif" srcset="/blog/img/loading.gif" lazyload alt="DapLink烧录"></p>
+<h3 id="3-3-调试"><a href="#3-3-调试" class="headerlink" title="3.3 调试"></a>3.3 调试</h3><h4 id="3-3-1-安装OpenOCD"><a href="#3-3-1-安装OpenOCD" class="headerlink" title="3.3.1 安装OpenOCD"></a>3.3.1 安装OpenOCD</h4><p>点击<strong>Setup Utility Tools</strong>，选择<strong>OpenOCD</strong>，点击安装<br><img src="/blog/2024/09/04/vscode-hc32-develop/install_openocd.png" srcset="/blog/img/loading.gif" lazyload alt="安装OpenOCD"></p>
 <h4 id="3-3-2-新增目标配置"><a href="#3-3-2-新增目标配置" class="headerlink" title="3.3.2 新增目标配置"></a>3.3.2 新增目标配置</h4><p>增加target配置文件：比如在路径<code>C:\Users\Orionxer\.eide\tools\openocd_7a1adfbec_mingw32\share\openocd\scripts\target</code>中，新增<strong>hc32f46x.cfg</strong>文件，<strong>完整复制以下内容并保存</strong>。文件内容来源于羽名大佬<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Python3.12无法安装pyOCD](https://www.ezurio.com/support/faqs/i-am-having-problems-installing-pyocd-for-python)">[5]</span></a></sup>，感谢🎉</p>
 
     <div class="fold">
@@ -393,7 +393,7 @@
       </div>
     </div>
 
-<p><img src="/2024/09/04/vscode-hc32-develop/add_cfg.png" srcset="/img/loading.gif" lazyload alt="新增目标配置"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/add_cfg.png" srcset="/blog/img/loading.gif" lazyload alt="新增目标配置"></p>
 <h4 id="3-3-3-生成调试配置"><a href="#3-3-3-生成调试配置" class="headerlink" title="3.3.3 生成调试配置"></a>3.3.3 生成调试配置</h4><div class="note note-warning">
             <p>启动调试前自行确保Cortex Debug配置正确。</p>
           </div>
@@ -404,8 +404,8 @@
 <li>一般默认参数不需要修改，点击<strong>Create</strong></li>
 <li><strong>F5</strong>启动调试，调试启动较慢，大概耗时10-20秒不等。如果已经存在JLink等其他调试配置，可以先注释以避免无法启动调试。</li>
 </ul>
-<p><img src="/2024/09/04/vscode-hc32-develop/generate_openocd_cfg.png" srcset="/img/loading.gif" lazyload alt="生成OpenOCD调试配置"></p>
-<p><img src="/2024/09/04/vscode-hc32-develop/openocd_debug.png" srcset="/img/loading.gif" lazyload alt="OpenOCD启动调试"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/generate_openocd_cfg.png" srcset="/blog/img/loading.gif" lazyload alt="生成OpenOCD调试配置"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/openocd_debug.png" srcset="/blog/img/loading.gif" lazyload alt="OpenOCD启动调试"></p>
 <h4 id="3-3-4-优化调试速度"><a href="#3-3-4-优化调试速度" class="headerlink" title="3.3.4 优化调试速度"></a>3.3.4 优化调试速度</h4><p>成功进入调试后，根据gdbserver的log显示，其速度默认在100KHz；找到并修改<strong>cmsis-dap-v1.cfg</strong>文件：指定速度为8000KHz，即8MHz，能够显著提升进入调试的速度，实测启动调试耗时约<strong>4秒</strong>(与Keil的速度一致)，调试过程中没有延时。完整配置与路径如下：</p>
 
     <div class="fold">
@@ -419,21 +419,21 @@
       </div>
     </div>
 
-<p><img src="/2024/09/04/vscode-hc32-develop/cmsis-dap-path.png" srcset="/img/loading.gif" lazyload alt="cmsis-dap-v1.cfg路径"></p>
-<p><img src="/2024/09/04/vscode-hc32-develop/openocd_boost.gif" srcset="/img/loading.gif" lazyload alt="优化调试速度"></p>
-<p><img src="/2024/09/04/vscode-hc32-develop/debug_demo.png" srcset="/img/loading.gif" lazyload alt="调试效果"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/cmsis-dap-path.png" srcset="/blog/img/loading.gif" lazyload alt="cmsis-dap-v1.cfg路径"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/openocd_boost.gif" srcset="/blog/img/loading.gif" lazyload alt="优化调试速度"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/debug_demo.png" srcset="/blog/img/loading.gif" lazyload alt="调试效果"></p>
 <p>关于更多FreeRTOS调试分析可以参考STM32-FreeRTOS移植与调试<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote"><span class="hint--top hint--rounded" aria-label="[STM32-FreeRTOS移植与调试](https://blog.gogo.uno/2024/03/23/stm32-freertos/)">[7]</span></a></sup>的<strong>第3点-调试FreeRTOS</strong>和<strong>第4点-监控分析</strong></p>
 <div class="note note-warning">
             <p>不选用PyOCD进行调试是因为实测调试速度特别慢，且重启芯片的时候无法再次停在main函数。</p>
           </div>
 
-<h2 id="4-参考"><a href="#4-参考" class="headerlink" title="4.参考"></a>4.参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a href="https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/">Windows搭建STM32开发环境-进阶篇</a>
+<h2 id="4-参考"><a href="#4-参考" class="headerlink" title="4.参考"></a>4.参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/">Windows搭建STM32开发环境-进阶篇</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://discuss.em-ide.com/blog/67-cortex-debug">cortex-debug 用法</a>
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://em-ide.com/zh-cn/docs/intro/">Embedded IDE官方文档</a>
-<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a href="https://blog.gogo.uno/2024/02/04/vscode-develop-c/">Linux搭建C开发环境</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/04/vscode-develop-c/">Linux搭建C开发环境</a>
 <a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.ezurio.com/support/faqs/i-am-having-problems-installing-pyocd-for-python">Python3.12无法安装pyOCD</a>
 <a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://gitee.com/uyami/a-hc32-f460_-sdk">羽名&#x2F;aHC32F460_SDK</a>
-<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a href="https://blog.gogo.uno/2024/03/23/stm32-freertos/">STM32-FreeRTOS移植与调试</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/03/23/stm32-freertos/">STM32-FreeRTOS移植与调试</a>
 <a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
@@ -452,7 +452,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Other/" class="category-chain-item">Other</a>
+  <a href="/blog/categories/Other/" class="category-chain-item">Other</a>
   
   
 
@@ -467,9 +467,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/VSCode/" class="print-no-link">#VSCode</a>
+        <a href="/blog/tags/VSCode/" class="print-no-link">#VSCode</a>
       
-        <a href="/tags/HC32/" class="print-no-link">#HC32</a>
+        <a href="/blog/tags/HC32/" class="print-no-link">#HC32</a>
       
     </div>
   
@@ -482,7 +482,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>VSCode编译烧录调试HC32F460x</div>
-      <div>https://blog.gogo.uno/2024/09/04/vscode-hc32-develop/</div>
+      <div>https://orionxer.github.io/blog/2024/09/04/vscode-hc32-develop/</div>
     </div>
     <div class="license-meta">
       
@@ -537,7 +537,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/10/04/24-10-english/" title="24/Oct 每日英语">
+                      <a href="/blog/2024/10/04/24-10-english/" title="24/Oct 每日英语">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">24/Oct 每日英语</span>
                         <span class="visible-mobile">上一篇</span>
@@ -547,7 +547,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/02/24-09-english/" title="24/Sep 每日英语">
+                      <a href="/blog/2024/09/02/24-09-english/" title="24/Sep 每日英语">
                         <span class="hidden-mobile">24/Sep 每日英语</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -723,8 +723,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -746,7 +746,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -888,9 +888,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -898,7 +898,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   
