@@ -114,3 +114,5 @@ deploy:
   repo: https://github.com/Orionxer/blog
   branch: gh-pages
   message: hexo deploy test
+  author: Orionxer
+  email: orionxer@gmail.com
