@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
-  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,11 +22,11 @@
     <meta name="description" content="SolidWorks绘制一个最简单的正方体">
 <meta property="og:type" content="article">
 <meta property="og:title" content="1.SW-绘制正方体">
-<meta property="og:url" content="https://orionxer.github.io/blog/2024/01/01/sw-1-cube/index.html">
+<meta property="og:url" content="https://blog.gogo.uno/2024/01/01/sw-1-cube/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="SolidWorks绘制一个最简单的正方体">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://orionxer.github.io/blog/images/sw-1-cube.jpg">
+<meta property="og:image" content="https://blog.gogo.uno/images/sw-1-cube.jpg">
 <meta property="article:published_time" content="2023-12-31T16:00:05.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.785Z">
 <meta property="article:author" content="Orionxer">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="3D">
 <meta property="article:tag" content="结构">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://orionxer.github.io/blog/images/sw-1-cube.jpg">
+<meta name="twitter:image" content="https://blog.gogo.uno/images/sw-1-cube.jpg">
   
   
   
@@ -62,12 +62,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/blog/css/main.css" />
+<link  rel="stylesheet" href="/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
@@ -76,15 +76,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/blog/js/utils.js" ></script>
-  <script  src="/blog/js/color-schema.js" ></script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
 
   
@@ -114,7 +114,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/blog/">
+    <a class="navbar-brand" href="/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -133,7 +133,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/" target="_self">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/archives/" target="_self">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/categories/" target="_self">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/tags/" target="_self">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/about/" target="_self">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -211,7 +211,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/blog/images/sw-1-cube.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/images/sw-1-cube.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -302,20 +302,20 @@
             
               <div class="markdown-body">
                 
-                <h2 id="1-软件界面"><a href="#1-软件界面" class="headerlink" title="1.软件界面"></a>1.软件界面</h2><p><img src="/blog/2024/01/01/sw-1-cube/sw_hello.png" srcset="/blog/img/loading.gif" lazyload alt="hello-solidworks"></p>
-<h3 id="1-1-新建零件"><a href="#1-1-新建零件" class="headerlink" title="1.1 新建零件"></a>1.1 新建零件</h3><p>主页选择<strong>零件</strong>选项卡并保存为<code>1.Hello_Part.SLDPRT</code>文件名<br><img src="/blog/2024/01/01/sw-1-cube/new_part.png" srcset="/blog/img/loading.gif" lazyload alt="新建保存零件"></p>
+                <h2 id="1-软件界面"><a href="#1-软件界面" class="headerlink" title="1.软件界面"></a>1.软件界面</h2><p><img src="/blog/2024/01/01/sw-1-cube/sw_hello.png" srcset="/img/loading.gif" lazyload alt="hello-solidworks"></p>
+<h3 id="1-1-新建零件"><a href="#1-1-新建零件" class="headerlink" title="1.1 新建零件"></a>1.1 新建零件</h3><p>主页选择<strong>零件</strong>选项卡并保存为<code>1.Hello_Part.SLDPRT</code>文件名<br><img src="/blog/2024/01/01/sw-1-cube/new_part.png" srcset="/img/loading.gif" lazyload alt="新建保存零件"></p>
 <h3 id="1-2-新建草图"><a href="#1-2-新建草图" class="headerlink" title="1.2 新建草图"></a>1.2 新建草图</h3><ul>
 <li>选择<strong>草图</strong>选项，点击<strong>草图绘制</strong></li>
 <li>鼠标左键点击<strong>前视基准面</strong></li>
 </ul>
-<p><img src="/blog/2024/01/01/sw-1-cube/new_draft.gif" srcset="/blog/img/loading.gif" lazyload alt="进入草图编辑"></p>
+<p><img src="/blog/2024/01/01/sw-1-cube/new_draft.gif" srcset="/img/loading.gif" lazyload alt="进入草图编辑"></p>
 <h3 id="1-3-绘制矩形"><a href="#1-3-绘制矩形" class="headerlink" title="1.3 绘制矩形"></a>1.3 绘制矩形</h3><ul>
 <li>选择<strong>中心矩形</strong>(<em>选择<strong>边角矩形</strong>也可以，确保矩形的中心在原点即可</em>)</li>
 <li>在原点处选择<strong>中心点</strong></li>
 <li>拖动绘制矩形,单击完成绘制矩形</li>
 <li>按<strong>Esc</strong>键退出绘制矩形</li>
 </ul>
-<p><img src="/blog/2024/01/01/sw-1-cube/new_rect.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制矩形"></p>
+<p><img src="/blog/2024/01/01/sw-1-cube/new_rect.gif" srcset="/img/loading.gif" lazyload alt="绘制矩形"></p>
 <div class="note note-success">
             <p><strong>Esc</strong>键退出绘制模式; <strong>Ctrl + Z</strong>撤销操作; <strong>Ctrl + Y</strong>还原操作;</p>
           </div>
@@ -326,7 +326,7 @@
 <li>输入长度(或者加入单位)</li>
 <li>按<strong>Esc</strong>键退出智能尺寸</li>
 </ul>
-<p><img src="/blog/2024/01/01/sw-1-cube/add_straint.gif" srcset="/blog/img/loading.gif" lazyload alt="添加约束"></p>
+<p><img src="/blog/2024/01/01/sw-1-cube/add_straint.gif" srcset="/img/loading.gif" lazyload alt="添加约束"></p>
 <div class="note note-success">
             <p>草图的所有线条颜色均为<strong>黑色</strong>说明草图<strong>完全约束</strong>，如果存在蓝色线条，说明草图未完全约束。</p>
           </div>
@@ -336,14 +336,14 @@
 <li><strong>给定深度</strong>处填入100</li>
 <li>点击✅确定编辑</li>
 </ul>
-<p><img src="/blog/2024/01/01/sw-1-cube/add_depth.gif" srcset="/blog/img/loading.gif" lazyload alt="拉伸凸台基体"></p>
+<p><img src="/blog/2024/01/01/sw-1-cube/add_depth.gif" srcset="/img/loading.gif" lazyload alt="拉伸凸台基体"></p>
 <h3 id="1-6-观测操作"><a href="#1-6-观测操作" class="headerlink" title="1.6 观测操作"></a>1.6 观测操作</h3><ul>
 <li>按住鼠标<strong>中键</strong>，同时移动鼠标，即可观察该正方体</li>
 <li><strong>Ctrl + 7</strong>恢复<strong>等轴测</strong>视角</li>
 <li>点击<strong>视图定向</strong>, 选择需要正视的平面(<strong>空格键</strong>快速进入视图定向功能)</li>
 <li><strong>Ctrl + 鼠标中键</strong>, 平面移动</li>
 </ul>
-<p><img src="/blog/2024/01/01/sw-1-cube/switch_angle.gif" srcset="/blog/img/loading.gif" lazyload alt="切换视图定向"></p>
+<p><img src="/blog/2024/01/01/sw-1-cube/switch_angle.gif" srcset="/img/loading.gif" lazyload alt="切换视图定向"></p>
 
                 
               </div>
@@ -362,7 +362,7 @@
     
       <span class="category-chain">
         
-  <a href="/blog/categories/Solidworks/" class="category-chain-item">Solidworks</a>
+  <a href="/categories/Solidworks/" class="category-chain-item">Solidworks</a>
   
   
 
@@ -377,11 +377,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/Solidworks/" class="print-no-link">#Solidworks</a>
+        <a href="/tags/Solidworks/" class="print-no-link">#Solidworks</a>
       
-        <a href="/blog/tags/3D/" class="print-no-link">#3D</a>
+        <a href="/tags/3D/" class="print-no-link">#3D</a>
       
-        <a href="/blog/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
+        <a href="/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
       
     </div>
   
@@ -394,7 +394,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>1.SW-绘制正方体</div>
-      <div>https://orionxer.github.io/blog/2024/01/01/sw-1-cube/</div>
+      <div>https://blog.gogo.uno/2024/01/01/sw-1-cube/</div>
     </div>
     <div class="license-meta">
       
@@ -449,7 +449,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/01/01/24-01-english/" title="24/Jan 每日英语">
+                      <a href="/2024/01/01/24-01-english/" title="24/Jan 每日英语">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">24/Jan 每日英语</span>
                         <span class="visible-mobile">上一篇</span>
@@ -459,7 +459,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2023/12/20/hello-solidworks/" title="Solidworks学习地图">
+                      <a href="/2023/12/20/hello-solidworks/" title="Solidworks学习地图">
                         <span class="hidden-mobile">Solidworks学习地图</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -635,8 +635,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/blog/js/events.js" ></script>
-<script  src="/blog/js/plugins.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -658,7 +658,7 @@
 
 
   
-    <script  src="/blog/js/img-lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -800,9 +800,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/blog/js/leancloud.js" ></script>
+  <script defer src="/js/leancloud.js" ></script>
 
-  <script  src="/blog/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
 
 
 
@@ -810,7 +810,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/blog/js/boot.js" ></script>
+<script  src="/js/boot.js" ></script>
 
 
   

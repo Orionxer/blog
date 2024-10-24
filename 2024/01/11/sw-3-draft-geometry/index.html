@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
-  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,11 +22,11 @@
     <meta name="description" content="SolidWorks绘制草图几何关系">
 <meta property="og:type" content="article">
 <meta property="og:title" content="3.SW-草图几何关系与编辑">
-<meta property="og:url" content="https://orionxer.github.io/blog/2024/01/11/sw-3-draft-geometry/index.html">
+<meta property="og:url" content="https://blog.gogo.uno/2024/01/11/sw-3-draft-geometry/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="SolidWorks绘制草图几何关系">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://orionxer.github.io/blog/images/sw-3-draft-geometry.jpg">
+<meta property="og:image" content="https://blog.gogo.uno/images/sw-3-draft-geometry.jpg">
 <meta property="article:published_time" content="2024-01-10T22:08:51.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.896Z">
 <meta property="article:author" content="Orionxer">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="3D">
 <meta property="article:tag" content="结构">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://orionxer.github.io/blog/images/sw-3-draft-geometry.jpg">
+<meta name="twitter:image" content="https://blog.gogo.uno/images/sw-3-draft-geometry.jpg">
   
   
   
@@ -62,12 +62,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/blog/css/main.css" />
+<link  rel="stylesheet" href="/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
   
 
 
@@ -76,15 +76,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/blog/js/utils.js" ></script>
-  <script  src="/blog/js/color-schema.js" ></script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
   
 
   
@@ -114,7 +114,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/blog/">
+    <a class="navbar-brand" href="/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -133,7 +133,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/" target="_self">
+              <a class="nav-link" href="/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/archives/" target="_self">
+              <a class="nav-link" href="/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/categories/" target="_self">
+              <a class="nav-link" href="/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/tags/" target="_self">
+              <a class="nav-link" href="/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/blog/about/" target="_self">
+              <a class="nav-link" href="/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -211,7 +211,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/blog/images/sw-3-draft-geometry.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/images/sw-3-draft-geometry.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -306,25 +306,25 @@
             <p>SolidWroks草图几何关系包括：<strong>水平、竖直、重合、中点、相切、平行、相等、共线、对称</strong>等</p>
           </div>
 
-<h2 id="1-草图几何关系"><a href="#1-草图几何关系" class="headerlink" title="1.草图几何关系"></a>1.草图几何关系</h2><p><img src="/blog/2024/01/11/sw-3-draft-geometry/geometry.png" srcset="/blog/img/loading.gif" lazyload alt="常见的草图几何关系"></p>
+<h2 id="1-草图几何关系"><a href="#1-草图几何关系" class="headerlink" title="1.草图几何关系"></a>1.草图几何关系</h2><p><img src="/blog/2024/01/11/sw-3-draft-geometry/geometry.png" srcset="/img/loading.gif" lazyload alt="常见的草图几何关系"></p>
 <h3 id="1-1-垂直"><a href="#1-1-垂直" class="headerlink" title="1.1 垂直"></a>1.1 垂直</h3><ul>
 <li>绘制两条直线(其中第一条设置为水平线)，另一条任意绘制</li>
 <li>选中两条直线</li>
 <li>在左侧的<strong>添加几何关系</strong>中选择<strong>垂直</strong>关系</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/geometry_vertical.gif" srcset="/blog/img/loading.gif" lazyload alt="设置两条直线的垂直关系"></p>
-<h3 id="1-2-平行"><a href="#1-2-平行" class="headerlink" title="1.2 平行"></a>1.2 平行</h3><p><img src="/blog/2024/01/11/sw-3-draft-geometry/parallel.gif" srcset="/blog/img/loading.gif" lazyload alt="设置两条直线的平行关系"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/geometry_vertical.gif" srcset="/img/loading.gif" lazyload alt="设置两条直线的垂直关系"></p>
+<h3 id="1-2-平行"><a href="#1-2-平行" class="headerlink" title="1.2 平行"></a>1.2 平行</h3><p><img src="/blog/2024/01/11/sw-3-draft-geometry/parallel.gif" srcset="/img/loading.gif" lazyload alt="设置两条直线的平行关系"></p>
 <div class="note note-info">
             <p>如果是三条不共线的直线添加平行特征，则以第二条为基准来平行</p>
           </div>
 
-<h3 id="1-3-相切"><a href="#1-3-相切" class="headerlink" title="1.3 相切"></a>1.3 相切</h3><p><img src="/blog/2024/01/11/sw-3-draft-geometry/tangency.gif" srcset="/blog/img/loading.gif" lazyload alt="设置圆与直线相切"></p>
+<h3 id="1-3-相切"><a href="#1-3-相切" class="headerlink" title="1.3 相切"></a>1.3 相切</h3><p><img src="/blog/2024/01/11/sw-3-draft-geometry/tangency.gif" srcset="/img/loading.gif" lazyload alt="设置圆与直线相切"></p>
 <h3 id="1-4-对称"><a href="#1-4-对称" class="headerlink" title="1.4 对称"></a>1.4 对称</h3><ul>
 <li>绘制一条直线，设置为<strong>构造线</strong></li>
 <li>绘制第一个圆，使圆与直线相切</li>
 <li>绘制第二个圆，选中直线与两个圆，点击<strong>对称</strong></li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/symmetry.gif" srcset="/blog/img/loading.gif" lazyload alt="设置两个圆相对于构造线对称"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/symmetry.gif" srcset="/img/loading.gif" lazyload alt="设置两个圆相对于构造线对称"></p>
 <h2 id="2-裁剪实体"><a href="#2-裁剪实体" class="headerlink" title="2.裁剪实体"></a>2.裁剪实体</h2><div class="note note-info">
             <p>裁剪实体用于删除不必要的线段部分，最常用到的是<strong>强劲裁剪</strong>和<strong>裁剪到最近端</strong></p>
           </div>
@@ -334,15 +334,15 @@
 <li>选择属性栏的<strong>强劲裁剪</strong></li>
 <li>鼠标<strong>左键按住不放划过线段</strong>部分，能够看到线段被裁剪至最近的端点，即删除了线段</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/tailor_delete.gif" srcset="/blog/img/loading.gif" lazyload alt="强劲裁剪-删除线段"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/tailor_delete.gif" srcset="/img/loading.gif" lazyload alt="强劲裁剪-删除线段"></p>
 <h4 id="2-1-2-延伸-延长线段"><a href="#2-1-2-延伸-延长线段" class="headerlink" title="2.1.2 延伸(延长线段)"></a>2.1.2 延伸(延长线段)</h4><ul>
 <li>点击线段不放，滑动鼠标即可延长线段</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/tailor_extend.gif" srcset="/blog/img/loading.gif" lazyload alt="强劲裁剪-延伸线段"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/tailor_extend.gif" srcset="/img/loading.gif" lazyload alt="强劲裁剪-延伸线段"></p>
 <h3 id="2-2-裁剪到最近端"><a href="#2-2-裁剪到最近端" class="headerlink" title="2.2 裁剪到最近端"></a>2.2 裁剪到最近端</h3><ul>
 <li>与强劲裁剪类似，只是没有了延伸的功能，单击线段执行删除效果</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/tailor_delete_click.gif" srcset="/blog/img/loading.gif" lazyload alt="裁剪到最近端"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/tailor_delete_click.gif" srcset="/img/loading.gif" lazyload alt="裁剪到最近端"></p>
 <h2 id="3-转换实体引用"><a href="#3-转换实体引用" class="headerlink" title="3.转换实体引用"></a>3.转换实体引用</h2><div class="note note-info">
             <p>转换实体引用可以简单理解为<strong>投影</strong>，将需要使用的到线段(或者其他几何图形)投影到需要的平面上继续使用</p>
           </div>
@@ -352,22 +352,22 @@
 <li>重新进入草图绘制，选择圆柱顶面，此时可以对顶面可以进行草图编辑</li>
 <li>点击<strong>转换实体引用</strong>，点击圆的<strong>外部轮廓</strong>，属性栏点击<strong>确定</strong>(使转换实体引用生效)</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/draw_column.gif" srcset="/blog/img/loading.gif" lazyload alt="转换实体引用示例"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/draw_column.gif" srcset="/img/loading.gif" lazyload alt="转换实体引用示例"></p>
 <h3 id="3-2-观察圆柱体"><a href="#3-2-观察圆柱体" class="headerlink" title="3.2 观察圆柱体"></a>3.2 观察圆柱体</h3><ul>
 <li>点击<strong>显示类型</strong>，选择<strong>线架图</strong></li>
 <li>选择<strong>带边线上色</strong>则恢复默认视角</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/view_column.gif" srcset="/blog/img/loading.gif" lazyload alt="查看圆柱体"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/view_column.gif" srcset="/img/loading.gif" lazyload alt="查看圆柱体"></p>
 <h2 id="4-等距实体"><a href="#4-等距实体" class="headerlink" title="4.等距实体"></a>4.等距实体</h2><ul>
 <li>绘制一个圆</li>
 <li>点击<strong>等距实体</strong></li>
 <li>属性栏填入等距距离，选择<strong>反向</strong>或<strong>双向</strong></li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/isometry.gif" srcset="/blog/img/loading.gif" lazyload alt="绘制等距实体"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/isometry.gif" srcset="/img/loading.gif" lazyload alt="绘制等距实体"></p>
 <h2 id="5-添加长度-角度约束"><a href="#5-添加长度-角度约束" class="headerlink" title="5.添加长度&#x2F;角度约束"></a>5.添加长度&#x2F;角度约束</h2><ul>
 <li>在<strong>智能尺寸</strong>功能下，点击第一条线后继续点击第二条线，就能设置两条线的角度</li>
 </ul>
-<p><img src="/blog/2024/01/11/sw-3-draft-geometry/line_angle.gif" srcset="/blog/img/loading.gif" lazyload alt="设置角度约束"></p>
+<p><img src="/blog/2024/01/11/sw-3-draft-geometry/line_angle.gif" srcset="/img/loading.gif" lazyload alt="设置角度约束"></p>
 
                 
               </div>
@@ -386,7 +386,7 @@
     
       <span class="category-chain">
         
-  <a href="/blog/categories/Solidworks/" class="category-chain-item">Solidworks</a>
+  <a href="/categories/Solidworks/" class="category-chain-item">Solidworks</a>
   
   
 
@@ -401,11 +401,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/blog/tags/Solidworks/" class="print-no-link">#Solidworks</a>
+        <a href="/tags/Solidworks/" class="print-no-link">#Solidworks</a>
       
-        <a href="/blog/tags/3D/" class="print-no-link">#3D</a>
+        <a href="/tags/3D/" class="print-no-link">#3D</a>
       
-        <a href="/blog/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
+        <a href="/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
       
     </div>
   
@@ -418,7 +418,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>3.SW-草图几何关系与编辑</div>
-      <div>https://orionxer.github.io/blog/2024/01/11/sw-3-draft-geometry/</div>
+      <div>https://blog.gogo.uno/2024/01/11/sw-3-draft-geometry/</div>
     </div>
     <div class="license-meta">
       
@@ -473,7 +473,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/01/14/sw-3-A-conver-entities/" title="3.A-SW-转换实体引用">
+                      <a href="/2024/01/14/sw-3-A-conver-entities/" title="3.A-SW-转换实体引用">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">3.A-SW-转换实体引用</span>
                         <span class="visible-mobile">上一篇</span>
@@ -483,7 +483,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2024/01/05/sw-2-draw-draft/" title="2.SW-绘制草图">
+                      <a href="/2024/01/05/sw-2-draw-draft/" title="2.SW-绘制草图">
                         <span class="hidden-mobile">2.SW-绘制草图</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -659,8 +659,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/blog/js/events.js" ></script>
-<script  src="/blog/js/plugins.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -682,7 +682,7 @@
 
 
   
-    <script  src="/blog/js/img-lazyload.js" ></script>
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -824,9 +824,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/blog/js/leancloud.js" ></script>
+  <script defer src="/js/leancloud.js" ></script>
 
-  <script  src="/blog/js/local-search.js" ></script>
+  <script  src="/js/local-search.js" ></script>
 
 
 
@@ -834,7 +834,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/blog/js/boot.js" ></script>
+<script  src="/js/boot.js" ></script>
 
 
   
