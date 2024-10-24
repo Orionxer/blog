@@ -1,0 +1,35 @@
+﻿name: build
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发工作流
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'latest'  # 使用最新版本的 Node.js
+
+      - name: Install Hexo CLI and dependencies
+        run: |
+          npm install -g hexo-cli
+          npm install --save hexo-theme-fluid
+          npm install
+
+      - name: Build Hexo
+        run: |
+          hexo generate  # 生成静态文件
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # GitHub 提供的访问令牌
+          publish_dir: ./public  # 指定生成的静态文件目录
