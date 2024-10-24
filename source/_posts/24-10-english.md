@@ -43,3 +43,8 @@ excerpt: 2024 October English
 {% fold info @If the dream is big enough, the facts don't count.%}
 心中有目标，风雨不折腰。
 {% endfold %}
+
+### 8th
+{% fold info @All of us hope for success, but it is illusive and hard to keep.%}
+我们都希望成功，但成功却是虚幻且难以维持的。
+{% endfold %}

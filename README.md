@@ -1,6 +1,7 @@
 ﻿# 个人博客说明
 
-![Build Workflow](https://github.com/orionxer/blog/actions/workflows/build.yml/badge.svg)
+![Hexo Deployment Status](https://github.com/orionxer/blog/workflows/pages%20build%20and%20deployment/badge.svg)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Forionxer.github.io/blog)
 ![GitHub repo size](https://img.shields.io/github/repo-size/orionxer/blog)
 
 
@@ -46,3 +47,5 @@ hexo s
 ```
 
 ## Pages空间限制
+
+使用外部图床节省Pages空间
