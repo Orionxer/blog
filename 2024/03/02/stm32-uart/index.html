@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,18 +22,18 @@
     <meta name="description" content="使用STM32CubeMX+STM32配置UART外设以及设置为系统调试打印的输出接口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STM32-串口USART">
-<meta property="og:url" content="https://blog.gogo.uno/2024/03/02/stm32-uart/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/03/02/stm32-uart/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="使用STM32CubeMX+STM32配置UART外设以及设置为系统调试打印的输出接口">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/stm32-uart.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/stm32-uart.jpg">
 <meta property="article:published_time" content="2024-03-02T12:16:39.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.717Z">
 <meta property="article:author" content="Orionxer">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/stm32-uart.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/stm32-uart.jpg">
   
   
   
@@ -61,12 +61,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -75,15 +75,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -113,7 +113,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -132,7 +132,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -144,7 +144,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -156,7 +156,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -168,7 +168,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -180,7 +180,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -210,7 +210,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/stm32-uart.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/stm32-uart.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -345,20 +345,20 @@
 </tbody></table>
 </div>
 
-<h2 id="2-生成MDK工程"><a href="#2-生成MDK工程" class="headerlink" title="2.生成MDK工程"></a>2.生成MDK工程</h2><p>使用STM32CubeMX生成Keil MDK工程，目标芯片选择<strong>STM32F103C8</strong>，时钟配置为<strong>72MHz</strong>，步骤基本与<a href="https://blog.gogo.uno/2024/02/12/vscode-stm32-develop/">Windows搭建STM32开发环境(基础篇)</a>一致</p>
+<h2 id="2-生成MDK工程"><a href="#2-生成MDK工程" class="headerlink" title="2.生成MDK工程"></a>2.生成MDK工程</h2><p>使用STM32CubeMX生成Keil MDK工程，目标芯片选择<strong>STM32F103C8</strong>，时钟配置为<strong>72MHz</strong>，步骤基本与<a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/12/vscode-stm32-develop/">Windows搭建STM32开发环境(基础篇)</a>一致</p>
 <ul>
 <li>配置<strong>PC13</strong>为<strong>GPIO输出</strong></li>
 <li>配置串口外设<strong>USART1</strong>，选择模式为<code>Asynchronous</code>，则<strong>PA10</strong>和<strong>PA9</strong>默认为USART1的RX与TX</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/add_usart1.png" srcset="/img/loading.gif" lazyload alt="增加USART1配置"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/add_usart1.png" srcset="/blog/img/loading.gif" lazyload alt="增加USART1配置"></p>
 <ul>
 <li>点击<code>NVIC Settings</code>选项卡，勾选<strong>USART1 global interrupt</strong>，也就是开启USART1的全局中断</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/enable_interrupt.png" srcset="/img/loading.gif" lazyload alt="开启串口接收中断"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/enable_interrupt.png" srcset="/blog/img/loading.gif" lazyload alt="开启串口接收中断"></p>
 <h2 id="3-编译烧录"><a href="#3-编译烧录" class="headerlink" title="3.编译烧录"></a>3.编译烧录</h2><p>在工程生成之后，默认使用Keil打开工程，设置Jlink烧录，选择SWD方式，勾选<code>Reset and Run</code>即下载完自动重启，在<code>main.c</code>文件中的<code>/* USER CODE BEGIN 3 */</code>后添加代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// LED切换高低电平</span><br>HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);<br><span class="hljs-type">char</span> *hello_str = <span class="hljs-string">&quot;hello world\n&quot;</span>;<br><span class="hljs-comment">// USART1 发送字符串</span><br>HAL_UART_Transmit(&amp;huart1, (<span class="hljs-type">uint8_t</span> *)hello_str, <span class="hljs-built_in">strlen</span>(hello_str), HAL_MAX_DELAY);<br>HAL_Delay(<span class="hljs-number">500</span>);<br></code></pre></td></tr></table></figure>
 <p>尝试编译烧录，如果下载成功PC13的LED灯会以500ms的间隔闪烁，打开串口调试助手，也能看到STM32的串口以500ms的间隔发送字符串</p>
-<h2 id="4-EIDE导入工程"><a href="#4-EIDE导入工程" class="headerlink" title="4.EIDE导入工程"></a>4.EIDE导入工程</h2><p>VSCode打开EIDE插件，选择<code>import_project</code>，在弹出的窗口中选择MDK工程，确定切换工作区，选择烧录的芯片为<code>STM32F103C8</code>，尝试编译烧录<br><img src="/blog/2024/03/02/stm32-uart/eide_compile.png" srcset="/img/loading.gif" lazyload alt="EIDE编译STM32工程"></p>
+<h2 id="4-EIDE导入工程"><a href="#4-EIDE导入工程" class="headerlink" title="4.EIDE导入工程"></a>4.EIDE导入工程</h2><p>VSCode打开EIDE插件，选择<code>import_project</code>，在弹出的窗口中选择MDK工程，确定切换工作区，选择烧录的芯片为<code>STM32F103C8</code>，尝试编译烧录<br><img src="/blog/2024/03/02/stm32-uart/eide_compile.png" srcset="/blog/img/loading.gif" lazyload alt="EIDE编译STM32工程"></p>
 <h2 id="5-串口接收中断"><a href="#5-串口接收中断" class="headerlink" title="5.串口接收中断"></a>5.串口接收中断</h2><div class="note note-primary">
             <p>STM32接收串口的数据方式之一是<strong>打开</strong>串口的接收中断<code>HAL_UART_Receive_IT</code>，也可以叫<strong>使能</strong>或者<strong>启用</strong>串口的接收中断，本质上都是<strong>Enable</strong>。以下为一个例子：在产生串口中断后，将串口的接收数据拷贝到接收缓冲区中，等待接收结束标志位的出现(即换行符)，则认为单次串口接收结束，置位接收标志位，通知主函数打印接收到的所有数据，并重新打开接收中断。</p>
           </div>
@@ -443,7 +443,7 @@
 </div>
 
 <p>编译烧录到STM32，尝试发送一个字符串<code>Echo test</code>，字符串结尾加一个回车符标记串口发送结束，观察串口助手是否将收到的数据发送回来。</p>
-<p><img src="/blog/2024/03/02/stm32-uart/uart_transceive.gif" srcset="/img/loading.gif" lazyload alt="串口收发"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/uart_transceive.gif" srcset="/blog/img/loading.gif" lazyload alt="串口收发"></p>
 <div class="note note-warning">
             <p>如果尝试给STM32的串口发送一个字符串，且确定加了换行作为结束标志，但是STM32没有将数据发送回来，那么应该需要检查串口调试的助手的<strong>换行设置</strong>, 确保是<strong>Line Feed</strong>而不是<em>Carriage Return</em>。按照当前代码的结束符，如果不是以<strong>Line Feed</strong>结尾则无法认为本次接收结束</p>
           </div>
@@ -474,7 +474,7 @@
 </tbody></table>
 </div>
 
-<p><img src="/blog/2024/03/02/stm32-uart/return.png" srcset="/img/loading.gif" lazyload alt="换行设置为Line Feed"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/return.png" srcset="/blog/img/loading.gif" lazyload alt="换行设置为Line Feed"></p>
 <h2 id="6-示波器"><a href="#6-示波器" class="headerlink" title="6.示波器"></a>6.示波器</h2><div class="note note-primary">
             <p>使用示波器查看数据，重点是测量信号、波形分析。</p>
           </div>
@@ -504,18 +504,18 @@
 <li>串口调试助手发送一条数据<code>Echo Test</code></li>
 <li>查看示波器波形，能够看到通道0先采集到数据，通道1再采集到数据</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/osc_capture.bmp" srcset="/img/loading.gif" lazyload alt="捕获波形"></p>
-<h3 id="6-3-波形分析"><a href="#6-3-波形分析" class="headerlink" title="6.3 波形分析"></a>6.3 波形分析</h3><p>选择示波器的<strong>UART解码</strong>功能，暂时分析通道0，串口参数与上面保持一致，注意位序默认是<strong>LSB</strong><br><img src="/blog/2024/03/02/stm32-uart/osc_uart_decode.bmp" srcset="/img/loading.gif" lazyload alt="串口解码"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/osc_capture.bmp" srcset="/blog/img/loading.gif" lazyload alt="捕获波形"></p>
+<h3 id="6-3-波形分析"><a href="#6-3-波形分析" class="headerlink" title="6.3 波形分析"></a>6.3 波形分析</h3><p>选择示波器的<strong>UART解码</strong>功能，暂时分析通道0，串口参数与上面保持一致，注意位序默认是<strong>LSB</strong><br><img src="/blog/2024/03/02/stm32-uart/osc_uart_decode.bmp" srcset="/blog/img/loading.gif" lazyload alt="串口解码"></p>
 <p>放大最左侧的起始信号，分析第一个字节<code>0x45</code></p>
 <ul>
 <li><code>S</code>代表起始位，低电平</li>
 <li>中间代表数据位，共8位，从高到低的二进制是<code>1010 0010</code>，由于串口传输的方式默认是<strong>LSB</strong>，因此该二进制需要反转才能代表正确数据，即<code>0100 0101</code>，换算成16进制也就是<code>0x45</code>，也就是ASCII码的字符<code>E</code></li>
 <li><code>T</code>代表停止位，高电平</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/decode_first_byte.bmp" srcset="/img/loading.gif" lazyload alt="分析第一个字节"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/decode_first_byte.bmp" srcset="/blog/img/loading.gif" lazyload alt="分析第一个字节"></p>
 <h3 id="6-4-字符解码"><a href="#6-4-字符解码" class="headerlink" title="6.4 字符解码"></a>6.4 字符解码</h3><p>设置串口解码的数据显示类型为ASCII字符，且放大时基，查看通道1所有数据</p>
-<p><img src="/blog/2024/03/02/stm32-uart/decode_ascii_channel_1.bmp" srcset="/img/loading.gif" lazyload alt="解码通道0的ASCII码"></p>
-<p><img src="/blog/2024/03/02/stm32-uart/decode_ascii_channel_2.bmp" srcset="/img/loading.gif" lazyload alt="解码通道1的ASCII码"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/decode_ascii_channel_1.bmp" srcset="/blog/img/loading.gif" lazyload alt="解码通道0的ASCII码"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/decode_ascii_channel_2.bmp" srcset="/blog/img/loading.gif" lazyload alt="解码通道1的ASCII码"></p>
 <h2 id="7-逻辑分析仪"><a href="#7-逻辑分析仪" class="headerlink" title="7.逻辑分析仪"></a>7.逻辑分析仪</h2><div class="note note-primary">
             <p>使用逻辑分析仪查看数据，重点是解码协议。虽然逻辑分析仪在测量信号的准确度上不如示波器，只能处理逻辑电平信号：高电平<code>1</code>或低电平<code>0</code>，但其在解码协议以及数据显示方面是十分优秀的。</p>
           </div>
@@ -526,15 +526,15 @@
 <li>同理添加<code>Channel 1</code></li>
 <li>重命名<code>Channel 0</code>为<code>UART_TX</code>， <code>Channel 0</code>为<code>UART_RX</code>，并选择合适的颜色</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/set_logic.gif" srcset="/img/loading.gif" lazyload alt="设置串口通道参数"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/set_logic.gif" srcset="/blog/img/loading.gif" lazyload alt="设置串口通道参数"></p>
 <h3 id="7-2-监听数据"><a href="#7-2-监听数据" class="headerlink" title="7.2 监听数据"></a>7.2 监听数据</h3><ul>
 <li>点击<code>Start</code>开始监听，并适当放大时基</li>
 <li>串口调试助手发送一条数据<code>Echo Test</code></li>
 <li>停止监听，缩小时基，查看具体数据</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/logic_capture.gif" srcset="/img/loading.gif" lazyload alt="监听数据"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/logic_capture.gif" srcset="/blog/img/loading.gif" lazyload alt="监听数据"></p>
 <h3 id="7-3-分析数据"><a href="#7-3-分析数据" class="headerlink" title="7.3 分析数据"></a>7.3 分析数据</h3><p>选择<code>Channel 0</code>的数据显示方式为<code>Hexadecimal</code>，以16进制查看数据；放大第一个字节，切换不同数据显示格式以验证以上结果。</p>
-<p><img src="/blog/2024/03/02/stm32-uart/logic_analyze.gif" srcset="/img/loading.gif" lazyload alt="分析数据"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/logic_analyze.gif" srcset="/blog/img/loading.gif" lazyload alt="分析数据"></p>
 <div class="note note-warning">
             <p><strong>示波器查看信号是否准确，逻辑分析仪查看数据是否正确。</strong></p>
           </div>
@@ -548,9 +548,9 @@
 <li>弹出的<code>Build Options</code>页面中选择<code>Global Options</code>选项卡</li>
 <li>确保勾选<strong>Use MicroLIB</strong>，点击右上角<code>SAVE ALL</code>按钮保存</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/use_microlib.png" srcset="/img/loading.gif" lazyload alt="启用微库"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/use_microlib.png" srcset="/blog/img/loading.gif" lazyload alt="启用微库"></p>
 <h3 id="8-2-重定向设置"><a href="#8-2-重定向设置" class="headerlink" title="8.2 重定向设置"></a>8.2 重定向设置</h3><h4 id="8-2-1-修改头文件"><a href="#8-2-1-修改头文件" class="headerlink" title="8.2.1 修改头文件"></a>8.2.1 修改头文件</h4><p>在<code>usart.h</code>文件中，在 <code>/* USER CODE BEGIN Includes */</code> 与<code> /*USER CODE END Includes */</code>之间加入<code> #include &lt;stdio.h&gt;</code></p>
-<p><img src="/blog/2024/03/02/stm32-uart/uasrt.h.png" srcset="/img/loading.gif" lazyload alt="usart.h导入stdio.h"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/uasrt.h.png" srcset="/blog/img/loading.gif" lazyload alt="usart.h导入stdio.h"></p>
 <h4 id="8-2-2-修改源文件"><a href="#8-2-2-修改源文件" class="headerlink" title="8.2.2 修改源文件"></a>8.2.2 修改源文件</h4><p>在<code>usart.c</code>文件中，在 <code>/* USER CODE BEGIN 0 */</code> 和 <code>/* USER CODE END 0 */</code>加入以下代码</p>
 
     <div class="fold">
@@ -564,7 +564,7 @@
       </div>
     </div>
 
-<p><img src="/blog/2024/03/02/stm32-uart/usart.c_1.png" srcset="/img/loading.gif" lazyload alt="增加代码到usart.c的USER CODE 0"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/usart.c_1.png" srcset="/blog/img/loading.gif" lazyload alt="增加代码到usart.c的USER CODE 0"></p>
 <p>在<code>usart.c</code>文件中，在 <code>/* USER CODE BEGIN 1 */</code> 和 <code>/* USER CODE END 1 */</code>加入以下代码</p>
 
     <div class="fold">
@@ -578,36 +578,36 @@
       </div>
     </div>
 
-<p><img src="/blog/2024/03/02/stm32-uart/usart.c_2.png" srcset="/img/loading.gif" lazyload alt="增加代码到usart.c的USER CODE 1"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/usart.c_2.png" srcset="/blog/img/loading.gif" lazyload alt="增加代码到usart.c的USER CODE 1"></p>
 <h3 id="8-3-标准打印"><a href="#8-3-标准打印" class="headerlink" title="8.3 标准打印"></a>8.3 标准打印</h3><p>在<code>main.c</code>文件中，尝试在串口初始化完成后使用<code>printf</code>函数打印<code>STM32 USART1 Demo</code>字符串</p>
-<p><img src="/blog/2024/03/02/stm32-uart/stanrd_print.png" srcset="/img/loading.gif" lazyload alt="标准打印"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/stanrd_print.png" srcset="/blog/img/loading.gif" lazyload alt="标准打印"></p>
 <h3 id="8-4-彩色打印"><a href="#8-4-彩色打印" class="headerlink" title="8.4 彩色打印"></a>8.4 彩色打印</h3><h4 id="8-4-1-文件准备"><a href="#8-4-1-文件准备" class="headerlink" title="8.4.1 文件准备"></a>8.4.1 文件准备</h4><ul>
 <li>MDK同级目录下<strong>新建</strong><code>Debug</code>目录</li>
 <li>将彩色打印库<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="[终端彩色打印](https://blog.gogo.uno/2024/02/12/c-color-print/)">[4]</span></a></sup>，即<code>debug_log.h</code>和<code>debug_log.c</code>文件复制在<code>Debug</code>目录之下</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/new_debug_folder.gif" srcset="/img/loading.gif" lazyload alt="文件夹准备"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/new_debug_folder.gif" srcset="/blog/img/loading.gif" lazyload alt="文件夹准备"></p>
 <h4 id="8-4-2-添加至工程"><a href="#8-4-2-添加至工程" class="headerlink" title="8.4.2 添加至工程"></a>8.4.2 添加至工程</h4><ul>
 <li>点击<code>Project Resources</code>的右侧文件夹按钮，选择<code>Virtual Folder</code>，输入<strong>Debug</strong></li>
 <li>选择<code>debug_log.c</code>文件</li>
 <li>点击<code>Project Attributes</code>，选择<code>Include Directories</code>右侧的加号，选择<code>Debug</code>目录</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/add_debug_log.gif" srcset="/img/loading.gif" lazyload alt="添加至工程"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/add_debug_log.gif" srcset="/blog/img/loading.gif" lazyload alt="添加至工程"></p>
 <h4 id="8-4-3-打印效果"><a href="#8-4-3-打印效果" class="headerlink" title="8.4.3 打印效果"></a>8.4.3 打印效果</h4><ul>
 <li>导入头文件<code>debug_log.h</code></li>
 <li>在进入循环之前调用<code>debug_log_demo()</code></li>
 <li>编译烧录，查看打印效果</li>
 </ul>
-<p><img src="/blog/2024/03/02/stm32-uart/log_demo.gif" srcset="/img/loading.gif" lazyload alt="彩色打印效果"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/log_demo.gif" srcset="/blog/img/loading.gif" lazyload alt="彩色打印效果"></p>
 <div class="note note-warning">
             <p>注意：<code>printf</code>函数不能在硬件级的中断函数中打印，该函数阻塞运行且属于耗时操作。比如<code>printf</code>打印一个字节(有效数据8位)，以波特率115200，1bit起始位 + 8bit数据位 + 1bit停止位 为例，传输一个字节大约需要86us。假设一个定时器频率1Mhz, 其中断函数需要1us进入一次，<code>printf</code>的执行时间远大于该定时器进入中断的时间。传输一个字节的时间计算公式如下:</p>
           </div>
 
 <p>$$<br>一个字节传输时间 &#x3D; (1bit + 8bit + 1bit) ÷ 115200bps ≈ 0.000086s &#x3D; 86us<br>$$</p>
-<p><img src="/blog/2024/03/02/stm32-uart/1byte_time.gif" srcset="/img/loading.gif" lazyload alt="测量传输一个字节的时长"></p>
+<p><img src="/blog/2024/03/02/stm32-uart/1byte_time.gif" srcset="/blog/img/loading.gif" lazyload alt="测量传输一个字节的时长"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Zhou-zhi-peng/SerialPortForWindowsTerminal?tab=readme-ov-file">SerialPortForWindowsTerminal</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.alithon.com/downloads">友善串口调试助手</a>
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://c.miaowlabs.com/A23.html">Usart与Printf函数重定向</a>
-<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a href="https://blog.gogo.uno/2024/02/12/c-color-print/">终端彩色打印</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/12/c-color-print/">终端彩色打印</a>
 <a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
@@ -626,7 +626,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/STM32/" class="category-chain-item">STM32</a>
+  <a href="/blog/categories/STM32/" class="category-chain-item">STM32</a>
   
   
 
@@ -641,9 +641,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-C/" class="print-no-link">#C/C++</a>
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
       
-        <a href="/tags/STM32/" class="print-no-link">#STM32</a>
+        <a href="/blog/tags/STM32/" class="print-no-link">#STM32</a>
       
     </div>
   
@@ -656,7 +656,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>STM32-串口USART</div>
-      <div>https://blog.gogo.uno/2024/03/02/stm32-uart/</div>
+      <div>https://orionxer.github.io/blog/2024/03/02/stm32-uart/</div>
     </div>
     <div class="license-meta">
       
@@ -711,7 +711,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/16/debounce/" title="按键去抖">
+                      <a href="/blog/2024/03/16/debounce/" title="按键去抖">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">按键去抖</span>
                         <span class="visible-mobile">上一篇</span>
@@ -721,7 +721,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/02/sw-7-features/" title="7.SW-特征成型-3">
+                      <a href="/blog/2024/03/02/sw-7-features/" title="7.SW-特征成型-3">
                         <span class="hidden-mobile">7.SW-特征成型-3</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -897,8 +897,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -920,7 +920,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -1062,9 +1062,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -1072,7 +1072,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

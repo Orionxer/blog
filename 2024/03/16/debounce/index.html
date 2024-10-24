@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,18 +22,18 @@
     <meta name="description" content="分别对比按键去抖的软硬件实现方案，使用STM32 + 示波器测试去抖效果">
 <meta property="og:type" content="article">
 <meta property="og:title" content="按键去抖">
-<meta property="og:url" content="https://blog.gogo.uno/2024/03/16/debounce/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/03/16/debounce/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="分别对比按键去抖的软硬件实现方案，使用STM32 + 示波器测试去抖效果">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/debounce.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/debounce.jpg">
 <meta property="article:published_time" content="2024-03-16T14:50:23.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.560Z">
 <meta property="article:author" content="Orionxer">
 <meta property="article:tag" content="C&#x2F;C++">
 <meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/debounce.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/debounce.jpg">
   
   
   
@@ -61,12 +61,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -75,15 +75,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -113,7 +113,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -132,7 +132,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -144,7 +144,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -156,7 +156,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -168,7 +168,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -180,7 +180,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -210,7 +210,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/debounce.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/debounce.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -309,11 +309,11 @@
             <p>正常人类操作按键的时间约几百毫秒到几秒不等，而按键的抖动信号的持续时间约<strong>5ms到20ms</strong>。按键的闭合以及松开的瞬间均会产生抖动信号。</p>
           </div>
 
-<p><img src="/blog/2024/03/16/debounce/bounce.png" srcset="/img/loading.gif" lazyload alt="按键抖动波形"></p>
+<p><img src="/blog/2024/03/16/debounce/bounce.png" srcset="/blog/img/loading.gif" lazyload alt="按键抖动波形"></p>
 <p>按键在空闲时(稳定松开状态)默认高电平，以下分析<strong>上升沿</strong>：按键在按下状态，松开瞬间的波形，也就是从低电平变为高电平的瞬间。</p>
 <h2 id="2-创建工程"><a href="#2-创建工程" class="headerlink" title="2.创建工程"></a>2.创建工程</h2><p>STM32CubeMX创建工程，设置<code>PA2</code>为<code>GPIO_EXTI2</code>(配置为外部中断触发)，同时设置<code>PC13</code>作为GPIO输出。</p>
-<p><img src="/blog/2024/03/16/debounce/init_project.png" srcset="/img/loading.gif" lazyload alt="初始化工程"></p>
-<p><img src="/blog/2024/03/16/debounce/config_interrupt.png" srcset="/img/loading.gif" lazyload alt="配置触发中断条件"></p>
+<p><img src="/blog/2024/03/16/debounce/init_project.png" srcset="/blog/img/loading.gif" lazyload alt="初始化工程"></p>
+<p><img src="/blog/2024/03/16/debounce/config_interrupt.png" srcset="/blog/img/loading.gif" lazyload alt="配置触发中断条件"></p>
 <p>生成工程并导入到<code>EIDE</code>中，在<code>/* USER CODE BEGIN 4 */</code>代码块之间插入代码，意思是在GPIO的输入中断里切换<code>PC13</code>的电平（切换LED灯显示），编译烧录到STM32开发板中</p>
 
     <div class="fold">
@@ -357,7 +357,7 @@
 </tbody></table>
 </div>
 
-<p><img src="/blog/2024/03/16/debounce/osc_bounce.bmp" srcset="/img/loading.gif" lazyload alt="按键实际抖动波形"></p>
+<p><img src="/blog/2024/03/16/debounce/osc_bounce.bmp" srcset="/blog/img/loading.gif" lazyload alt="按键实际抖动波形"></p>
 <h2 id="4-软件去抖"><a href="#4-软件去抖" class="headerlink" title="4.软件去抖"></a>4.软件去抖</h2><h3 id="4-1-延时"><a href="#4-1-延时" class="headerlink" title="4.1 延时"></a>4.1 延时</h3><p>延时的方式相当直观简单，在主循环中，只要检测到<code>PA2</code>为低电平，也就是按键按下，<strong>延迟10ms再次检测</strong>是否为低电平，如果是说明按键按下。</p>
 
     <div class="fold">
@@ -371,12 +371,12 @@
       </div>
     </div>
 
-<p><img src="/blog/2024/03/16/debounce/delay.png" srcset="/img/loading.gif" lazyload alt="延时判断代码"></p>
+<p><img src="/blog/2024/03/16/debounce/delay.png" srcset="/blog/img/loading.gif" lazyload alt="延时判断代码"></p>
 <div class="note note-warning">
             <p>虽然延时判断的方式简单有效，但是会极大影响系统的实时性（系统在延时期间无法处理其他任务）。正常情况下不会应用到实际项目中，除非是简单验证功能或者项目没有实时性的要求。</p>
           </div>
 
-<h3 id="4-2-定时器"><a href="#4-2-定时器" class="headerlink" title="4.2 定时器"></a>4.2 定时器</h3><p>STM32CubeMX添加定时器<code>TIM1</code>，参数如下。定时器中断去抖的本质上就是检测在某一段时间内是否有连续相同的电平状态。<br><img src="/blog/2024/03/16/debounce/tim1.png" srcset="/img/loading.gif" lazyload alt="定时器TIM1配置"><br><img src="/blog/2024/03/16/debounce/update_interrupt.png" srcset="/img/loading.gif" lazyload alt="启用TIM1中断"></p>
+<h3 id="4-2-定时器"><a href="#4-2-定时器" class="headerlink" title="4.2 定时器"></a>4.2 定时器</h3><p>STM32CubeMX添加定时器<code>TIM1</code>，参数如下。定时器中断去抖的本质上就是检测在某一段时间内是否有连续相同的电平状态。<br><img src="/blog/2024/03/16/debounce/tim1.png" srcset="/blog/img/loading.gif" lazyload alt="定时器TIM1配置"><br><img src="/blog/2024/03/16/debounce/update_interrupt.png" srcset="/blog/img/loading.gif" lazyload alt="启用TIM1中断"></p>
 <p>以下函数均在<code>main.c</code>文件中实现</p>
 
     <div class="fold">
@@ -443,15 +443,15 @@
           </div>
 
 <p>以电容取值100nF，电阻取值10KΩ为例，原理图如下，将示波器探头接入<code>PA2</code>，观察按键松开时的波形</p>
-<p><img src="/blog/2024/03/16/debounce/schematic.png" srcset="/img/loading.gif" lazyload alt="电容滤波原理图"></p>
-<p><img src="/blog/2024/03/16/debounce/capacitance.bmp" srcset="/img/loading.gif" lazyload alt="电容滤波结果"></p>
+<p><img src="/blog/2024/03/16/debounce/schematic.png" srcset="/blog/img/loading.gif" lazyload alt="电容滤波原理图"></p>
+<p><img src="/blog/2024/03/16/debounce/capacitance.bmp" srcset="/blog/img/loading.gif" lazyload alt="电容滤波结果"></p>
 <p>底部的测量参数<strong>上升沿</strong>1.524ms，实际从低电平爬升至高电平需要3-4ms左右，因此电容的取值不能过大，否则爬升时间太长可能会影响按键的有效判断。</p>
 <h3 id="5-2-RS触发器"><a href="#5-2-RS触发器" class="headerlink" title="5.2 RS触发器"></a>5.2 RS触发器</h3><div class="note note-primary">
             <p>RS触发器就是使用两个<strong>与非门</strong>的级联，其中一个与非门的输出作为另一个与非门的输入，描述方法是现态$Q^{n}$和次态$Q^{n+1}$，通常用于没有MCU的场合，使用较少。</p>
           </div>
 
 <p>单击此处可以<a target="_blank" rel="noopener" href="http://scratch.trtos.com/circuitjs.html?cct=$+1+0.000005+20.712724888983452+54+5+43%0A151+160+80+416+80+0+2+5+5%0A151+160+256+416+256+0+2+5+5%0Ar+416+80+496+80+0+1000%0Ag+496+80+544+80+0%0Aw+112+304+112+320+0%0Av+112+448+112+384+0+0+40+5+0+0+0.5%0Ag+112+448+112+496+0%0AS+-208+176+-112+176+0+0+false+0+2%0Ag+-208+176+-240+176+0%0Ar+112+320+112+384+0+1000%0Aw+112+304+112+272+0%0Aw+-48+272+-48+192+0%0Aw+-48+192+-112+192+0%0Ar+112+-32+112+32+0+1000%0Av+112+-112+112+-32+0+0+40+5+0+0+0.5%0Ag+112+-112+112+-144+0%0Aw+112+272+-48+272+0%0Aw+112+32+112+64+0%0Aw+112+64+-48+64+0%0Aw+-48+64+-48+160+0%0Aw+-48+160+-112+160+0%0Aw+160+64+112+64+0%0Aw+160+272+112+272+0%0Aw+160+96+160+144+0%0Aw+160+240+160+208+0%0Aw+160+144+416+208+0%0Aw+416+208+416+256+0%0Aw+160+208+400+128+0%0Aw+400+128+400+80+0%0Ao+2+64+0+4098+5+0.05+0+2+2+3%0A">在线模拟RS触发器</a>按键效果，单击切换开关，观察底部的示波器波形，示意图如下</p>
-<p><img src="/blog/2024/03/16/debounce/rs_schematic.png" srcset="/img/loading.gif" lazyload alt="模拟RS触发器"></p>
+<p><img src="/blog/2024/03/16/debounce/rs_schematic.png" srcset="/blog/img/loading.gif" lazyload alt="模拟RS触发器"></p>
 <p>根据与非门的先与后非的运算规则，<strong>只要输入0，一定输出1</strong>，真值表如下</p>
 <div class="center">
 
@@ -517,7 +517,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/STM32/" class="category-chain-item">STM32</a>
+  <a href="/blog/categories/STM32/" class="category-chain-item">STM32</a>
   
   
 
@@ -532,9 +532,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-C/" class="print-no-link">#C/C++</a>
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
       
-        <a href="/tags/STM32/" class="print-no-link">#STM32</a>
+        <a href="/blog/tags/STM32/" class="print-no-link">#STM32</a>
       
     </div>
   
@@ -547,7 +547,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>按键去抖</div>
-      <div>https://blog.gogo.uno/2024/03/16/debounce/</div>
+      <div>https://orionxer.github.io/blog/2024/03/16/debounce/</div>
     </div>
     <div class="license-meta">
       
@@ -602,7 +602,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/24/stm32-freertos/" title="STM32-FreeRTOS移植与调试">
+                      <a href="/blog/2024/03/24/stm32-freertos/" title="STM32-FreeRTOS移植与调试">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">STM32-FreeRTOS移植与调试</span>
                         <span class="visible-mobile">上一篇</span>
@@ -612,7 +612,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/02/stm32-uart/" title="STM32-串口USART">
+                      <a href="/blog/2024/03/02/stm32-uart/" title="STM32-串口USART">
                         <span class="hidden-mobile">STM32-串口USART</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -788,8 +788,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -811,7 +811,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -953,9 +953,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -963,7 +963,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

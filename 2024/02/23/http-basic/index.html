@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,17 +22,17 @@
     <meta name="description" content="通过命令行以及HTTPie客户端调试HTTP接口">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP基础调试">
-<meta property="og:url" content="https://blog.gogo.uno/2024/02/23/http-basic/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/02/23/http-basic/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="通过命令行以及HTTPie客户端调试HTTP接口">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/http-basic.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/http-basic.jpg">
 <meta property="article:published_time" content="2024-02-22T17:04:05.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:17.582Z">
 <meta property="article:author" content="Orionxer">
 <meta property="article:tag" content="HTTP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/http-basic.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/http-basic.jpg">
   
   
   
@@ -60,12 +60,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -74,15 +74,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -112,7 +112,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -131,7 +131,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -143,7 +143,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -155,7 +155,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -167,7 +167,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -179,7 +179,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -209,7 +209,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/http-basic.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/http-basic.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -322,17 +322,17 @@
 <p>在请求中提供<code>key</code>以及IP定位查询到的<code>abcode</code>的值。注意：<code>abcode</code>的值应该赋值给<code>city</code>的键名。请求成功后则获取到当前城市的天气信息。</p>
 <h2 id="2-命令行"><a href="#2-命令行" class="headerlink" title="2.命令行"></a>2.命令行</h2><h3 id="2-1-CURL命令行"><a href="#2-1-CURL命令行" class="headerlink" title="2.1 CURL命令行"></a>2.1 CURL命令行</h3><p>一般Linux系统默认安装了<code>curl</code>，直接开始测试，以下的命令包含<code>&amp;&amp; echo</code>仅为了换行显示，对HTTP请求没有影响</p>
 <h4 id="2-1-1-请求定位"><a href="#2-1-1-请求定位" class="headerlink" title="2.1.1 请求定位"></a>2.1.1 请求定位</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">curl https://restapi.amap.com/v3/ip -d key=47478abb752cf12e1a6c91ab0892cae0 &amp;&amp; <span class="hljs-built_in">echo</span><br></code></pre></td></tr></table></figure>
-<p><img src="/blog/2024/02/23/http-basic/curl_ip.png" srcset="/img/loading.gif" lazyload alt="curl命令行请求定位"></p>
+<p><img src="/blog/2024/02/23/http-basic/curl_ip.png" srcset="/blog/img/loading.gif" lazyload alt="curl命令行请求定位"></p>
 <div class="note note-info">
             <p>根据IP定位请求结果，城市编码<code>abcode</code>的值为<strong>440100</strong></p>
           </div>
 <h4 id="2-2-2-查询天气"><a href="#2-2-2-查询天气" class="headerlink" title="2.2.2 查询天气"></a>2.2.2 查询天气</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">curl https://restapi.amap.com/v3/weather/weatherInfo -d key=47478abb752cf12e1a6c91ab0892cae0 -d city=440100 &amp;&amp; <span class="hljs-built_in">echo</span><br></code></pre></td></tr></table></figure>
-<p><img src="/blog/2024/02/23/http-basic/curl_weather.png" srcset="/img/loading.gif" lazyload alt="curl命令行查询天气"></p>
+<p><img src="/blog/2024/02/23/http-basic/curl_weather.png" srcset="/blog/img/loading.gif" lazyload alt="curl命令行查询天气"></p>
 <h3 id="2-2-HTTPie命令行"><a href="#2-2-HTTPie命令行" class="headerlink" title="2.2 HTTPie命令行"></a>2.2 HTTPie命令行</h3><h4 id="2-2-1-安装"><a href="#2-2-1-安装" class="headerlink" title="2.2.1 安装"></a>2.2.1 安装</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo apt install httpie -y<br></code></pre></td></tr></table></figure>
 <h4 id="2-2-2-请求定位"><a href="#2-2-2-请求定位" class="headerlink" title="2.2.2 请求定位"></a>2.2.2 请求定位</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">http https://restapi.amap.com/v3/ip key==47478abb752cf12e1a6c91ab0892cae0<br></code></pre></td></tr></table></figure>
-<p><img src="/blog/2024/02/23/http-basic/httpie_ip.png" srcset="/img/loading.gif" lazyload alt="httpie命令行IP定位"></p>
+<p><img src="/blog/2024/02/23/http-basic/httpie_ip.png" srcset="/blog/img/loading.gif" lazyload alt="httpie命令行IP定位"></p>
 <h4 id="2-2-2-查询天气-1"><a href="#2-2-2-查询天气-1" class="headerlink" title="2.2.2 查询天气"></a>2.2.2 查询天气</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">http https://restapi.amap.com/v3/weather/weatherInfo key==47478abb752cf12e1a6c91ab0892cae0 city==440100<br></code></pre></td></tr></table></figure>
-<p><img src="/blog/2024/02/23/http-basic/httpie_weather.png" srcset="/img/loading.gif" lazyload alt="httpie命令行查询天气"></p>
+<p><img src="/blog/2024/02/23/http-basic/httpie_weather.png" srcset="/blog/img/loading.gif" lazyload alt="httpie命令行查询天气"></p>
 <h2 id="3-HTTPie"><a href="#3-HTTPie" class="headerlink" title="3.HTTPie"></a>3.HTTPie</h2><p>⭐HTTPie<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="[⭐HTTPie客户端官网](https://httpie.io/app)">[4]</span></a></sup>客户端可以非常优雅地调试HTTP，完全免费，不仅能够兼容各个平台，而且能够<strong>跨平台同步HTTP工作区</strong>，使用github账户可以快速登陆。</p>
 <h3 id="3-1-网页客户端"><a href="#3-1-网页客户端" class="headerlink" title="3.1 网页客户端"></a>3.1 网页客户端</h3><h4 id="3-1-1-IP定位"><a href="#3-1-1-IP定位" class="headerlink" title="3.1.1 IP定位"></a>3.1.1 IP定位</h4><ol>
 <li>左侧边栏空白区域右键点击<code>Draft request</code></li>
@@ -348,21 +348,21 @@
 <li>响应头可以点击展开查看具体的键值对</li>
 <li>响应体可以选择不同格式展示，<code>JSON</code>，<code>RAW</code>以及<code>XML</code>等</li>
 </ul>
-<p><img src="/blog/2024/02/23/http-basic/httpie_web_ip.png" srcset="/img/loading.gif" lazyload alt="HTTPie网页客户端IP定位"></p>
+<p><img src="/blog/2024/02/23/http-basic/httpie_web_ip.png" srcset="/blog/img/loading.gif" lazyload alt="HTTPie网页客户端IP定位"></p>
 <p>观察HTTP响应报文：状态行显示<code>200 OK</code>，说明本次HTTP请求成功，而且响应体里的JSON键值对<code>&quot;status&quot;:&quot;1&quot;</code>以及<code>&quot;info&quot;:&quot;OK&quot;</code>均说明请求的<code>URL</code>以及<code>Params</code>参数合法。但是却没有查询到具体的城市。出现该问题的原因是Httpie网页客户端是由美国的服务器主机提供，虽然客户端运行在本地的浏览器。但是客户端发起HTTP请求的时候，实际上是从美国服务器IP去访问高德的IP定位接口的。根据高德的IP定位文档，国外的IP返回空。使用HTTPie本地客户端可以解决这个问题。</p>
 <p>终端查询<code>httpie.io</code>的IP以及属地信息命令</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">curl https://ipinfo.io/$(dig +short httpie.io) &amp;&amp; <span class="hljs-built_in">echo</span><br></code></pre></td></tr></table></figure>
-<p><img src="/blog/2024/02/23/http-basic/httpie_ip_info.png" srcset="/img/loading.gif" lazyload alt="终端查询httpie.io信息"></p>
+<p><img src="/blog/2024/02/23/http-basic/httpie_ip_info.png" srcset="/blog/img/loading.gif" lazyload alt="终端查询httpie.io信息"></p>
 <p>根据查询信息可以看到<code>httpie.io</code>运行于美国的服务器主机。或者终端查询域名的解析到的IP地址</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">nslookup httpie.io<br></code></pre></td></tr></table></figure>
 <p>再复制该IP地址到IP查询的WEB服务端进行查询，一样可以判断出由美国主机提供的服务。</p>
-<p><img src="/blog/2024/02/23/http-basic/web_httpie_ip_info.png" srcset="/img/loading.gif" lazyload alt="网页查询httpie.io信息"></p>
-<p><img src="/blog/2024/02/23/http-basic/amap_ip.png" srcset="/img/loading.gif" lazyload alt="高德IP定位接口省份以及城市显示为空"></p>
+<p><img src="/blog/2024/02/23/http-basic/web_httpie_ip_info.png" srcset="/blog/img/loading.gif" lazyload alt="网页查询httpie.io信息"></p>
+<p><img src="/blog/2024/02/23/http-basic/amap_ip.png" srcset="/blog/img/loading.gif" lazyload alt="高德IP定位接口省份以及城市显示为空"></p>
 <h4 id="3-1-2-天气查询"><a href="#3-1-2-天气查询" class="headerlink" title="3.1.2 天气查询"></a>3.1.2 天气查询</h4><p>步骤与IP定位相同，更换<code>URL</code>以及添加<code>Params</code>参数<code>city:440100</code></p>
-<p><img src="/blog/2024/02/23/http-basic/httpie_web_weather.png" srcset="/img/loading.gif" lazyload alt="HTTPie网页客户端天气查询"></p>
+<p><img src="/blog/2024/02/23/http-basic/httpie_web_weather.png" srcset="/blog/img/loading.gif" lazyload alt="HTTPie网页客户端天气查询"></p>
 <h3 id="3-2-本地客户端"><a href="#3-2-本地客户端" class="headerlink" title="3.2 本地客户端"></a>3.2 本地客户端</h3><p>下载安装HTTPie本地客户端且登陆账号之后，本地客户端会自动同步网页客户端创建的HTTP工作区</p>
-<h4 id="3-2-1-IP定位"><a href="#3-2-1-IP定位" class="headerlink" title="3.2.1 IP定位"></a>3.2.1 IP定位</h4><p><img src="/blog/2024/02/23/http-basic/httpie_local_ip.png" srcset="/img/loading.gif" lazyload alt="HTTPie本地客户端IP定位"></p>
-<h4 id="3-2-2-天气查询"><a href="#3-2-2-天气查询" class="headerlink" title="3.2.2 天气查询"></a>3.2.2 天气查询</h4><p><img src="/blog/2024/02/23/http-basic/httpie_local_weather.png" srcset="/img/loading.gif" lazyload alt="HTTPie本地客户端天气查询"></p>
+<h4 id="3-2-1-IP定位"><a href="#3-2-1-IP定位" class="headerlink" title="3.2.1 IP定位"></a>3.2.1 IP定位</h4><p><img src="/blog/2024/02/23/http-basic/httpie_local_ip.png" srcset="/blog/img/loading.gif" lazyload alt="HTTPie本地客户端IP定位"></p>
+<h4 id="3-2-2-天气查询"><a href="#3-2-2-天气查询" class="headerlink" title="3.2.2 天气查询"></a>3.2.2 天气查询</h4><p><img src="/blog/2024/02/23/http-basic/httpie_local_weather.png" srcset="/blog/img/loading.gif" lazyload alt="HTTPie本地客户端天气查询"></p>
 <h2 id="4-分析Header"><a href="#4-分析Header" class="headerlink" title="4.分析Header"></a>4.分析Header</h2><p>以HTTP响应头<code>Header</code>中的<code>Content-Length</code>为例，尝试分析HTTP请求。<code>Content-Length</code>用于表示响应体<code>Body</code>的大小，且<strong>特指字节大小</strong>，非字符大小。如果响应体中包含中文，以UTF-8编码的标准，一个中文字符占用3个Byte。以字符的方式统计可能会出现错误，但是以字节则不会。测试方法如下：</p>
 <ul>
 <li>在HTTPie本地客户端的IP定位请求成功后，设置<code>RAW</code>方式显示<code>Body</code>信息，再点击<code>Copy body</code>按钮</li>
@@ -374,8 +374,8 @@
             <p>字符串转16进制的时候，一个字节占用两个字符，因此需要除以2才能算出实际的字节数。比如第一个字符<code>{</code>对应的16进制是<code>7B</code>。</p>
           </div>
 
-<p><img src="/blog/2024/02/23/http-basic/ip_length.gif" srcset="/img/loading.gif" lazyload alt="计算IP定位的Content-Length"></p>
-<p><img src="/blog/2024/02/23/http-basic/weather_length.gif" srcset="/img/loading.gif" lazyload alt="计算天气查询的Content-Length"></p>
+<p><img src="/blog/2024/02/23/http-basic/ip_length.gif" srcset="/blog/img/loading.gif" lazyload alt="计算IP定位的Content-Length"></p>
+<p><img src="/blog/2024/02/23/http-basic/weather_length.gif" srcset="/blog/img/loading.gif" lazyload alt="计算天气查询的Content-Length"></p>
 <div class="note note-warning">
             <p>有一些字符串转16进制的在线工具可能会<strong>自动删除空格</strong>，会导致计算的Content-Length与实际的不一致，比如<a target="_blank" rel="noopener" href="https://www.bejson.com/convert/ox2str/">BEJSON的字符串转16进制的工具</a>就会出现这个问题，需要注意。</p>
           </div>
@@ -402,7 +402,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/HTTP/" class="category-chain-item">HTTP</a>
+  <a href="/blog/categories/HTTP/" class="category-chain-item">HTTP</a>
   
   
 
@@ -417,7 +417,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/HTTP/" class="print-no-link">#HTTP</a>
+        <a href="/blog/tags/HTTP/" class="print-no-link">#HTTP</a>
       
     </div>
   
@@ -430,7 +430,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>HTTP基础调试</div>
-      <div>https://blog.gogo.uno/2024/02/23/http-basic/</div>
+      <div>https://orionxer.github.io/blog/2024/02/23/http-basic/</div>
     </div>
     <div class="license-meta">
       
@@ -485,7 +485,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/01/24-03-english/" title="24/Mar 每日英语">
+                      <a href="/blog/2024/03/01/24-03-english/" title="24/Mar 每日英语">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">24/Mar 每日英语</span>
                         <span class="visible-mobile">上一篇</span>
@@ -495,7 +495,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/22/generate-ascii-art/" title="生成ASCII艺术字">
+                      <a href="/blog/2024/02/22/generate-ascii-art/" title="生成ASCII艺术字">
                         <span class="hidden-mobile">生成ASCII艺术字</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -671,8 +671,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -694,7 +694,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -836,9 +836,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -846,7 +846,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   

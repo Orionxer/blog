@@ -8,8 +8,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/images/ORIONXER-LOGO-128.jpg">
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
   
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
@@ -22,11 +22,11 @@
     <meta name="description" content="基于Linux搭建 VSCode + CMake + C开发环境">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux搭建C开发环境">
-<meta property="og:url" content="https://blog.gogo.uno/2024/02/05/vscode-develop-c/index.html">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/02/05/vscode-develop-c/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="基于Linux搭建 VSCode + CMake + C开发环境">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog.gogo.uno/images/vscode-develop-c.jpg">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/vscode-develop-c.jpg">
 <meta property="article:published_time" content="2024-02-04T17:03:30.000Z">
 <meta property="article:modified_time" content="2024-10-23T08:50:18.703Z">
 <meta property="article:author" content="Orionxer">
@@ -34,7 +34,7 @@
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="VSCode">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog.gogo.uno/images/vscode-develop-c.jpg">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/vscode-develop-c.jpg">
   
   
   
@@ -62,12 +62,12 @@
 <link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
 
 
-<link  rel="stylesheet" href="/css/main.css" />
+<link  rel="stylesheet" href="/blog/css/main.css" />
 
 
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
   
 
 
@@ -76,15 +76,15 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"blog.gogo.uno","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
       Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
   </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
   
 
   
@@ -114,7 +114,7 @@
 <div class="header-inner" style="height: 70vh;">
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/blog/">
       <strong>Orionxer&#39;s Blog</strong>
     </a>
 
@@ -133,7 +133,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
+              <a class="nav-link" href="/blog/" target="_self">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
               </a>
@@ -145,7 +145,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
+              <a class="nav-link" href="/blog/archives/" target="_self">
                 <i class="iconfont icon-archive-fill"></i>
                 <span>归档</span>
               </a>
@@ -157,7 +157,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
+              <a class="nav-link" href="/blog/categories/" target="_self">
                 <i class="iconfont icon-category-fill"></i>
                 <span>分类</span>
               </a>
@@ -169,7 +169,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
+              <a class="nav-link" href="/blog/tags/" target="_self">
                 <i class="iconfont icon-tags-fill"></i>
                 <span>标签</span>
               </a>
@@ -181,7 +181,7 @@
           
           
             <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
+              <a class="nav-link" href="/blog/about/" target="_self">
                 <i class="iconfont icon-user-fill"></i>
                 <span>关于</span>
               </a>
@@ -211,7 +211,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/images/vscode-develop-c.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/blog/images/vscode-develop-c.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -379,24 +379,24 @@
 <li><code>include</code>文件夹放置<strong>头文件</strong>，例如：<code>sha256.h</code></li>
 <li><code>source</code>文件夹放置<strong>源文件</strong>，例如：<code>sha256.c</code></li>
 </ul>
-<p><img src="/blog/2024/02/05/vscode-develop-c/directory.png" srcset="/img/loading.gif" lazyload alt="工程目录结构"></p>
-<h2 id="3-编译调试"><a href="#3-编译调试" class="headerlink" title="3.编译调试"></a>3.编译调试</h2><p><code>F7</code>编译，<code>F5</code>启动调试(<code>F5</code>包含编译的过程)，按照<code>launch.json</code>的<code>StopAtEntry:true</code>的定义，程序应该暂停在<code>main</code><br><img src="/blog/2024/02/05/vscode-develop-c/f5_debug.png" srcset="/img/loading.gif" lazyload alt="启动调试"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/directory.png" srcset="/blog/img/loading.gif" lazyload alt="工程目录结构"></p>
+<h2 id="3-编译调试"><a href="#3-编译调试" class="headerlink" title="3.编译调试"></a>3.编译调试</h2><p><code>F7</code>编译，<code>F5</code>启动调试(<code>F5</code>包含编译的过程)，按照<code>launch.json</code>的<code>StopAtEntry:true</code>的定义，程序应该暂停在<code>main</code><br><img src="/blog/2024/02/05/vscode-develop-c/f5_debug.png" srcset="/blog/img/loading.gif" lazyload alt="启动调试"></p>
 <h2 id="4-调试入门"><a href="#4-调试入门" class="headerlink" title="4.调试入门"></a>4.调试入门</h2><div class="note note-primary">
             <p>所有语言以及IDE在调试的逻辑上基本是一致的，甚至连调试的快捷键也可能相同。比如MDK和VSCode的调试快捷键完全相同，虽然两者完全不具备可比性。VSCode官方介绍的Debugging用法<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[VSCode官方的Debugging用法](https://code.visualstudio.com/docs/editor/debugging)">[2]</span></a></sup>。</p>
           </div>
 <h3 id="4-1-断点"><a href="#4-1-断点" class="headerlink" title="4.1 断点"></a>4.1 断点</h3><p>断点作为调试中最重要的功能，常用的有三种，普通断点、条件断点和日志断点</p>
-<h4 id="4-1-1-普通断点"><a href="#4-1-1-普通断点" class="headerlink" title="4.1.1 普通断点"></a>4.1.1 普通断点</h4><p>在一行语句上创建断点，启动调试后，程序会在该语句前暂停，即<strong>断点所在的行未被执行</strong>。以下图为例，程序执行到该断点处，b的值为0，说明语句<code>b = debug_func(a);</code>未被执行。继续往下执行，则b的值变为45，说明语句执行了。<br><img src="/blog/2024/02/05/vscode-develop-c/normal_breakpoint.gif" srcset="/img/loading.gif" lazyload alt="普通断点 - Breakpoint"></p>
-<h4 id="4-1-2-条件断点"><a href="#4-1-2-条件断点" class="headerlink" title="4.1.2 条件断点"></a>4.1.2 条件断点</h4><p><code>Conditional Breakpoint</code>，条件断点，当程序符合预设的条件时，暂停在断点处，其标志是断点符号中有个<strong>等号</strong>。条件断点一般有两种情况，符合<strong>表达式</strong>或者<strong>命中次数</strong>。命中次数可以简单理解为该语句执行了多少遍。以下图为例，创建一个条件断点，<code>Expression</code>表达式<code>i &gt; 5</code>与<code>Hit Count</code>命中次数<code>5</code>是等价的。<br><img src="/blog/2024/02/05/vscode-develop-c/conditional_breakpoint_expression.gif" srcset="/img/loading.gif" lazyload alt="条件断点 - Expression - 表达式"><br><img src="/blog/2024/02/05/vscode-develop-c/conditional_breakpoint_hit_count.gif" srcset="/img/loading.gif" lazyload alt="条件断点 - Hit Count - 命中次数"></p>
+<h4 id="4-1-1-普通断点"><a href="#4-1-1-普通断点" class="headerlink" title="4.1.1 普通断点"></a>4.1.1 普通断点</h4><p>在一行语句上创建断点，启动调试后，程序会在该语句前暂停，即<strong>断点所在的行未被执行</strong>。以下图为例，程序执行到该断点处，b的值为0，说明语句<code>b = debug_func(a);</code>未被执行。继续往下执行，则b的值变为45，说明语句执行了。<br><img src="/blog/2024/02/05/vscode-develop-c/normal_breakpoint.gif" srcset="/blog/img/loading.gif" lazyload alt="普通断点 - Breakpoint"></p>
+<h4 id="4-1-2-条件断点"><a href="#4-1-2-条件断点" class="headerlink" title="4.1.2 条件断点"></a>4.1.2 条件断点</h4><p><code>Conditional Breakpoint</code>，条件断点，当程序符合预设的条件时，暂停在断点处，其标志是断点符号中有个<strong>等号</strong>。条件断点一般有两种情况，符合<strong>表达式</strong>或者<strong>命中次数</strong>。命中次数可以简单理解为该语句执行了多少遍。以下图为例，创建一个条件断点，<code>Expression</code>表达式<code>i &gt; 5</code>与<code>Hit Count</code>命中次数<code>5</code>是等价的。<br><img src="/blog/2024/02/05/vscode-develop-c/conditional_breakpoint_expression.gif" srcset="/blog/img/loading.gif" lazyload alt="条件断点 - Expression - 表达式"><br><img src="/blog/2024/02/05/vscode-develop-c/conditional_breakpoint_hit_count.gif" srcset="/blog/img/loading.gif" lazyload alt="条件断点 - Hit Count - 命中次数"></p>
 <div class="note note-warning">
             <p>GDB调试器不一定支持<code>Hit Count</code>断点，启动调试后提示<code>Breakpoints of this type are not supported by the debugger</code>，该断点退化成普通断点。<br>增加一个变量，统计函数的运行次数，使用<code>Expression</code>的条件断点能够达到与<code>Hit Count</code>一样的效果。</p>
           </div>
 
-<h4 id="4-1-3-记录点"><a href="#4-1-3-记录点" class="headerlink" title="4.1.3 记录点"></a>4.1.3 记录点</h4><p>当程序不方便暂停调试时，可以添加<code>记录点</code>，或者叫<code>Logpoint</code>。其符号是<strong>方块形状</strong>，在<code>DEBUG CONSOLE</code>控制台输出日志。<em>如果称其为日志断点则不是很合适，因为程序没有暂停运行，不符合断点的概念</em><br><img src="/blog/2024/02/05/vscode-develop-c/logpoint.gif" srcset="/img/loading.gif" lazyload alt="记录点 - Logpoint"></p>
+<h4 id="4-1-3-记录点"><a href="#4-1-3-记录点" class="headerlink" title="4.1.3 记录点"></a>4.1.3 记录点</h4><p>当程序不方便暂停调试时，可以添加<code>记录点</code>，或者叫<code>Logpoint</code>。其符号是<strong>方块形状</strong>，在<code>DEBUG CONSOLE</code>控制台输出日志。<em>如果称其为日志断点则不是很合适，因为程序没有暂停运行，不符合断点的概念</em><br><img src="/blog/2024/02/05/vscode-develop-c/logpoint.gif" srcset="/blog/img/loading.gif" lazyload alt="记录点 - Logpoint"></p>
 <h4 id="4-1-4-内联断点"><a href="#4-1-4-内联断点" class="headerlink" title="4.1.4 内联断点"></a>4.1.4 内联断点</h4><p>内联断点，即<code>Inline Breakpoint</code>，用于调试一行代码中包含多个语句的情况。以下图为例，在<code>for</code>循环语句中，虽然只有一行代码，但是该行包含了3个语句：<code>int i = 0</code>和<code>i &lt; a</code>以及<code>i++</code>。因此内联断点需要在<strong>指定的列</strong>前添加并显示。</p>
 <div class="note note-warning">
             <p>在实际的工程项目中，如果工程遵守合理的编码规范的情况下，内联断点是基本用不上的。</p>
           </div>
-<p><img src="/blog/2024/02/05/vscode-develop-c/inline_breakpoint.gif" srcset="/img/loading.gif" lazyload alt="内联断点 - Inline Breakpoint"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/inline_breakpoint.gif" srcset="/blog/img/loading.gif" lazyload alt="内联断点 - Inline Breakpoint"></p>
 <h4 id="4-1-5-函数断点"><a href="#4-1-5-函数断点" class="headerlink" title="4.1.5 函数断点"></a>4.1.5 函数断点</h4><p>创建函数断点：选择<code>Run</code>-&gt;<code>New Breakpoint</code>-&gt;<code>Function Breakpoint</code>，输入函数的名称，断点创建成功。该方式<em>可以但没必要</em>，不如直接在函数的入口打一个普通断点来的方便。</p>
 <h3 id="4-2-监控变量"><a href="#4-2-监控变量" class="headerlink" title="4.2 监控变量"></a>4.2 监控变量</h3><h4 id="4-2-1-基础变量"><a href="#4-2-1-基础变量" class="headerlink" title="4.2.1 基础变量"></a>4.2.1 基础变量</h4><p><code>Watch</code>窗口可以查看所有类型的变量</p>
 <ul>
@@ -405,15 +405,15 @@
 <li>字符串(本质上是字符串指针)，先显示地址再显示字符串的值</li>
 <li>自定义的结构体以及枚举，枚举会显示枚举名称</li>
 </ul>
-<p><img src="/blog/2024/02/05/vscode-develop-c/basic_variable.png" srcset="/img/loading.gif" lazyload alt="基础变量显示"></p>
-<h4 id="4-2-2-不同进制"><a href="#4-2-2-不同进制" class="headerlink" title="4.2.2 不同进制"></a>4.2.2 不同进制</h4><p>以int变量<code>a</code>为例，<code>a</code>默认以十进制的值显示，<code>a,h</code>以十六进制显示, <code>a,b</code>二进制，<code>a,o</code>八进制<br><img src="/blog/2024/02/05/vscode-develop-c/hexadecimal.png" srcset="/img/loading.gif" lazyload alt="变量以不同进制显示"></p>
-<h4 id="4-2-3-表达式"><a href="#4-2-3-表达式" class="headerlink" title="4.2.3 表达式"></a>4.2.3 表达式</h4><p>监控变量窗口可以直接计算出表达式的结果<br><img src="/blog/2024/02/05/vscode-develop-c/watch_expression.png" srcset="/img/loading.gif" lazyload alt="计算表达式"></p>
-<h4 id="4-2-4-指针"><a href="#4-2-4-指针" class="headerlink" title="4.2.4 指针"></a>4.2.4 指针</h4><p>如果监控一个<code>void</code>类型的指针，监控窗口只会显示指针地址，使用<strong>强制类型转换</strong>才能正确显示字符串或结构体或数组的具体值。下图展示<code>void</code>类型的指针转换为字符串指针或者结构体指针用法<br><img src="/blog/2024/02/05/vscode-develop-c/cast_pointer.gif" srcset="/img/loading.gif" lazyload alt="强转void指针为具体类型"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/basic_variable.png" srcset="/blog/img/loading.gif" lazyload alt="基础变量显示"></p>
+<h4 id="4-2-2-不同进制"><a href="#4-2-2-不同进制" class="headerlink" title="4.2.2 不同进制"></a>4.2.2 不同进制</h4><p>以int变量<code>a</code>为例，<code>a</code>默认以十进制的值显示，<code>a,h</code>以十六进制显示, <code>a,b</code>二进制，<code>a,o</code>八进制<br><img src="/blog/2024/02/05/vscode-develop-c/hexadecimal.png" srcset="/blog/img/loading.gif" lazyload alt="变量以不同进制显示"></p>
+<h4 id="4-2-3-表达式"><a href="#4-2-3-表达式" class="headerlink" title="4.2.3 表达式"></a>4.2.3 表达式</h4><p>监控变量窗口可以直接计算出表达式的结果<br><img src="/blog/2024/02/05/vscode-develop-c/watch_expression.png" srcset="/blog/img/loading.gif" lazyload alt="计算表达式"></p>
+<h4 id="4-2-4-指针"><a href="#4-2-4-指针" class="headerlink" title="4.2.4 指针"></a>4.2.4 指针</h4><p>如果监控一个<code>void</code>类型的指针，监控窗口只会显示指针地址，使用<strong>强制类型转换</strong>才能正确显示字符串或结构体或数组的具体值。下图展示<code>void</code>类型的指针转换为字符串指针或者结构体指针用法<br><img src="/blog/2024/02/05/vscode-develop-c/cast_pointer.gif" srcset="/blog/img/loading.gif" lazyload alt="强转void指针为具体类型"></p>
 <p>强转数组则有一点区别，因为只强转数组的类型是不够的，还需要指定长度。假设需要强制指针<code>array_ptr</code>成长度为10的int数组，则表达式如下</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">*(<span class="hljs-type">int</span>(*)[<span class="hljs-number">10</span>])array_ptr<br></code></pre></td></tr></table></figure>
-<p><img src="/blog/2024/02/05/vscode-develop-c/cast_array.gif" srcset="/img/loading.gif" lazyload alt="强转数组指针"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/cast_array.gif" srcset="/blog/img/loading.gif" lazyload alt="强转数组指针"></p>
 <h3 id="4-3-调用堆栈"><a href="#4-3-调用堆栈" class="headerlink" title="4.3 调用堆栈"></a>4.3 调用堆栈</h3><p>以一个递归为例子，从1累加到5，预期进入5次递归函数。左侧的<code>CALL STACK</code>就会显示当前程序的调用栈。切换栈的深度时，观察<code>arg</code>的值</p>
-<p><img src="/blog/2024/02/05/vscode-develop-c/call_stack.gif" srcset="/img/loading.gif" lazyload alt="调用堆栈"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/call_stack.gif" srcset="/blog/img/loading.gif" lazyload alt="调用堆栈"></p>
 <h3 id="4-4-快捷键"><a href="#4-4-快捷键" class="headerlink" title="4.4 快捷键"></a>4.4 快捷键</h3><div class="note note-primary">
             <p>熟练常用的调试快捷键非常重要，在实际项目中的效率远高于按钮点击的方式。</p>
           </div>
@@ -470,10 +470,10 @@
 </tbody></table>
 </div>
 
-<h4 id="F5"><a href="#F5" class="headerlink" title="F5"></a>F5</h4><p><img src="/blog/2024/02/05/vscode-develop-c/continue.gif" srcset="/img/loading.gif" lazyload alt="F5 - Continue - 继续"></p>
-<h4 id="F10"><a href="#F10" class="headerlink" title="F10"></a>F10</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_over.gif" srcset="/img/loading.gif" lazyload alt="F10 - Step Over - 单步跳过"></p>
-<h4 id="F11"><a href="#F11" class="headerlink" title="F11"></a>F11</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_in.gif" srcset="/img/loading.gif" lazyload alt="F11 - Step In - 单步执行"></p>
-<h4 id="Shift-F11"><a href="#Shift-F11" class="headerlink" title="Shift + F11"></a>Shift + F11</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_out.gif" srcset="/img/loading.gif" lazyload alt="Shift F11 - Step Out- 单步停止"></p>
+<h4 id="F5"><a href="#F5" class="headerlink" title="F5"></a>F5</h4><p><img src="/blog/2024/02/05/vscode-develop-c/continue.gif" srcset="/blog/img/loading.gif" lazyload alt="F5 - Continue - 继续"></p>
+<h4 id="F10"><a href="#F10" class="headerlink" title="F10"></a>F10</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_over.gif" srcset="/blog/img/loading.gif" lazyload alt="F10 - Step Over - 单步跳过"></p>
+<h4 id="F11"><a href="#F11" class="headerlink" title="F11"></a>F11</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_in.gif" srcset="/blog/img/loading.gif" lazyload alt="F11 - Step In - 单步执行"></p>
+<h4 id="Shift-F11"><a href="#Shift-F11" class="headerlink" title="Shift + F11"></a>Shift + F11</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_out.gif" srcset="/blog/img/loading.gif" lazyload alt="Shift F11 - Step Out- 单步停止"></p>
 <h2 id="5-导入C文件"><a href="#5-导入C文件" class="headerlink" title="5.导入C文件"></a>5.导入C文件</h2><p>根据当前的CMake规则，所有在<code>include</code>和<code>source</code>文件夹下的C文件会自动加入编译链接。以导入<code>sha256</code>库<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="[SHA256 for C github地址](https://github.com/ilvn/SHA256)">[4]</span></a></sup>为例子，计算一个从1到10的数组的哈希值</p>
 
     <div class="fold">
@@ -487,11 +487,11 @@
       </div>
     </div>
 
-<p><img src="/blog/2024/02/05/vscode-develop-c/hash.gif" srcset="/img/loading.gif" lazyload alt="计算哈希"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/hash.gif" srcset="/blog/img/loading.gif" lazyload alt="计算哈希"></p>
 <p>使用在线哈希计算工具验证计算结果<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="[在线哈希值计算](https://www.lddgo.net/encrypt/hash)">[5]</span></a></sup>。</p>
-<p><img src="/blog/2024/02/05/vscode-develop-c/hash_result.png" srcset="/img/loading.gif" lazyload alt="在线哈希工具验证结果"></p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/hash_result.png" srcset="/blog/img/loading.gif" lazyload alt="在线哈希工具验证结果"></p>
 <h2 id="6-终端编译运行"><a href="#6-终端编译运行" class="headerlink" title="6.终端编译运行"></a>6.终端编译运行</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 工程目录进入build文件夹</span><br><span class="hljs-comment">## 如果没有build文件夹则创建一个</span><br><span class="hljs-built_in">cd</span> build<br><br><span class="hljs-comment"># CMake以及make编译</span><br>cmake ../ &amp;&amp; make<br><br><span class="hljs-comment"># 运行可执行文件</span><br>./main<br><br><span class="hljs-comment"># 重新编译</span><br><span class="hljs-comment">## 1.清空build目录</span><br><span class="hljs-built_in">rm</span> -r ./*<br><span class="hljs-comment">## 2.再次编译</span><br>cmake ../ &amp;&amp; make<br></code></pre></td></tr></table></figure>
-<h3 id="6-1-测试结果"><a href="#6-1-测试结果" class="headerlink" title="6.1 测试结果"></a>6.1 测试结果</h3><p><img src="/blog/2024/02/05/vscode-develop-c/terminal.png" srcset="/img/loading.gif" lazyload alt="终端编译运行结果"></p>
+<h3 id="6-1-测试结果"><a href="#6-1-测试结果" class="headerlink" title="6.1 测试结果"></a>6.1 测试结果</h3><p><img src="/blog/2024/02/05/vscode-develop-c/terminal.png" srcset="/blog/img/loading.gif" lazyload alt="终端编译运行结果"></p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Orionxer/c_project">Linux编译调试C的github地址</a>
 <a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/debugging">VSCode官方的Debugging用法</a>
 <a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://learnku.com/articles/67523">VSCode 调试 WSL C&#x2F;C++ 项目</a>
@@ -515,7 +515,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/C-C/" class="category-chain-item">C/C++</a>
+  <a href="/blog/categories/C-C/" class="category-chain-item">C/C++</a>
   
   
 
@@ -530,11 +530,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/C-C/" class="print-no-link">#C/C++</a>
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
       
-        <a href="/tags/Linux/" class="print-no-link">#Linux</a>
+        <a href="/blog/tags/Linux/" class="print-no-link">#Linux</a>
       
-        <a href="/tags/VSCode/" class="print-no-link">#VSCode</a>
+        <a href="/blog/tags/VSCode/" class="print-no-link">#VSCode</a>
       
     </div>
   
@@ -547,7 +547,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>Linux搭建C开发环境</div>
-      <div>https://blog.gogo.uno/2024/02/05/vscode-develop-c/</div>
+      <div>https://orionxer.github.io/blog/2024/02/05/vscode-develop-c/</div>
     </div>
     <div class="license-meta">
       
@@ -602,7 +602,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/02/12/c-color-print/" title="终端彩色打印">
+                      <a href="/blog/2024/02/12/c-color-print/" title="终端彩色打印">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">终端彩色打印</span>
                         <span class="visible-mobile">上一篇</span>
@@ -612,7 +612,7 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/02/04/vscode-qemu-freertos/" title="Linux搭建FreeRTOS开发环境">
+                      <a href="/blog/2024/02/04/vscode-qemu-freertos/" title="Linux搭建FreeRTOS开发环境">
                         <span class="hidden-mobile">Linux搭建FreeRTOS开发环境</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
@@ -788,8 +788,8 @@
 
 <script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
 <script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
 
 
   <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
@@ -811,7 +811,7 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    <script  src="/blog/js/img-lazyload.js" ></script>
   
 
 
@@ -953,9 +953,9 @@
 
   <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
-  <script defer src="/js/leancloud.js" ></script>
+  <script defer src="/blog/js/leancloud.js" ></script>
 
-  <script  src="/js/local-search.js" ></script>
+  <script  src="/blog/js/local-search.js" ></script>
 
 
 
@@ -963,7 +963,7 @@
 
 <!-- 主题的启动项，将它保持在最底部 -->
 <!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script  src="/blog/js/boot.js" ></script>
 
 
   
