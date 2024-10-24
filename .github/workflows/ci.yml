@@ -1,10 +1,9 @@
 ﻿name: Deploy Hexo to GitHub Pages
-
 on:
   push:
     branches:
       - main  # 你可以修改为你的主分支名称
-
+  
 jobs:
   build:
     runs-on: ubuntu-latest
