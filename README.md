@@ -1,6 +1,6 @@
 ﻿# 个人博客说明
 
-![Build Workflow](https://github.com/orionxer/blog/actions/workflows/ci.yml/badge.svg)
+![Build Workflow](https://github.com/orionxer/blog/actions/workflows/build.yml/badge.svg)
 ![GitHub repo size](https://img.shields.io/github/repo-size/orionxer/blog)
 
 
@@ -41,6 +41,7 @@ Press Enter to open https://github.com/login/device in your browser...
 ```
 npm install -g hexo-cli
 npm install --save hexo-theme-fluid
+npm install hexo-deployer-git --save
 hexo s
 ```
 

@@ -110,4 +110,7 @@ language: zh-CN
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/Orionxer/blog
+  branch: gh-pages
+  message: hexo deploy test
