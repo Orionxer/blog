@@ -39,12 +39,30 @@ Press Enter to open https://github.com/login/device in your browser...
 
 ## 本地部署命令
 
-```
+```sh
+
 npm install -g hexo-cli
 npm install --save hexo-theme-fluid
 npm install hexo-deployer-git --save
 hexo s
+# 自定义域名配置
+hexo g --config gogo_config.yml
 ```
+
+## 图片路径不一致问题
+
+本地图片路径与Hexo部署路径不一致的问题
+- [ ] 未验证
+```sh
+npm install hexo-asset-image --save
+npm install hexo-img-locator --save
+```
+确保`_config.yml`打开此项
+```sh
+post_asset_folder: true
+```
+
+
 
 ## Pages空间限制
 
