@@ -39,3 +39,8 @@ excerpt: 2024 December English
 软弱的人通过无礼来模仿力量。
 {% endfold %}
 
+### 7th
+{% fold info @Life is the sum of all your choices.%}
+你生命是你所有选择的结果。
+{% endfold %}
+
