@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在Windows&#x2F;Linux&#x2F;VSCode下配置SSH免密登录，提升SSH登录便捷性与安全性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置SSH免密码登录">
+<meta property="og:url" content="https://orionxer.github.io/blog/2023/12/11/ssh_psk/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在Windows&#x2F;Linux&#x2F;VSCode下配置SSH免密登录，提升SSH登录便捷性与安全性">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/ssh_psk.jpg">
+<meta property="article:published_time" content="2023-12-11T12:07:11.000Z">
+<meta property="article:modified_time" content="2025-01-25T00:46:22.559Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="SSH">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/ssh_psk.jpg">
+  
+  
+  
+  <title>配置SSH免密码登录 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/ssh_psk.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="配置SSH免密码登录"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-11 20:07" pubdate>
+          2023年12月11日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          989 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          9 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">配置SSH免密码登录</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>在Windows&#x2F;Linux&#x2F;VSCode下配置SSH免密登录，提升SSH登录便捷性与安全性</p>
+</blockquote>
+<h2 id="SSH密钥登录优势"><a href="#SSH密钥登录优势" class="headerlink" title="SSH密钥登录优势"></a>SSH密钥登录优势</h2><h3 id="🔒安全性"><a href="#🔒安全性" class="headerlink" title="🔒安全性"></a>🔒安全性</h3><p>相对于传统的密码登录(<em>密码在网络中传输</em>)，密钥对登录因为其非对称加密的特性会极大提升安全性。<code>ssh-keygen</code>使用了非对称算法生成一个公钥和私钥(默认算法是<code>SHA256</code>)，私钥一直存储在客户端，而公钥保存至服务器。在SSH登录过程中不涉及密码传输以及私钥传输，即便是公钥被窃取，也无法逆向推导出私钥。</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-6622d6d1" role="button" aria-expanded="false" aria-controls="collapse-6622d6d1">
+        <div class="fold-arrow">▶</div>SSH登录的过程<sup id=fnref:1 class=footnote-ref><a href=#fn:1 rel=footnote><span class=hint--top hint--rounded aria-label=[网道-SSH密钥登录](https://wangdoc.com/ssh/key)>[1]</span></a></sup>
+      </div>
+      <div class="fold-collapse collapse" id="collapse-6622d6d1">
+        <div class="fold-content">
+          <ol><li>客户端通过<code>ssh-keygen</code>生成自己的公钥和私钥。</li><li>手动将客户端的公钥放入远程服务器的指定位置(<code>~/.ssh</code>)。</li><li>客户端向服务器发起 SSH 登录的请求。</li><li>服务器收到用户 SSH 登录的请求，发送一些随机数据给用户，要求用户证明自己的身份。</li><li>客户端收到服务器发来的数据，使用私钥对数据进行签名，然后再发还给服务器。</li><li>服务器收到客户端发来的加密签名后，使用对应的公钥解密，然后跟原始数据比较。如果一致，就允许用户登录。</li></ol>
+        </div>
+      </div>
+    </div>
+<h3 id="🚗便捷性"><a href="#🚗便捷性" class="headerlink" title="🚗便捷性"></a>🚗便捷性</h3><p>VSCode使用传统密码远程连接主机且打开工作区的时候，往往需要手动输入2-3次密码，长期使用则十分繁琐。使用密钥对登录则只要确保SSH密钥对配置成功，后续SSH登录都不再需要输入密码。</p>
+<h2 id="SSH客户端配置"><a href="#SSH客户端配置" class="headerlink" title="SSH客户端配置"></a>SSH客户端配置</h2><p>以服务器<code>unraid</code>, 登录用户<code>root</code> 为例</p>
+<h3 id="Windows客户端"><a href="#Windows客户端" class="headerlink" title="Windows客户端"></a>Windows客户端</h3><div class="note note-primary">
+            <p>以用户名<code>Orionxer</code>为例，SSH公钥、私钥以及配置文件存储在该路径<code>C:\Users\Orionxer\.ssh</code></p>
+          </div>
+<div class="note note-warning">
+            <p>不建议使用<code>PowerShell</code>进行SSH的密钥对生成以及配置，<code>PowerShell</code>缺少<code>ssh-copy-id</code><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[PowerShell无法使用ssh-copy-id命令](https://www.cnblogs.com/zhouzhihao/p/17087666.html)">[2]</span></a></sup>命令</p>
+          </div>
+<h4 id="1-进入密钥路径"><a href="#1-进入密钥路径" class="headerlink" title="1.进入密钥路径"></a>1.进入密钥路径</h4><p>打开<code>Git Bash</code>终端并进入<code>.ssh</code>文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-built_in">cd</span> ~/.ssh<br></code></pre></td></tr></table></figure>
+<h4 id="2-生成密钥对"><a href="#2-生成密钥对" class="headerlink" title="2.生成密钥对"></a>2.生成密钥对</h4><p>私钥名称格式 &#x3D; <em>Host_id_rsa</em>(有助于区分多个服务器),比如<code>unraid_id_rsa</code>,则该命令会自动生成公钥名称：<code>unraid_id_rsa.pub</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">ssh-keygen.exe<br></code></pre></td></tr></table></figure>
+<p><img src="/blog/2023/12/11/ssh_psk/ssh-keygen.jpg" srcset="/blog/img/loading.gif" lazyload alt="第一个参数输入私钥名称；第二、三个参数直接回车确认"></p>
+<h4 id="3-传输公钥到服务器"><a href="#3-传输公钥到服务器" class="headerlink" title="3.传输公钥到服务器"></a>3.传输公钥到服务器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">ssh-copy-id -i unraid_id_rsa.pub root@unraid<br></code></pre></td></tr></table></figure>
+<!-- ![输入服务器密码](/images/ssh_psk/ssh-copy-id.jpg) -->
+<p><img src="/blog/2023/12/11/ssh_psk/ssh-copy-id.jpg" srcset="/blog/img/loading.gif" lazyload alt="输入服务器密码"></p>
+<h4 id="4-配置ssh-config"><a href="#4-配置ssh-config" class="headerlink" title="4.配置ssh_config"></a>4.配置ssh_config</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">vim config<br></code></pre></td></tr></table></figure>
+<p>添加以下配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-string">Host</span> <span class="hljs-string">unraid</span><br>    <span class="hljs-string">HostName</span> <span class="hljs-string">unraid</span><br>    <span class="hljs-string">User</span> <span class="hljs-string">root</span><br>    <span class="hljs-string">PreferredAuthentications</span> <span class="hljs-string">publickey</span><br>    <span class="hljs-string">PubkeyAuthentication</span> <span class="hljs-literal">yes</span><br>    <span class="hljs-string">IdentityFile</span> <span class="hljs-string">&quot;C:\Users\Orionxer\.ssh\unraid_id_rsa&quot;</span><br></code></pre></td></tr></table></figure>
+<p>以上配置要求SSH登陆使用密钥对的验证方式，更多参数定义查阅SSH官网<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="[ssh_config-Linux_man_page](https://linux.die.net/man/5/ssh_config)">[3]</span></a></sup></p>
+<h4 id="5-SSH登录"><a href="#5-SSH登录" class="headerlink" title="5.SSH登录"></a>5.SSH登录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">ssh root@unraid<br></code></pre></td></tr></table></figure>
+<p><img src="/blog/2023/12/11/ssh_psk/windows-ssh-login.jpg" srcset="/blog/img/loading.gif" lazyload alt="Windows-SSH免密登录成功"></p>
+<h3 id="Linux客户端"><a href="#Linux客户端" class="headerlink" title="Linux客户端"></a>Linux客户端</h3><div class="note note-primary">
+            <p>一般的Linux系统，SSH公钥、私钥以及配置文件存储在该路径<code>~/.ssh</code><br><em>Linux的SSH密钥对生成与配置步骤与Windows一致。</em></p>
+          </div>
+<p>使用<code>WSL2 Ubuntu</code>系统，服务器<code>unraid</code>, 登录用户<code>root</code>为例</p>
+<h4 id="1-进入密钥路径-1"><a href="#1-进入密钥路径-1" class="headerlink" title="1.进入密钥路径"></a>1.进入密钥路径</h4><p>打开<code>Bash</code>终端并进入<code>.ssh</code>文件夹</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-built_in">cd</span> ~/.ssh<br></code></pre></td></tr></table></figure>
+<h4 id="2-生成密钥对-1"><a href="#2-生成密钥对-1" class="headerlink" title="2.生成密钥对"></a>2.生成密钥对</h4><p>根据提示填写私钥名称以及回车确认密码，生成公钥以及私钥</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">ssh-keygen<br></code></pre></td></tr></table></figure>
+<h4 id="3-传输公钥到服务器-1"><a href="#3-传输公钥到服务器-1" class="headerlink" title="3.传输公钥到服务器"></a>3.传输公钥到服务器</h4><p>根据提示输入服务器密码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">ssh-copy-id -i unraid_id_rsa.pub root@unraid<br></code></pre></td></tr></table></figure>
+<h4 id="4-配置ssh-config-1"><a href="#4-配置ssh-config-1" class="headerlink" title="4.配置ssh_config"></a>4.配置ssh_config</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Bash">vim config<br></code></pre></td></tr></table></figure>
+<p>添加以下配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-string">Host</span> <span class="hljs-string">unraid</span><br>    <span class="hljs-string">HostName</span> <span class="hljs-string">unraid</span><br>    <span class="hljs-string">User</span> <span class="hljs-string">root</span><br>    <span class="hljs-string">IdentityFile</span> <span class="hljs-string">&quot;~/.ssh/unraid_id_rsa&quot;</span><br>    <span class="hljs-string">ForwardAgent</span> <span class="hljs-literal">yes</span><br></code></pre></td></tr></table></figure>
+<h4 id="5-SSH登录-1"><a href="#5-SSH登录-1" class="headerlink" title="5.SSH登录"></a>5.SSH登录</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-comment"># 可以使用tab自动补全</span><br>ssh unraid<br><span class="hljs-comment"># 或者</span><br>ssh root@unraid<br></code></pre></td></tr></table></figure>
+<p><img src="/blog/2023/12/11/ssh_psk/linux-ssh-login.jpg" srcset="/blog/img/loading.gif" lazyload alt="Linux-SSH免密登录成功"></p>
+<h3 id="VSCode客户端"><a href="#VSCode客户端" class="headerlink" title="VSCode客户端"></a>VSCode客户端</h3><p>确保VSCode已经安装<code>Remote-SSH</code>插件, 且假设VSCode安装在Windows上<br><img src="/blog/2023/12/11/ssh_psk/ssh-vscode.jpg" srcset="/blog/img/loading.gif" lazyload alt="VSCode-SSH"></p>
+<h2 id="其他传输公钥的方式"><a href="#其他传输公钥的方式" class="headerlink" title="其他传输公钥的方式"></a>其他传输公钥的方式</h2><div class="note note-info">
+            <p>本质上能够将公钥内容追加至服务器的<code>~/.ssh/authorized_keys</code>文件里都可以</p>
+          </div>
+<p>以服务器<code>Tower</code>, 登录用户<code>root</code>为例</p>
+<h3 id="SCP上传公钥"><a href="#SCP上传公钥" class="headerlink" title="SCP上传公钥"></a>SCP上传公钥</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Bash"><span class="hljs-comment"># 客户端上传公钥</span><br>scp Tower_id_rsa.pub root@Tower:~/.ssh<br><span class="hljs-comment"># 服务器保存公钥至authorized_keys(需要远程登陆SSH服务器)</span><br><span class="hljs-built_in">cat</span> ~/.ssh/Tower_id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys<br></code></pre></td></tr></table></figure>
+<h3 id="直接复制公钥"><a href="#直接复制公钥" class="headerlink" title="直接复制公钥"></a>直接复制公钥</h3><p>以客户端上的公钥<code>Tower_id_rsa.pub</code>为例，其内容如下</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLm+9JG+yvnweKub7pKL4R/M7SeQ5976D1whSI28HbSZamdGRTZdQt/gmPYLA4gYiwgmHhEX2wNQA0DWbzktFy6raR8cwglKU3TTKAUFh4SUHaxHHl5zLnd47hvDHEEOQT3IF/zbTwvOQXcDYSqIX6BrvOMV7nacDaHUzj/+iN8i2m5C+A7rwfUzp3M+aZ6qQqZxlHAfBxWGKczj2OBvsKajSefDu1cbHeM9uF7CP4Fyl7LZcuQ9iM+xEvO8NWyQ+OUG45y1G1zw6WKzkyNmvqwe8yJn1J1lSABkD7jFdAAGY+0WvG/QcS4c8ZwZnqE8nDT5uxKJ5h7y1HbStEkDWBpagr19Rr7A2H7Xv1h4fZW4onRX/yFkoDRPY55fqh7ewIJGDk0ZB0CCfr6cHgMK7Cwq4Sc0owq5FpaRsgZQyD3PIyRtBG1lA7/Fun08FfWHLwN9eRzKEl5X1xp47alGWFcMWGpE5v/9GSEn8O8J4XGIDIFp0Ub+8xNDomOo8S4WE= Administrator@PC-20200903OFZO<br></code></pre></td></tr></table></figure>
+<p>复制以上内容后，追加到服务器的<code>~/.ssh/authorized_keys</code>中，该文件一行存储一个公钥，<strong>注意不要覆盖到其他的公钥</strong></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://wangdoc.com/ssh/key">网道-SSH密钥登录</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhouzhihao/p/17087666.html">PowerShell无法使用ssh-copy-id命令</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://linux.die.net/man/5/ssh_config">ssh_config-Linux_man_page</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Linux/" class="category-chain-item">Linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/blog/tags/SSH/" class="print-no-link">#SSH</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>配置SSH免密码登录</div>
+      <div>https://orionxer.github.io/blog/2023/12/11/ssh_psk/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年12月11日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年1月25日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2023/12/13/open_source/" title="开源协议">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">开源协议</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2023/11/05/first_post/" title="My First Post">
+                        <span class="hidden-mobile">My First Post</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
