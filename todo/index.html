@@ -19,15 +19,15 @@
   <meta name="author" content="Orionxer">
   <meta name="keywords" content="">
   
-    <meta name="description" content="今日待办：today 明日待办：tomorrow">
+    <meta name="description" content="▶参考命令                                  以todo模板创建关于crypto的待办事项，并指定文章目录1hexo new todo &quot;crypto&quot; -p todo&#x2F;crypto                       昨日待办: yesterday 今日待办：today 明日待办：tomor">
 <meta property="og:type" content="website">
 <meta property="og:title" content="待办事项">
 <meta property="og:url" content="https://orionxer.github.io/blog/todo/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="今日待办：today 明日待办：tomorrow">
+<meta property="og:description" content="▶参考命令                                  以todo模板创建关于crypto的待办事项，并指定文章目录1hexo new todo &quot;crypto&quot; -p todo&#x2F;crypto                       昨日待办: yesterday 今日待办：today 明日待办：tomor">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-25T03:21:50.000Z">
-<meta property="article:modified_time" content="2025-01-25T08:17:02.767Z">
+<meta property="article:modified_time" content="2025-02-06T01:14:41.756Z">
 <meta property="article:author" content="Orionxer">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -38,6 +38,12 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
@@ -234,13 +240,76 @@
                 
 
 <article class="page-content">
-  <p>今日待办：<a href="/blog/2025/01/25/today/" title="今日待办">today</a></p>
-<p>明日待办：<a href="/blog/2025/01/25/tomorrow/" title="tomorrow">tomorrow</a></p>
+  <div class="markdown-body">
 
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-ed3c037d" role="button" aria-expanded="false" aria-controls="collapse-ed3c037d">
+        <div class="fold-arrow">▶</div>参考命令
+      </div>
+      <div class="fold-collapse collapse" id="collapse-ed3c037d">
+        <div class="fold-content">
+          <p>以<code>todo</code>模板创建关于crypto的待办事项，并指定文章目录</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">hexo new todo <span class="hljs-string">&quot;crypto&quot;</span> -p todo/crypto<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<p>昨日待办: <a href="/blog/2025/02/06/todo/yesterday/" title="yesterday">yesterday</a></p>
+<p>今日待办：<a href="/blog/2025/02/06/todo/today/" title="today">today</a></p>
+<p>明日待办：<a href="/blog/2025/02/06/todo/tomorrow/" title="tomorrow">tomorrow</a></p>
+<p>加密待办：<a href="/blog/2025/02/06/todo/crypto/" title="crypt">crypto</a></p>
+</div>
 
   
 
 </article>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
 
 
 
@@ -367,6 +436,102 @@
 
 
 
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script defer src="/blog/js/leancloud.js" ></script>
 
