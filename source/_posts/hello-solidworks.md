@@ -4,6 +4,7 @@ date: 2023-12-20 07:15:21
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/hello-solidworks.jpg
 index_img: /images/hello-solidworks.jpg
 excerpt: Solidworks学习入门使用

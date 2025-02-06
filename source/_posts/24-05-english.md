@@ -4,6 +4,7 @@ date: 2024-05-05 21:22:09
 categories:
 - English
 tags: [English]
+type: english
 banner_img: /images/24-05-english.jpg
 index_img: /images/24-05-english.jpg
 excerpt: 2024 May English

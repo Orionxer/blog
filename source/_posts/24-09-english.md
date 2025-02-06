@@ -4,6 +4,7 @@ date: 2024-09-02 08:54:10
 categories:
 - English
 tags: [English]
+type: english
 banner_img: /images/24-09-english.jpg
 index_img: /images/24-09-english.jpg
 excerpt: 2024 September English

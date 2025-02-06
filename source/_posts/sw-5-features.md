@@ -4,6 +4,7 @@ date: 2024-01-20 22:41:54
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-5-features.png
 index_img: /images/sw-5-features.png
 excerpt: SolidWorks特征成型与设计树

@@ -4,6 +4,7 @@ date: 2024-02-19 06:29:03
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-6-features.jpg
 index_img: /images/sw-6-features.jpg
 excerpt: SolidWorks特征成型：拉伸切除与基准面、扫描与螺旋线、旋转凸台

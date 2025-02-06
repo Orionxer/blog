@@ -4,6 +4,7 @@ date: 2024-07-08 06:30:37
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-9-phone-stand.jpg
 index_img: /images/sw-9-phone-stand.jpg
 excerpt: 使用SolidWorks设计一个手机支架，并使用3D打印机打印出来

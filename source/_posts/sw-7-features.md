@@ -4,6 +4,7 @@ date: 2024-03-02 19:59:50
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-7-features.jpg
 index_img: /images/sw-7-features.jpg
 excerpt: SolidWorks特征成型：旋转切除、参考几何体进阶、剖视图、圆角和倒角

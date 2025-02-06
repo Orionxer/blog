@@ -4,6 +4,7 @@ date: 2024-11-24 00:15:01
 categories:
 - English
 tags: [English]
+type: english
 banner_img: /images/24-11-english.jpg
 index_img: /images/24-11-english.jpg
 excerpt: 2024 November English

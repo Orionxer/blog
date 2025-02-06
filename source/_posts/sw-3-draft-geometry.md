@@ -4,6 +4,7 @@ date: 2024-01-11 06:08:51
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-3-draft-geometry.jpg
 index_img: /images/sw-3-draft-geometry.jpg
 excerpt: SolidWorks绘制草图几何关系

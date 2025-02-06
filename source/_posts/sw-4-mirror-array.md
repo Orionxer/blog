@@ -4,6 +4,7 @@ date: 2024-01-17 07:31:14
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-4-mirror-array.jpg
 index_img: /images/sw-4-mirror-array.jpg
 excerpt: SolidWorks草图关于镜像与阵列的功能

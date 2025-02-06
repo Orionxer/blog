@@ -1,12 +1,13 @@
 ﻿---
-title: {{ title }}
+title: {{ title }} 每日英语
 date: {{ date }}
 categories:
 - English
 tags: [English]
-banner_img: /images/24-12-english.jpg
-index_img: /images/24-12-english.jpg
-excerpt: 2024 December English
+type: english
+excerpt: {{ title }} Daily Quote
+banner_img: /images/three_body_unsplash.jpg
+index_img: /images/three_body_unsplash.jpg
 ---
 
 ### 1st

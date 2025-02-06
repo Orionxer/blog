@@ -3,7 +3,7 @@ title: 开源协议
 date: 2023-12-13 00:31:07
 categories:
 - Other
-tags: [License]
+type: other
 banner_img: /images/open_source.png
 index_img: /images/open_source.png
 excerpt: 了解主流的开源协议以及如何使用开源协议

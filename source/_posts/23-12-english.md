@@ -4,6 +4,7 @@ date: 2023-12-18 05:44:35
 categories:
 - English
 tags: [English]
+type: english
 banner_img: /images/23-12-english.jpg
 index_img: /images/23-12-english.jpg
 excerpt: 2023 December English

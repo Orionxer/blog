@@ -3,7 +3,7 @@ title: Clash快速入门到精通
 date: 2024-03-26 19:28:55
 categories:
 - Other
-tags: [Clash]
+type: other
 banner_img: /images/clash.jpg
 index_img: /images/clash.jpg
 excerpt: 介绍如何优雅的使用Clash代理：包含自定义代理规则、局域网设备代理、虚拟网卡等
@@ -12,15 +12,6 @@ excerpt: 介绍如何优雅的使用Clash代理：包含自定义代理规则、
 {% note success %}
 代理也可以叫劫持，本质上就是域名解析，通过将请求转发到指定的服务器(通常是海外)来访问被大陆封禁的服务。比如浏览器访问谷歌网站，这是最常见的是应用层HTTP代理。Clash内置规则分流系统，能够自定义代理规则；局域网设备代理可以让同一局域网的设备实现代理而无需在每一台设备上安装Clash；虚拟网卡可以从物理层实现代理。
 {% endnote %} 
-
-- [ ] vscode markdown 预览gif
-- [x] 文章设置可见列表
-- [ ] 预览折叠块
-- [x] 双向链接
-- [ ] 添加Foam说明
-- [ ] 优化知识图谱色彩
-  
-[[linux-cmd-1]]
 
 ## 1.代理规则
 通过[Clash for Windows 代理工具使用说明](https://docs.gtk.pw/)快速了解Clash

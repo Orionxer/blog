@@ -4,6 +4,7 @@ date: 2024-10-04 01:33:28
 categories:
 - English
 tags: [English]
+type: english
 banner_img: /images/24-10-english.jpg
 index_img: /images/24-10-english.jpg
 excerpt: 2024 October English

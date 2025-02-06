@@ -4,6 +4,7 @@ date: 2024-01-05 22:58:08
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-2-draw-draft.jpg
 index_img: /images/sw-2-draw-draft.jpg
 excerpt: SolidWorks绘制草图工具,包括直线/矩形/圆/槽/圆弧/圆角/点

@@ -4,6 +4,7 @@ date: 2024-03-02 05:59:38
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-6-draft.jpg
 index_img: /images/sw-6-draft.jpg
 excerpt: SolidWorks草图建立新的基准面以及分析实线与构造线的区别

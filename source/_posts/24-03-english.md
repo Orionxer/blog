@@ -4,6 +4,7 @@ date: 2024-03-01 17:55:52
 categories:
 - English
 tags: [English]
+type: english
 banner_img: /images/24-03-english.jpg
 index_img: /images/24-03-english.jpg
 excerpt: 2024 March English

@@ -4,6 +4,7 @@ date: 2024-07-04 08:00:29
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-8-features.jpg
 index_img: /images/sw-8-features.jpg
 excerpt: SolidWorks特征成型：异形孔向导、线性阵列、镜像

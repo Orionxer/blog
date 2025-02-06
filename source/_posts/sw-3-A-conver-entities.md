@@ -4,6 +4,7 @@ date: 2024-01-14 01:29:48
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-3-A-conver-entities.png
 index_img: /images/sw-3-A-conver-entities.png
 excerpt: SolidWorks演示【转换实体引用】功能

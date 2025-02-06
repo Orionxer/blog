@@ -4,6 +4,7 @@ date: 2024-1-1 00:00:05
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-1-cube.jpg
 index_img: /images/sw-1-cube.jpg
 excerpt: SolidWorks绘制一个最简单的正方体

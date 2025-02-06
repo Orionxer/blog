@@ -4,6 +4,7 @@ date: 2024-01-20 01:34:26
 categories:
 - Solidworks
 tags: [Solidworks, 3D, 结构]
+type: solidworks
 banner_img: /images/sw-4-A-pratice.jpg
 index_img: /images/sw-4-A-pratice.jpg
 excerpt: SolidWorks草图练习
