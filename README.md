@@ -122,7 +122,7 @@ VSCode Markdown本地渲染折叠块：暂时没有找到可行的办法。考�
 - [x] 重新整理readme
 - [x] readme中增加foam的说明以及演示
 - [x] 优化Foam知识图谱颜色
-- [ ] 试用`hexo-all-minifier`插件
+- [x] 试用`hexo-all-minifier`插件。实测只能优化静态图片，如果包含了gif则会报错
 
 ## 5.仓库体积问题
 
