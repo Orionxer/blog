@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="LVGL9.4运行于Windows环境下，并移植Gui Guider导出的Demo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LVGL9-移植">
+<meta property="og:url" content="https://orionxer.github.io/blog/2025/10/03/lvgl-porting/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="LVGL9.4运行于Windows环境下，并移植Gui Guider导出的Demo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/lvgl.jpg">
+<meta property="article:published_time" content="2025-10-03T03:14:01.000Z">
+<meta property="article:modified_time" content="2025-10-07T16:02:20.330Z">
+<meta property="article:author" content="Orionxer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/lvgl.jpg">
+  
+  
+  
+  <title>LVGL9-移植 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/lvgl.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LVGL9-移植"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-10-03 11:14" pubdate>
+          2025年10月3日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          957 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">LVGL9-移植</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="1-环境"><a href="#1-环境" class="headerlink" title="1.环境"></a>1.环境</h2><p>检查<code>gcc</code>,<code>g++</code>, <code>make</code>, <code>cmake</code>编译环境，如果不具备则安装mingw64和cmake</p>
+<h3 id="1-1-Mingw64下载安装"><a href="#1-1-Mingw64下载安装" class="headerlink" title="1.1 Mingw64下载安装"></a>1.1 Mingw64下载安装</h3><p>下载已经编译好的mingw64版本<a target="_blank" rel="noopener" href="https://github.com/niXman/mingw-builds-binaries/releases">mingw-build-binaries</a>,选择类似于<code>x86_64-15.2.0-release-posix-seh-ucrt-rt_v13-rev0.7z</code>的版本下载并解压到D盘下，例如<code>D:\mingw64</code>,则PATH的系统环境变量应该添加<code>D:\mingw64\bin</code>，注意，在该目录下把<code>mingw32-make.exe</code>复制一份并重命名为<code>make.exe</code>。</p>
+<h3 id="1-2-CMake下载安装"><a href="#1-2-CMake下载安装" class="headerlink" title="1.2 CMake下载安装"></a>1.2 CMake下载安装</h3><p>下载cmake的安装包<a target="_blank" rel="noopener" href="https://cmake.org/download/">cmake</a>，选择类似于<code>cmake-4.1.2-windows-x86_64.zip</code>的版本，解压到D盘下，例如<code>D:\cmake-4.1.2-windows-x86_64</code>,则PATH的系统环境变量应该添加<code>D:\cmake-4.1.2-windows-x86_64\bin</code>。</p>
+<h3 id="1-3-Vcpkg下载安装"><a href="#1-3-Vcpkg下载安装" class="headerlink" title="1.3 Vcpkg下载安装"></a>1.3 Vcpkg下载安装</h3><p>在D盘下克隆vcpkg的仓库，<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/vcpkg/get_started/get-started?pivots=shell-powershell">教程：通过 CMake 安装和使用包</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> https://github.com/microsoft/vcpkg.git<br></code></pre></td></tr></table></figure>
+<p>进入vcpkg目录，执行启动脚本</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> vcpkg; .\bootstrap-vcpkg.bat<br></code></pre></td></tr></table></figure>
+<p>环境变量PATH添加<code>D:\vcpkg</code></p>
+<h3 id="1-4-检查环境"><a href="#1-4-检查环境" class="headerlink" title="1.4 检查环境"></a>1.4 检查环境</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">gcc --version<br></code></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">g++ --version<br></code></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">make --version<br></code></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">cmake --version<br></code></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vcpkg --version<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-安装SDL2环境"><a href="#2-安装SDL2环境" class="headerlink" title="2.安装SDL2环境"></a>2.安装SDL2环境</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">vcpkg install sdl2:x64-mingw-static<br></code></pre></td></tr></table></figure>
+<p>则安装好的SDL2的路径应该是<code>D:\vcpkg\installed\x64-mingw-static\share\sdl2</code></p>
+<h2 id="3-下载LVGL"><a href="#3-下载LVGL" class="headerlink" title="3.下载LVGL"></a>3.下载LVGL</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git <span class="hljs-built_in">clone</span> --recursive https://github.com/lvgl/lv_port_pc_vscode<br></code></pre></td></tr></table></figure>
+<h3 id="3-1-修改CMakeLists-txt"><a href="#3-1-修改CMakeLists-txt" class="headerlink" title="3.1 修改CMakeLists.txt"></a>3.1 修改CMakeLists.txt</h3><p>修改根目录下的<code>CMakeLists.txt</code>，在<code># Find and include SDL2 library</code>下面一行引入SDL2库，例如</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># Find and include SDL2 library</span><br><span class="hljs-comment"># 引入SDL2库</span><br><span class="hljs-keyword">set</span>(SDL2_DIR <span class="hljs-string">&quot;D:/vcpkg/installed/x64-mingw-static/share/sdl2&quot;</span>)<br><span class="hljs-keyword">find_package</span>(SDL2 REQUIRED)<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-使用CMake编译"><a href="#3-2-使用CMake编译" class="headerlink" title="3.2 使用CMake编译"></a>3.2 使用CMake编译</h3><p>创建并进入build目录</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">mkdir</span> build &amp;&amp; <span class="hljs-built_in">cd</span> build<br></code></pre></td></tr></table></figure>
+<p>生成Makefile</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">cmake -G <span class="hljs-string">&quot;MinGW Makefiles&quot;</span> ..<br></code></pre></td></tr></table></figure>
+<p>编译项目</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">make -j16<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-运行"><a href="#3-3-运行" class="headerlink" title="3.3 运行"></a>3.3 运行</h3><p>进入<code>bin</code>目录找到<code>main.exe</code>双击运行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-built_in">cd</span> ../bin; ./main.exe<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-优化"><a href="#4-优化" class="headerlink" title="4.优化"></a>4.优化</h2><h3 id="4-1-修改运行尺寸"><a href="#4-1-修改运行尺寸" class="headerlink" title="4.1 修改运行尺寸"></a>4.1 修改运行尺寸</h3><p><code>main.c</code>中找到<code>sdl_hal_init</code>函数，修改尺寸</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">sdl_hal_init(<span class="hljs-number">720</span>, <span class="hljs-number">1280</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-2-鼠标残影"><a href="#4-2-鼠标残影" class="headerlink" title="4.2 鼠标残影"></a>4.2 鼠标残影</h3><p><code>hal.c</code>中找到鼠标初始化相关代码，注释掉，否则会有鼠标残影</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">if</span> 0 <span class="hljs-comment">// 注释鼠标图片，否则会有重影</span></span><br>  <span class="hljs-comment">/*Declare the image file.*/</span><br>  LV_IMAGE_DECLARE(mouse_cursor_icon); <br>  <span class="hljs-type">lv_obj_t</span> * cursor_obj;<br>  <span class="hljs-comment">/*Create an image object for the cursor */</span><br>  cursor_obj = lv_image_create(lv_screen_active()); <br>  <span class="hljs-comment">/*Set the image source*/</span><br>  lv_image_set_src(cursor_obj, &amp;mouse_cursor_icon);           <br>  <span class="hljs-comment">/*Connect the image  object to the driver*/</span><br>  lv_indev_set_cursor(mouse, cursor_obj);             <br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-打开监控"><a href="#4-3-打开监控" class="headerlink" title="4.3 打开监控"></a>4.3 打开监控</h3><p><code>lv_conf.h</code>中确保以下宏定义启用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_SYSMON   1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_PERF_MONITOR 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_USE_MEM_MONITOR 1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-4-提升帧率"><a href="#4-4-提升帧率" class="headerlink" title="4.4 提升帧率"></a>4.4 提升帧率</h3><p><code>lv_conf.h</code>中修改以下宏定义，16ms刷新一次，即60FPS</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> LV_DEF_REFR_PERIOD  16</span><br></code></pre></td></tr></table></figure>
+
+<p>重新编译运行，记得关闭程序再编译，否则提示<code>Permission denied</code>错误</p>
+<h2 id="5-Gui-Guider导出"><a href="#5-Gui-Guider导出" class="headerlink" title="5.Gui Guider导出"></a>5.Gui Guider导出</h2><blockquote>
+<p>以Gui Guider中的Demo: SmartAppliance为例进行导出</p>
+</blockquote>
+<h3 id="5-1-生成Project"><a href="#5-1-生成Project" class="headerlink" title="5.1 生成Project"></a>5.1 生成Project</h3><ul>
+<li>点击<code>New</code>，在LVGL9.2.1的标签下选择<code>Simulator</code>，选择<code>SmartAppliance</code>，点击<code>Create Project</code></li>
+<li><code>Project Directory</code>修改为项目保存路径</li>
+<li>其他参数自定义，分辨率可以保持默认的<code>480*272</code></li>
+<li>点击<code>Create</code>确定</li>
+<li>尝试点击右上角的编译按钮，选择<code>C</code>进行编译运行</li>
+</ul>
+<h3 id="5-2-导出代码"><a href="#5-2-导出代码" class="headerlink" title="5.2 导出代码"></a>5.2 导出代码</h3><ul>
+<li>点击<code>Project</code></li>
+<li>移动到<code>Export Code</code></li>
+<li>选择<code>Zephyr</code></li>
+<li>弹窗选择保存路径<br>导出后的目录结构如下<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs sh">.<br>├── CMakeLists.txt<br>├── patches<br>├── prj.conf<br>└── src<br>    ├── custom<br>    │   ├── custom.c<br>    │   ├── custom.h<br>    │   ├── lv_conf_ext.h<br>    │   ├── ui_Aircon.c<br>    │   ├── ui_Aircon.h<br>    │   ├── ui_Oven.c<br>    │   └── ui_Oven.h<br>    ├── generated<br>    │   ├── events_init.c<br>    │   ├── events_init.h<br>    │   ├── gui_guider.c<br>    │   ├── gui_guider.h<br>    │   ├── guider_customer_fonts<br>    │   ├── guider_fonts<br>    │   ├── images<br>    │   ├── setup_scr_scrAircon.c<br>    │   ├── setup_scr_scrHome.c<br>    │   ├── setup_scr_scrHood.c<br>    │   ├── setup_scr_scrOven.c<br>    │   ├── widgets_init.c<br>    │   └── widgets_init.h<br>    └── main.c<br></code></pre></td></tr></table></figure>
+其中<code>custom</code>和<code>generated</code>文件夹下的源文件需要加入编译。</li>
+</ul>
+<h3 id="5-3-复制文件"><a href="#5-3-复制文件" class="headerlink" title="5.3 复制文件"></a>5.3 复制文件</h3><p>在成功运行lvgl9的官方Demo后，把<code>custom</code>和<code>generated</code>目录复制到<code>src</code>目录下，结构如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sh">src/<br>├── custom<br>├── freertos<br>├── freertos_main.c<br>├── generated<br>├── hal<br>├── main.c<br>└── mouse_cursor_icon.c<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-4-修改文件"><a href="#5-4-修改文件" class="headerlink" title="5.4 修改文件"></a>5.4 修改文件</h3><h4 id="5-4-1-main-c"><a href="#5-4-1-main-c" class="headerlink" title="5.4.1 main.c"></a>5.4.1 main.c</h4><p>在引入头文件部分添加</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;generated/gui_guider.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;generated/events_init.h&quot;</span></span><br></code></pre></td></tr></table></figure>
+<p>再添加guider_ui结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">lv_ui guider_ui;<br></code></pre></td></tr></table></figure>
+<p>在main函数里的初始化官方demo处，替换为ui和events初始化，例如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">setup_ui(&amp;guider_ui);<br>events_init(&amp;guider_ui);<br><span class="hljs-comment">// lv_demo_widgets();</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="5-4-2-其他文件"><a href="#5-4-2-其他文件" class="headerlink" title="5.4.2 其他文件"></a>5.4.2 其他文件</h4><p>把所有的源文件中的<code>lv_animimg_set_src</code>的最后一个布尔值参数删除，删除后类似如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">lv_animimg_set_src(ui-&gt;scrAircon_aimgAirconSwing, (<span class="hljs-type">const</span> <span class="hljs-type">void</span> **) scrAircon_aimgAirconSwing_imgs, <span class="hljs-number">15</span>);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>所有函数<code>lv_animimg_set_playback_time</code>替换为<code>lv_animimg_set_reverse_duration</code></li>
+<li>所有函数<code>lv_animimg_set_playback_delay</code>替换为<code>lv_animimg_set_reverse_delay</code></li>
+</ul>
+<h4 id="5-4-3-添加编译规则"><a href="#5-4-3-添加编译规则" class="headerlink" title="5.4.3 添加编译规则"></a>5.4.3 添加编译规则</h4><p>根目录下的<code>CMakeLists.txt</code>文件增加编译规则，大概37行后面添加新的编译路径</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-comment"># Main include files of the project</span><br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/main/inc)<br><span class="hljs-comment"># 新增的编译路径</span><br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/src)<br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/src/custom)<br><span class="hljs-keyword">include_directories</span>(<span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/src/generated)<br></code></pre></td></tr></table></figure>
+<p><code>set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c)</code>修改为</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">file</span>(GLOB_RECURSE GENERATED_SOURCES <br>    src/generated/*.c<br>    src/generated/guider_customer_fonts/*.c<br>    src/generated/guider_fonts/*.c<br>    src/generated/images/*.c<br>)<br><span class="hljs-keyword">file</span>(GLOB CUSTOM_SOURCES src/custom/*.c)<br><span class="hljs-keyword">set</span>(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c <span class="hljs-variable">$&#123;GENERATED_SOURCES&#125;</span> <span class="hljs-variable">$&#123;CUSTOM_SOURCES&#125;</span>)<br></code></pre></td></tr></table></figure>
+<p>重新编译运行</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/LVGL/" class="category-chain-item">LVGL</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LVGL9-移植</div>
+      <div>https://orionxer.github.io/blog/2025/10/03/lvgl-porting/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/12/01/24-12-english/" title="24/Dec 每日英语">
+                        <span class="hidden-mobile">24/Dec 每日英语</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

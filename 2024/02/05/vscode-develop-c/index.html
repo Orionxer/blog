@@ -1,0 +1,975 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基于Linux搭建 VSCode + CMake + C开发环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux搭建C开发环境">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/02/05/vscode-develop-c/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基于Linux搭建 VSCode + CMake + C开发环境">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/vscode-develop-c.jpg">
+<meta property="article:published_time" content="2024-02-04T17:03:30.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:57.136Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="VSCode">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/vscode-develop-c.jpg">
+  
+  
+  
+  <title>Linux搭建C开发环境 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/vscode-develop-c.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Linux搭建C开发环境"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-02-05 01:03" pubdate>
+          2024年2月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Linux搭建C开发环境</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>本篇文章基于WSL2 Ubuntu，使用CMake搭建 VSCode + C 的编译调试开发环境，<strong>本质上适用于所有Linux系统</strong>。<br>也可以从github上克隆示例项目<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Linux编译调试C的github地址](https://github.com/Orionxer/c_project)">[1]</span></a></sup>到本地，直接启动调试。</p>
+          </div>
+
+<h2 id="1-安装编译调试环境"><a href="#1-安装编译调试环境" class="headerlink" title="1.安装编译调试环境"></a>1.安装编译调试环境</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">sudo apt install cmake build-essential gcc gdb -y<br></code></pre></td></tr></table></figure>
+<h2 id="2-初始化工程结构"><a href="#2-初始化工程结构" class="headerlink" title="2.初始化工程结构"></a>2.初始化工程结构</h2><h3 id="2-1-终端创建目录以及文件"><a href="#2-1-终端创建目录以及文件" class="headerlink" title="2.1 终端创建目录以及文件"></a>2.1 终端创建目录以及文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 创建工程目录并进入</span><br><span class="hljs-built_in">mkdir</span> basic &amp;&amp; <span class="hljs-built_in">cd</span> basic<br><span class="hljs-comment"># 工程根目录创建.vscode文件夹</span><br><span class="hljs-built_in">mkdir</span> .vscode<br><span class="hljs-comment"># 创建VSCode编译调试的配置文件</span><br><span class="hljs-built_in">touch</span> .vscode/c_cpp_properties.json<br><span class="hljs-built_in">touch</span> .vscode/launch.json<br><span class="hljs-built_in">touch</span> .vscode/tasks.json<br><span class="hljs-comment"># 创建编译相关文件夹</span><br><span class="hljs-built_in">mkdir</span> include<br><span class="hljs-built_in">mkdir</span> <span class="hljs-built_in">source</span><br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-comment"># 创建主函数文件</span><br><span class="hljs-built_in">touch</span> main.c<br><span class="hljs-comment"># 创建CMake配置文件</span><br><span class="hljs-built_in">touch</span> CMakeLists.txt<br></code></pre></td></tr></table></figure>
+
+<div class="note note-info">
+            <p>c_cpp_properties.json也可以通过VSCode自动生成: 在VSCode中<code>Ctrl + Shift + P</code>调出控制命令台，输入并选择<code>C/C++ Edit Configurations(JSON)</code>，VSCode会自动生成合法的配置。</p>
+          </div>
+<h3 id="2-2-打开VSCode工作区"><a href="#2-2-打开VSCode工作区" class="headerlink" title="2.2 打开VSCode工作区"></a>2.2 打开VSCode工作区</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">code .<br></code></pre></td></tr></table></figure>
+<h3 id="2-3-复制内容到对应文件"><a href="#2-3-复制内容到对应文件" class="headerlink" title="2.3 复制内容到对应文件"></a>2.3 复制内容到对应文件</h3>
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-9c51fa20" role="button" aria-expanded="false" aria-controls="collapse-9c51fa20">
+        <div class="fold-arrow">▶</div>c_cpp_properties.json
+      </div>
+      <div class="fold-collapse collapse" id="collapse-9c51fa20">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Linux&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;includePath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;defines&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;compilerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/gcc&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cStandard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c17&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cppStandard&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gnu++14&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;intelliSenseMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;linux-gcc-x64&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;configurationProvider&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ms-vscode.cmake-tools&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">4</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-05eef982" role="button" aria-expanded="false" aria-controls="collapse-05eef982">
+        <div class="fold-arrow">▶</div>launch.json
+      </div>
+      <div class="fold-collapse collapse" id="collapse-05eef982">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-comment">// 更多调试设置参考：https://code.visualstudio.com/docs/cpp/launch-json-reference</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;0.2.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Project debug (C/C++ GDB)&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppdbg&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;launch&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;program&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;/debug/main&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;stopAtEntry&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 启动调试时在main函数暂停</span><br>            <span class="hljs-attr">&quot;externalConsole&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;preLaunchTask&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Build For Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;linux&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;MIMode&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;gdb&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;miDebuggerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;/usr/bin/gdb&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-90469042" role="button" aria-expanded="false" aria-controls="collapse-90469042">
+        <div class="fold-arrow">▶</div>tasks.json
+      </div>
+      <div class="fold-collapse collapse" id="collapse-90469042">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-comment">// 更多任务设置参考：https://go.microsoft.com/fwlink/?LinkId=733558</span><br>    <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2.0.0&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;tasks&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Generate Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppbuild&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;-B&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;debug&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;-D&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;CMAKE_BUILD_TYPE=Debug&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;-G&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;Unix Makefiles&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;$gcc&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;group&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isDefault&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;label&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Build For Debug&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cppbuild&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;command&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;cmake&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;args&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;--build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-string">&quot;debug&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;cwd&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;$&#123;workspaceFolder&#125;&quot;</span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;problemMatcher&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;$gcc&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;dependsOn&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-string">&quot;Generate Debug&quot;</span><br>            <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;group&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>                <span class="hljs-attr">&quot;kind&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;build&quot;</span><span class="hljs-punctuation">,</span><br>                <span class="hljs-attr">&quot;isDefault&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>            <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-738764b7" role="button" aria-expanded="false" aria-controls="collapse-738764b7">
+        <div class="fold-arrow">▶</div>main.c
+      </div>
+      <div class="fold-collapse collapse" id="collapse-738764b7">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stdio.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;## Hello World\n&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-dfb167e8" role="button" aria-expanded="false" aria-controls="collapse-dfb167e8">
+        <div class="fold-arrow">▶</div>CMakeLists.txt
+      </div>
+      <div class="fold-collapse collapse" id="collapse-dfb167e8">
+        <div class="fold-content">
+          <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs txt"># CMake最低版本号要求<br>cmake_minimum_required(VERSION 3.0)<br><br># 配置项目名<br>project(hello_c)<br><br># 设置包含目录<br>include_directories(include)<br><br># 递归遍历获取项目的所有源文件列表<br>file(GLOB_RECURSE SRC_LIST FOLLOW_SYMLINKS main.c source/*.c)<br><br># 生成可执行文件 main，后面是源码列表<br>add_executable(main $&#123;SRC_LIST&#125;)<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<h3 id="2-4-工程目录结构参考"><a href="#2-4-工程目录结构参考" class="headerlink" title="2.4 工程目录结构参考"></a>2.4 工程目录结构参考</h3><p>以上准备工作结束后，工程的目录结构如下图所示，其中</p>
+<ul>
+<li><code>include</code>文件夹放置<strong>头文件</strong>，例如：<code>sha256.h</code></li>
+<li><code>source</code>文件夹放置<strong>源文件</strong>，例如：<code>sha256.c</code></li>
+</ul>
+<p><img src="/blog/2024/02/05/vscode-develop-c/directory.png" srcset="/blog/img/loading.gif" lazyload alt="工程目录结构"></p>
+<h2 id="3-编译调试"><a href="#3-编译调试" class="headerlink" title="3.编译调试"></a>3.编译调试</h2><p><code>F7</code>编译，<code>F5</code>启动调试(<code>F5</code>包含编译的过程)，按照<code>launch.json</code>的<code>StopAtEntry:true</code>的定义，程序应该暂停在<code>main</code><br><img src="/blog/2024/02/05/vscode-develop-c/f5_debug.png" srcset="/blog/img/loading.gif" lazyload alt="启动调试"></p>
+<h2 id="4-调试入门"><a href="#4-调试入门" class="headerlink" title="4.调试入门"></a>4.调试入门</h2><div class="note note-primary">
+            <p>所有语言以及IDE在调试的逻辑上基本是一致的，甚至连调试的快捷键也可能相同。比如MDK和VSCode的调试快捷键完全相同，虽然两者完全不具备可比性。VSCode官方介绍的Debugging用法<sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[VSCode官方的Debugging用法](https://code.visualstudio.com/docs/editor/debugging)">[2]</span></a></sup>。</p>
+          </div>
+<h3 id="4-1-断点"><a href="#4-1-断点" class="headerlink" title="4.1 断点"></a>4.1 断点</h3><p>断点作为调试中最重要的功能，常用的有三种，普通断点、条件断点和日志断点</p>
+<h4 id="4-1-1-普通断点"><a href="#4-1-1-普通断点" class="headerlink" title="4.1.1 普通断点"></a>4.1.1 普通断点</h4><p>在一行语句上创建断点，启动调试后，程序会在该语句前暂停，即<strong>断点所在的行未被执行</strong>。以下图为例，程序执行到该断点处，b的值为0，说明语句<code>b = debug_func(a);</code>未被执行。继续往下执行，则b的值变为45，说明语句执行了。<br><img src="/blog/2024/02/05/vscode-develop-c/normal_breakpoint.gif" srcset="/blog/img/loading.gif" lazyload alt="普通断点 - Breakpoint"></p>
+<h4 id="4-1-2-条件断点"><a href="#4-1-2-条件断点" class="headerlink" title="4.1.2 条件断点"></a>4.1.2 条件断点</h4><p><code>Conditional Breakpoint</code>，条件断点，当程序符合预设的条件时，暂停在断点处，其标志是断点符号中有个<strong>等号</strong>。条件断点一般有两种情况，符合<strong>表达式</strong>或者<strong>命中次数</strong>。命中次数可以简单理解为该语句执行了多少遍。以下图为例，创建一个条件断点，<code>Expression</code>表达式<code>i &gt; 5</code>与<code>Hit Count</code>命中次数<code>5</code>是等价的。<br><img src="/blog/2024/02/05/vscode-develop-c/conditional_breakpoint_expression.gif" srcset="/blog/img/loading.gif" lazyload alt="条件断点 - Expression - 表达式"><br><img src="/blog/2024/02/05/vscode-develop-c/conditional_breakpoint_hit_count.gif" srcset="/blog/img/loading.gif" lazyload alt="条件断点 - Hit Count - 命中次数"></p>
+<div class="note note-warning">
+            <p>GDB调试器不一定支持<code>Hit Count</code>断点，启动调试后提示<code>Breakpoints of this type are not supported by the debugger</code>，该断点退化成普通断点。<br>增加一个变量，统计函数的运行次数，使用<code>Expression</code>的条件断点能够达到与<code>Hit Count</code>一样的效果。</p>
+          </div>
+
+<h4 id="4-1-3-记录点"><a href="#4-1-3-记录点" class="headerlink" title="4.1.3 记录点"></a>4.1.3 记录点</h4><p>当程序不方便暂停调试时，可以添加<code>记录点</code>，或者叫<code>Logpoint</code>。其符号是<strong>方块形状</strong>，在<code>DEBUG CONSOLE</code>控制台输出日志。<em>如果称其为日志断点则不是很合适，因为程序没有暂停运行，不符合断点的概念</em><br><img src="/blog/2024/02/05/vscode-develop-c/logpoint.gif" srcset="/blog/img/loading.gif" lazyload alt="记录点 - Logpoint"></p>
+<h4 id="4-1-4-内联断点"><a href="#4-1-4-内联断点" class="headerlink" title="4.1.4 内联断点"></a>4.1.4 内联断点</h4><p>内联断点，即<code>Inline Breakpoint</code>，用于调试一行代码中包含多个语句的情况。以下图为例，在<code>for</code>循环语句中，虽然只有一行代码，但是该行包含了3个语句：<code>int i = 0</code>和<code>i &lt; a</code>以及<code>i++</code>。因此内联断点需要在<strong>指定的列</strong>前添加并显示。</p>
+<div class="note note-warning">
+            <p>在实际的工程项目中，如果工程遵守合理的编码规范的情况下，内联断点是基本用不上的。</p>
+          </div>
+<p><img src="/blog/2024/02/05/vscode-develop-c/inline_breakpoint.gif" srcset="/blog/img/loading.gif" lazyload alt="内联断点 - Inline Breakpoint"></p>
+<h4 id="4-1-5-函数断点"><a href="#4-1-5-函数断点" class="headerlink" title="4.1.5 函数断点"></a>4.1.5 函数断点</h4><p>创建函数断点：选择<code>Run</code>-&gt;<code>New Breakpoint</code>-&gt;<code>Function Breakpoint</code>，输入函数的名称，断点创建成功。该方式<em>可以但没必要</em>，不如直接在函数的入口打一个普通断点来的方便。</p>
+<h3 id="4-2-监控变量"><a href="#4-2-监控变量" class="headerlink" title="4.2 监控变量"></a>4.2 监控变量</h3><h4 id="4-2-1-基础变量"><a href="#4-2-1-基础变量" class="headerlink" title="4.2.1 基础变量"></a>4.2.1 基础变量</h4><p><code>Watch</code>窗口可以查看所有类型的变量</p>
+<ul>
+<li>数值类变量<code>int</code>,<code>float</code>,<code>double</code></li>
+<li>字符类型，先显示十进制的数值再显示<code>ASCII</code>对应的字符</li>
+<li>字符串(本质上是字符串指针)，先显示地址再显示字符串的值</li>
+<li>自定义的结构体以及枚举，枚举会显示枚举名称</li>
+</ul>
+<p><img src="/blog/2024/02/05/vscode-develop-c/basic_variable.png" srcset="/blog/img/loading.gif" lazyload alt="基础变量显示"></p>
+<h4 id="4-2-2-不同进制"><a href="#4-2-2-不同进制" class="headerlink" title="4.2.2 不同进制"></a>4.2.2 不同进制</h4><p>以int变量<code>a</code>为例，<code>a</code>默认以十进制的值显示，<code>a,h</code>以十六进制显示, <code>a,b</code>二进制，<code>a,o</code>八进制<br><img src="/blog/2024/02/05/vscode-develop-c/hexadecimal.png" srcset="/blog/img/loading.gif" lazyload alt="变量以不同进制显示"></p>
+<h4 id="4-2-3-表达式"><a href="#4-2-3-表达式" class="headerlink" title="4.2.3 表达式"></a>4.2.3 表达式</h4><p>监控变量窗口可以直接计算出表达式的结果<br><img src="/blog/2024/02/05/vscode-develop-c/watch_expression.png" srcset="/blog/img/loading.gif" lazyload alt="计算表达式"></p>
+<h4 id="4-2-4-指针"><a href="#4-2-4-指针" class="headerlink" title="4.2.4 指针"></a>4.2.4 指针</h4><p>如果监控一个<code>void</code>类型的指针，监控窗口只会显示指针地址，使用<strong>强制类型转换</strong>才能正确显示字符串或结构体或数组的具体值。下图展示<code>void</code>类型的指针转换为字符串指针或者结构体指针用法<br><img src="/blog/2024/02/05/vscode-develop-c/cast_pointer.gif" srcset="/blog/img/loading.gif" lazyload alt="强转void指针为具体类型"></p>
+<p>强转数组则有一点区别，因为只强转数组的类型是不够的，还需要指定长度。假设需要强制指针<code>array_ptr</code>成长度为10的int数组，则表达式如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">*(<span class="hljs-type">int</span>(*)[<span class="hljs-number">10</span>])array_ptr<br></code></pre></td></tr></table></figure>
+<p><img src="/blog/2024/02/05/vscode-develop-c/cast_array.gif" srcset="/blog/img/loading.gif" lazyload alt="强转数组指针"></p>
+<h3 id="4-3-调用堆栈"><a href="#4-3-调用堆栈" class="headerlink" title="4.3 调用堆栈"></a>4.3 调用堆栈</h3><p>以一个递归为例子，从1累加到5，预期进入5次递归函数。左侧的<code>CALL STACK</code>就会显示当前程序的调用栈。切换栈的深度时，观察<code>arg</code>的值</p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/call_stack.gif" srcset="/blog/img/loading.gif" lazyload alt="调用堆栈"></p>
+<h3 id="4-4-快捷键"><a href="#4-4-快捷键" class="headerlink" title="4.4 快捷键"></a>4.4 快捷键</h3><div class="note note-primary">
+            <p>熟练常用的调试快捷键非常重要，在实际项目中的效率远高于按钮点击的方式。</p>
+          </div>
+<style>
+.center 
+{
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>F5</code></td>
+<td align="center">Continue</td>
+<td align="center">继续</td>
+<td align="center">继续运行到下一个断点</td>
+</tr>
+<tr>
+<td align="center"><code>F10</code></td>
+<td align="center">Step Over</td>
+<td align="center">单步跳过</td>
+<td align="center">执行一行代码</td>
+</tr>
+<tr>
+<td align="center"><code>F11</code></td>
+<td align="center">Step In</td>
+<td align="center">单步执行</td>
+<td align="center">进入函数</td>
+</tr>
+<tr>
+<td align="center"><code>Shift + F11</code></td>
+<td align="center">Step Out</td>
+<td align="center">单步停止</td>
+<td align="center">跳出函数</td>
+</tr>
+<tr>
+<td align="center"><code>F9</code></td>
+<td align="center">Toggle Breakpoint</td>
+<td align="center">切换断点</td>
+<td align="center">添加或者删除断点</td>
+</tr>
+</tbody></table>
+</div>
+
+<h4 id="F5"><a href="#F5" class="headerlink" title="F5"></a>F5</h4><p><img src="/blog/2024/02/05/vscode-develop-c/continue.gif" srcset="/blog/img/loading.gif" lazyload alt="F5 - Continue - 继续"></p>
+<h4 id="F10"><a href="#F10" class="headerlink" title="F10"></a>F10</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_over.gif" srcset="/blog/img/loading.gif" lazyload alt="F10 - Step Over - 单步跳过"></p>
+<h4 id="F11"><a href="#F11" class="headerlink" title="F11"></a>F11</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_in.gif" srcset="/blog/img/loading.gif" lazyload alt="F11 - Step In - 单步执行"></p>
+<h4 id="Shift-F11"><a href="#Shift-F11" class="headerlink" title="Shift + F11"></a>Shift + F11</h4><p><img src="/blog/2024/02/05/vscode-develop-c/step_out.gif" srcset="/blog/img/loading.gif" lazyload alt="Shift F11 - Step Out- 单步停止"></p>
+<h2 id="5-导入C文件"><a href="#5-导入C文件" class="headerlink" title="5.导入C文件"></a>5.导入C文件</h2><p>根据当前的CMake规则，所有在<code>include</code>和<code>source</code>文件夹下的C文件会自动加入编译链接。以导入<code>sha256</code>库<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="[SHA256 for C github地址](https://github.com/ilvn/SHA256)">[4]</span></a></sup>为例子，计算一个从1到10的数组的哈希值</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-8bbf6858" role="button" aria-expanded="false" aria-controls="collapse-8bbf6858">
+        <div class="fold-arrow">▶</div>计算哈希示例程序
+      </div>
+      <div class="fold-collapse collapse" id="collapse-8bbf6858">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;stdio.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;sha256.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-type">uint8_t</span> raw[<span class="hljs-number">10</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">sizeof</span>(raw); i++)<br>    &#123;<br>        raw[i] = i + <span class="hljs-number">1</span>;<br>    &#125;<br>    <span class="hljs-type">uint8_t</span> result[<span class="hljs-number">32</span>] = &#123;<span class="hljs-number">0</span>&#125;;<br>    sha256_context context;<br>    <span class="hljs-comment">// 初始化哈希</span><br>    sha256_init(&amp;context);<br>    <span class="hljs-comment">// 计算哈希</span><br>    sha256_hash(&amp;context, raw, <span class="hljs-keyword">sizeof</span>(raw));<br>    <span class="hljs-comment">// 结束哈希</span><br>    sha256_done(&amp;context, result);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;The Hash result is: &quot;</span>);<br>    <span class="hljs-comment">// 打印哈希结果</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">size_t</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-keyword">sizeof</span>(result); i++)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%02x&quot;</span>, result[i]);<br>    &#125;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<p><img src="/blog/2024/02/05/vscode-develop-c/hash.gif" srcset="/blog/img/loading.gif" lazyload alt="计算哈希"></p>
+<p>使用在线哈希计算工具验证计算结果<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="[在线哈希值计算](https://www.lddgo.net/encrypt/hash)">[5]</span></a></sup>。</p>
+<p><img src="/blog/2024/02/05/vscode-develop-c/hash_result.png" srcset="/blog/img/loading.gif" lazyload alt="在线哈希工具验证结果"></p>
+<h2 id="6-终端编译运行"><a href="#6-终端编译运行" class="headerlink" title="6.终端编译运行"></a>6.终端编译运行</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 工程目录进入build文件夹</span><br><span class="hljs-comment">## 如果没有build文件夹则创建一个</span><br><span class="hljs-built_in">cd</span> build<br><br><span class="hljs-comment"># CMake以及make编译</span><br>cmake ../ &amp;&amp; make<br><br><span class="hljs-comment"># 运行可执行文件</span><br>./main<br><br><span class="hljs-comment"># 重新编译</span><br><span class="hljs-comment">## 1.清空build目录</span><br><span class="hljs-built_in">rm</span> -r ./*<br><span class="hljs-comment">## 2.再次编译</span><br>cmake ../ &amp;&amp; make<br></code></pre></td></tr></table></figure>
+<h3 id="6-1-测试结果"><a href="#6-1-测试结果" class="headerlink" title="6.1 测试结果"></a>6.1 测试结果</h3><p><img src="/blog/2024/02/05/vscode-develop-c/terminal.png" srcset="/blog/img/loading.gif" lazyload alt="终端编译运行结果"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Orionxer/c_project">Linux编译调试C的github地址</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/debugging">VSCode官方的Debugging用法</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://learnku.com/articles/67523">VSCode 调试 WSL C&#x2F;C++ 项目</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/ilvn/SHA256">SHA256 for C github地址</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.lddgo.net/encrypt/hash">在线哈希值计算</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/C-C/" class="category-chain-item">C/C++</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
+      
+        <a href="/blog/tags/Linux/" class="print-no-link">#Linux</a>
+      
+        <a href="/blog/tags/VSCode/" class="print-no-link">#VSCode</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Linux搭建C开发环境</div>
+      <div>https://orionxer.github.io/blog/2024/02/05/vscode-develop-c/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年2月5日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/02/12/c-color-print/" title="终端彩色打印">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">终端彩色打印</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/02/04/vscode-qemu-freertos/" title="Linux搭建FreeRTOS开发环境">
+                        <span class="hidden-mobile">Linux搭建FreeRTOS开发环境</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

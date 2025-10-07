@@ -1,0 +1,874 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用STM32CubeMX生成FreeRTOS中间件以及调试FreeRTOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="STM32-FreeRTOS移植与调试">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/03/24/stm32-freertos/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用STM32CubeMX生成FreeRTOS中间件以及调试FreeRTOS">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/stm32-freertos.jpg">
+<meta property="article:published_time" content="2024-03-23T23:41:27.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:55.973Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="FreeRTOS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/stm32-freertos.jpg">
+  
+  
+  
+  <title>STM32-FreeRTOS移植与调试 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/stm32-freertos.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="STM32-FreeRTOS移植与调试"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-24 07:41" pubdate>
+          2024年3月24日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">STM32-FreeRTOS移植与调试</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>使用STM32CubeMX生成FreeRTOS中间件并创建两个任务，一个任务循环闪灯，另一个任务循环打印串口消息。进阶使用<code>XRTOS</code>调试，监控FreeRTOS任务堆栈大小以及分析任务的CPU使用率。</p>
+          </div>
+
+<h2 id="1-初始化工程"><a href="#1-初始化工程" class="headerlink" title="1.初始化工程"></a>1.初始化工程</h2><h3 id="1-1-新建工程"><a href="#1-1-新建工程" class="headerlink" title="1.1 新建工程"></a>1.1 新建工程</h3><p>STM32CubeMX创建工程，系统时钟、时钟树配置和调试口自行配置。PC13设置输出，启用USART1(提前用USB转串口模块接入PA9和PA10)，工程名称为<code>freertos_demo</code>。有问题则参考之前的文章。</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/new_project.png" srcset="/blog/img/loading.gif" lazyload alt="新建工程"></p>
+<h3 id="1-2-配置FreeRTOS"><a href="#1-2-配置FreeRTOS" class="headerlink" title="1.2 配置FreeRTOS"></a>1.2 配置FreeRTOS</h3><ul>
+<li>展开<code>Middleware and Software Packs</code>选项卡</li>
+<li>选择<code>FreeRTOS</code>，Interface选择<code>CMSIS_V1</code>，因为STM32F103C8T6就是<strong>M3</strong>内核的芯片，选择<code>CMSIS_V1</code>会更节省空间。</li>
+</ul>
+<p><img src="/blog/2024/03/24/stm32-freertos/select_config.png" srcset="/blog/img/loading.gif" lazyload alt="选择FreeRTOS配置"></p>
+<h3 id="1-3-创建任务"><a href="#1-3-创建任务" class="headerlink" title="1.3 创建任务"></a>1.3 创建任务</h3><ul>
+<li>选择<code>Tasks and Queues</code>标签，点击<code>Add</code>按钮</li>
+<li>将<code>Task Name</code>修改为<strong>LedTask</strong></li>
+<li>和<code>Entry Function</code>均修改为<strong>led_task</strong></li>
+<li>点击<code>OK</code>按钮确认</li>
+<li>同理再创建一个串口任务<code>uart_task</code></li>
+</ul>
+<p><img src="/blog/2024/03/24/stm32-freertos/new_led_task.png" srcset="/blog/img/loading.gif" lazyload alt="创建闪灯任务"></p>
+<p><img src="/blog/2024/03/24/stm32-freertos/new_uart_task.png" srcset="/blog/img/loading.gif" lazyload alt="创建串口任务"></p>
+<h3 id="1-4-编译导入"><a href="#1-4-编译导入" class="headerlink" title="1.4 编译导入"></a>1.4 编译导入</h3><h4 id="1-4-1-Keil编译"><a href="#1-4-1-Keil编译" class="headerlink" title="1.4.1 Keil编译"></a>1.4.1 Keil编译</h4><p>点击<code>GENRATE CODE</code>生成工程代码，点击<code>Open Project</code>,尝试用Keil编译，没有报错则可以将工程导入EIDE</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/generate_code.gif" srcset="/blog/img/loading.gif" lazyload alt="生成工程代码"></p>
+<div class="note note-warning">
+            <p>如果STM32CubeMX生成工程之后，<strong>KEIL没有编译</strong>，则EIDE尝试导入MDK工程时，可能会出现编译失败的情况，比如丢失RAM&#x2F;ROM布局导致的编译失败</p>
+          </div>
+
+<h4 id="1-4-2-EIDE编译"><a href="#1-4-2-EIDE编译" class="headerlink" title="1.4.2 EIDE编译"></a>1.4.2 EIDE编译</h4><p>打开VSCode，EIDE插件选择<code>Import Project</code>,选择刚刚创建的工程, 注意EIDE的工作区<strong>不要</strong>保存在与MDK同一目录下，虽然不影响EIDE编译调试，但是会导致VSCode工作区无法跟踪工程根目录的文件。<strong>EIDE工作区需要保存在工程根目录下</strong></p>
+<p><img src="/blog/2024/03/24/stm32-freertos/import_project.gif" srcset="/blog/img/loading.gif" lazyload alt="EIDE导入"></p>
+<p><img src="/blog/2024/03/24/stm32-freertos/eide_build_flash.gif" srcset="/blog/img/loading.gif" lazyload alt="EIDE编译烧录"></p>
+<h2 id="2-编辑任务"><a href="#2-编辑任务" class="headerlink" title="2.编辑任务"></a>2.编辑任务</h2><h3 id="2-1-闪灯任务"><a href="#2-1-闪灯任务" class="headerlink" title="2.1 闪灯任务"></a>2.1 闪灯任务</h3><ul>
+<li><code>main.c</code>文件中的<code>MX_FREERTOS_Init();</code>函数执行初始化任务，跳转进入该函数</li>
+<li>往下滑找到<code>led_task</code>任务，跳转进入该任务</li>
+<li>将原本任务里的<code>for</code>循环中的<code>osDelay(1);</code>修改为以下代码<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">osDelay(<span class="hljs-number">500</span>);<br>HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="/blog/2024/03/24/stm32-freertos/led_task.png" srcset="/blog/img/loading.gif" lazyload alt="闪灯任务"></p>
+<h3 id="2-2-串口任务"><a href="#2-2-串口任务" class="headerlink" title="2.2 串口任务"></a>2.2 串口任务</h3><p>根据<a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/03/02/stm32-uart/">STM32-串口USART</a>的第八点<strong>重定向printf</strong>，成功配置串口重定向之后尝试在串口任务每隔500ms打印数据</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/uart_task.png" srcset="/blog/img/loading.gif" lazyload alt="串口任务"></p>
+<h2 id="3-调试FreeRTOS"><a href="#3-调试FreeRTOS" class="headerlink" title="3.调试FreeRTOS"></a>3.调试FreeRTOS</h2><div class="note note-primary">
+            <p>在启动任何调试之前都必须确保工程的<strong>优化等级为0</strong>，否则各种情况都有可能发生，比如：创建了断点，但是程序无法暂停在断点处；或者创建断点的时候断点发生偏移。注意，如果EIDE<strong>再次导入</strong>STM32CubeMX生成的MDK工程，则需要<strong>再次检查</strong>优化等级。</p>
+          </div>
+
+
+<p><img src="/blog/2024/03/24/stm32-freertos/compile_level.png" srcset="/blog/img/loading.gif" lazyload alt="确保优化等级为0"></p>
+<p><code>F5</code>尝试启动调试，如果可以正常启动调试则在程序运行后几秒后创建一个断点，点击底部栏的<strong>XRTOS</strong>面板，查看任务状态</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/xrtos_debug.png" srcset="/blog/img/loading.gif" lazyload alt="XRTOS查看任务状态"></p>
+<p>XRTOS的面板必须在<strong>程序暂停后才能更新</strong>，观察XRTOS的任务状态列表，TaskName表示任务名称，黄色高亮的行代表当前断点暂停在哪个任务，任务优先级，程序地址等。但是其中有一些问题，比如Stack End、Stack Used以及RunTime等都是以问号显示。需要配置更多宏以及定时器资源才能正确监控任务状态。</p>
+<h3 id="3-1-启动任务监控"><a href="#3-1-启动任务监控" class="headerlink" title="3.1 启动任务监控"></a>3.1 启动任务监控</h3><p>在<code>FreeRTOSConfig.h</code>文件中，<strong>增加</strong>宏<code>configUSE_TRACE_FACILITY</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* USER CODE BEGIN Defines */</span><br><span class="hljs-comment">/* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_TRACE_FACILITY 1</span><br><span class="hljs-comment">/* USER CODE END Defines */</span><br></code></pre></td></tr></table></figure>
+
+<p>编译后启动调试，应该就能看到插件给出的提示, 单击展开提示</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/debug_hint.png" srcset="/blog/img/loading.gif" lazyload alt="监控提示"></p>
+<h3 id="3-2-开启栈尾监控"><a href="#3-2-开启栈尾监控" class="headerlink" title="3.2 开启栈尾监控"></a>3.2 开启栈尾监控</h3><p>在<code>FreeRTOSConfig.h</code>文件中，<strong>增加</strong>宏<code>configRECORD_STACK_HIGH_ADDRESS</code>，尽可能确保FreeRTOS的版本在V10.0.0以上</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* USER CODE BEGIN Defines */</span><br><span class="hljs-comment">/* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_TRACE_FACILITY                1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configRECORD_STACK_HIGH_ADDRESS         1</span><br><span class="hljs-comment">/* USER CODE END Defines */</span><br></code></pre></td></tr></table></figure>
+
+<p>编译后启动调试，等任务运行几秒后创建断点暂停程序，查看任务状态，应该可以看到栈尾状态，也就能查看完整的任务深度状态</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/stack_depth.png" srcset="/blog/img/loading.gif" lazyload alt="任务深度"></p>
+<h3 id="3-3-统计CPU使用率"><a href="#3-3-统计CPU使用率" class="headerlink" title="3.3 统计CPU使用率"></a>3.3 统计CPU使用率</h3><div class="note note-primary">
+            <p>CPU使用率，这里称为<code>Runtime</code>，用于统计每个任务的CPU使用率，能够直观地判断各个任务对CPU的占用情况。但是获取该<code>Runtime</code>属性需要消耗一个高速定时器。</p>
+          </div>
+
+<p>根据监控提示，用于统计CPU使用率的高速定时器必须10倍与FreeRTOS的系统中断时间（默认是1ms）。因此定时器的中断时间至少在100us以内，等价于10kHZ频率。STM32的定时器TIM1能够符合要求。</p>
+<blockquote>
+<p> Also, add the following two macros to provide a high speed counter – something at least 10x faster than your RTOS scheduler tick. One strategy could be to use a HW counter and sample its current value when needed</p>
+</blockquote>
+<p>STM32CubeMX配置STM32的TIM1频率为1Mhz，溢出计数为100-1，实现弱函数<code>HAL_TIM_PeriodElapsedCallback</code>并在该函数里递增计数，并将该计数值设置为全局变量以供FreeRTOS调用，就能够实现统计CPU使用率的效果。</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/create_tim1.png" srcset="/blog/img/loading.gif" lazyload alt="创建定时器TIM1"></p>
+<p><img src="/blog/2024/03/24/stm32-freertos/tim1_intr_enable.png" srcset="/blog/img/loading.gif" lazyload alt="启用定时器中断"></p>
+<p><code>main.c</code>中添加变量<code>CPU_Runtime</code>并初始化为0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* USER CODE BEGIN PV */</span><br><span class="hljs-keyword">volatile</span> <span class="hljs-type">uint32_t</span> CPU_RunTime = <span class="hljs-number">0</span>;<br><span class="hljs-comment">/* USER CODE END PV */</span><br></code></pre></td></tr></table></figure>
+
+<p><code>main.c</code>中启用定时器TIM1中断</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* USER CODE BEGIN 2 */</span><br>HAL_TIM_Base_Start_IT(&amp;htim1);<br><span class="hljs-comment">/* USER CODE END 2 */</span><br></code></pre></td></tr></table></figure>
+
+<p><code>main.c</code>中实现<code>TIM1</code>中断，累加<code>CPU_RunTime</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* USER CODE BEGIN 4 */</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">HAL_TIM_PeriodElapsedCallback</span><span class="hljs-params">(TIM_HandleTypeDef *htim)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (htim == &amp;htim1)<br>    &#123;<br>        CPU_RunTime++; <span class="hljs-comment">// 更新计数值</span><br>    &#125;<br>&#125;<br><span class="hljs-comment">/* USER CODE END 4 */</span><br></code></pre></td></tr></table></figure>
+<p><code>FreeRTOSConfig.h</code>中添加外部变量<code>CPU_Runtime</code>以及采样时间的宏, 完整FreeRTOS调试配置如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* USER CODE BEGIN Defines */</span><br><span class="hljs-comment">/* Section where parameter definitions can be added (for instance, to override default ones in FreeRTOS.h) */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configUSE_TRACE_FACILITY                 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configRECORD_STACK_HIGH_ADDRESS          1</span><br><span class="hljs-keyword">extern</span> <span class="hljs-keyword">volatile</span> <span class="hljs-type">uint32_t</span> CPU_RunTime;<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> configGENERATE_RUN_TIME_STATS            1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> portCONFIGURE_TIMER_FOR_RUN_TIME_STATS() (CPU_RunTime = 0ul)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> portGET_RUN_TIME_COUNTER_VALUE()          CPU_RunTime</span><br><span class="hljs-comment">/* USER CODE END Defines */</span><br></code></pre></td></tr></table></figure>
+<p>编译启动调试后，能够正常看到各个任务的CPU使用率</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/runtime.png" srcset="/blog/img/loading.gif" lazyload alt="CPU使用率"></p>
+<h2 id="4-监控分析"><a href="#4-监控分析" class="headerlink" title="4.监控分析"></a>4.监控分析</h2><h3 id="4-1-任务深度"><a href="#4-1-任务深度" class="headerlink" title="4.1 任务深度"></a>4.1 任务深度</h3><p>以闪灯任务<code>LedTask</code>为例，在未申请的临时变量时，其内存使用是<strong>96Byte</strong>，而在申请了临时变量后，内存使用是<strong>352Byte</strong>，相差刚好是<strong>256Byte</strong>。</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/raw_led_task.png" srcset="/blog/img/loading.gif" lazyload alt="未申请临时变量"></p>
+<p><img src="/blog/2024/03/24/stm32-freertos/chunk_led_task.png" srcset="/blog/img/loading.gif" lazyload alt="已申请临时变量"></p>
+<h3 id="4-2-CPU使用率"><a href="#4-2-CPU使用率" class="headerlink" title="4.2 CPU使用率"></a>4.2 CPU使用率</h3><ul>
+<li><code>LedTask</code>闪灯任务中增加阻塞延时500ms<code>HAL_Delay(500)</code></li>
+<li><code>UartTask</code>串口任务注释<code>printf</code>语句，修改延迟时间为1000ms,并增加切换LED状态代码</li>
+</ul>
+<p>此时两个任务执行的内容基本一致：都是延迟1s切换LED灯状态。唯一的区别就是闪灯任务的延迟是HAL库进行阻塞延时。进入调试状态，能够看到闪灯任务的CPU占用率是45.77%，接近50%；而串口任务占用率是0%。</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/delay_runtime.png" srcset="/blog/img/loading.gif" lazyload alt="阻塞延迟对CPU占用率的影响"></p>
+<p>删除闪灯任务中的延时，循环中仅切换LED灯，然后再加入<code>osDelay(1);</code>，调试查看前后任务的CPU占用率时间区别，明显能够看出加入了1ms延时的任务的CPU使用率有了明显的降低。</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/non_delay.png" srcset="/blog/img/loading.gif" lazyload alt="循环中没有延时"></p>
+<p><img src="/blog/2024/03/24/stm32-freertos/delay_1ms.png" srcset="/blog/img/loading.gif" lazyload alt="循环中包含1ms延时"></p>
+<p>修改串口任务延时1ms再打印数据，对比闪灯任务能够明显看到<code>printf</code>函数执行是相当耗时的。</p>
+<p><img src="/blog/2024/03/24/stm32-freertos/serial_to_led.png" srcset="/blog/img/loading.gif" lazyload alt="串口对比闪灯任务的CPU使用率"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://doc.embedfire.com/rtos/freertos/zh/latest/application/cpu_usage_rate.html#">CPU使用率统计</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/STM32/" class="category-chain-item">STM32</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
+      
+        <a href="/blog/tags/STM32/" class="print-no-link">#STM32</a>
+      
+        <a href="/blog/tags/FreeRTOS/" class="print-no-link">#FreeRTOS</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>STM32-FreeRTOS移植与调试</div>
+      <div>https://orionxer.github.io/blog/2024/03/24/stm32-freertos/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月24日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/03/26/clash/" title="Clash快速入门到精通">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Clash快速入门到精通</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/03/16/debounce/" title="按键去抖">
+                        <span class="hidden-mobile">按键去抖</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

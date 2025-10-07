@@ -1,0 +1,860 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用SolidWorks设计一个手机支架，并使用3D打印机打印出来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9.SW-3D打印手机支架">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/07/08/sw-9-phone-stand/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="使用SolidWorks设计一个手机支架，并使用3D打印机打印出来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/sw-9-phone-stand.jpg">
+<meta property="article:published_time" content="2024-07-07T22:30:37.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:56.680Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="Solidworks">
+<meta property="article:tag" content="3D">
+<meta property="article:tag" content="结构">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/sw-9-phone-stand.jpg">
+  
+  
+  
+  <title>9.SW-3D打印手机支架 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/sw-9-phone-stand.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="9.SW-3D打印手机支架"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-08 06:30" pubdate>
+          2024年7月8日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          862 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          8 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">9.SW-3D打印手机支架</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>本篇文章使用SolidWorks设计一个手机支架，包含草图文本、草图图片，样条曲线，材料与质量属性，测量。并最终使用3D打印机打印模型。</p>
+          </div>
+
+<h2 id="1-基础特征"><a href="#1-基础特征" class="headerlink" title="1.基础特征"></a>1.基础特征</h2><h3 id="1-1-横截面"><a href="#1-1-横截面" class="headerlink" title="1.1 横截面"></a>1.1 横截面</h3><p>新建零件，选择<strong>前视基准面</strong>，绘制一个手机支架横截面</p>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/cross_section.png" srcset="/blog/img/loading.gif" lazyload alt="横截面草图"></p>
+<h3 id="1-2-拉伸凸台基体"><a href="#1-2-拉伸凸台基体" class="headerlink" title="1.2 拉伸凸台基体"></a>1.2 拉伸凸台基体</h3><p>拉伸凸台基体，宽度为<strong>58mm</strong>，两侧对称<br><img src="/blog/2024/07/08/sw-9-phone-stand/features.gif" srcset="/blog/img/loading.gif" lazyload alt="拉伸凸台基体"></p>
+<h3 id="1-3-切除两边"><a href="#1-3-切除两边" class="headerlink" title="1.3 切除两边"></a>1.3 切除两边</h3><ul>
+<li>选择底座前面进行草图绘制</li>
+<li>左侧绘制一个倒三角形，原点上绘制一条直线，并设置为构造线(快捷键<code>Alt + C</code>)</li>
+<li>选择镜像实体，选择镜像轴，提交编辑</li>
+<li>标注尺寸为<strong>52mm</strong></li>
+<li>拉伸切除，点击<strong>完全贯穿 - 两者</strong></li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/features_cut.gif" srcset="/blog/img/loading.gif" lazyload alt="拉伸切除"></p>
+<h3 id="1-3-充电口"><a href="#1-3-充电口" class="headerlink" title="1.3 充电口"></a>1.3 充电口</h3><ul>
+<li>选择正斜面进行草图绘制</li>
+<li>绘制半个梯形，原点上绘制构造线，镜像</li>
+<li>分别设置尺寸，上底&#x3D;23mm，下底&#x3D;28mm，高&#x3D;25mm，下底距离原点13mm</li>
+<li>拉伸切除，方向1为<strong>成形到一面</strong>，选择背面；方向2为<strong>完全贯穿</strong></li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/charge_cut.gif" srcset="/blog/img/loading.gif" lazyload alt="切除充电口"></p>
+<h3 id="1-4-圆角-倒角"><a href="#1-4-圆角-倒角" class="headerlink" title="1.4 圆角&#x2F;倒角"></a>1.4 圆角&#x2F;倒角</h3><ul>
+<li>底座前侧增加<strong>圆角</strong>，半径<strong>10mm</strong></li>
+<li>转角处增加<strong>倒角</strong>，<strong>8mm</strong>，该位置应力最大，比较容易损坏</li>
+<li>外圆转角分别增加圆角，<strong>6mm</strong></li>
+<li>托架处增加圆角，半径<strong>3mm</strong>；底部圆角<strong>6mm</strong></li>
+<li>两侧托架圆角<strong>5mm</strong></li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/round_corner.gif" srcset="/blog/img/loading.gif" lazyload alt="圆角倒角"></p>
+<h3 id="1-5-底座支点"><a href="#1-5-底座支点" class="headerlink" title="1.5 底座支点"></a>1.5 底座支点</h3><ul>
+<li>底面进入草图绘制；靠右上方绘制一个圆，直径标注为15mm</li>
+<li><code>Ctrl</code>键按下同时点击圆心与圆弧，选择<strong>同心</strong></li>
+<li>原点绘制一条横线，设置为构造线，在线上绘制一个圆，使第一个圆相等，标注圆心到原点距离56mm</li>
+<li>选择镜像实体，选择第一个圆，镜像轴为构造线；拉伸凸台基体<strong>1mm</strong></li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/bottom.gif" srcset="/blog/img/loading.gif" lazyload alt="底座支点"></p>
+<h3 id="1-6-背部挖孔"><a href="#1-6-背部挖孔" class="headerlink" title="1.6 背部挖孔"></a>1.6 背部挖孔</h3><ul>
+<li>背面进入草图绘制；原点绘制一条竖线，设置为构造线</li>
+<li>绘制直槽口，长度20mm，宽度20mm，底部圆心到原点距离32mm</li>
+<li>拉伸切除，选择<strong>成形到一面</strong>，选择里面</li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/back.gif" srcset="/blog/img/loading.gif" lazyload alt="背部挖孔"></p>
+<h2 id="2-草图文本"><a href="#2-草图文本" class="headerlink" title="2.草图文本"></a>2.草图文本</h2><ul>
+<li>背面进入草图绘制，点击文本</li>
+<li>属性栏输入文本，比如<code>French Bulldog</code>，移动位置到靠底部的位置</li>
+<li>改变字体样式以及大小，根据实际情况调整(比如选择Adobe Gothic，大小5mm)</li>
+<li>拉伸切除0.3mm</li>
+<li>补充漏掉的两个圆角5mm</li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/draft_text.gif" srcset="/blog/img/loading.gif" lazyload alt="草图文本"></p>
+<h2 id="3-草图图片"><a href="#3-草图图片" class="headerlink" title="3.草图图片"></a>3.草图图片</h2><ul>
+<li>绘制两个同心圆，外圆直径30mm，距离内部圆1mm</li>
+<li>选择正面进入草图编辑，选择<strong>工具</strong> -&gt; 草图工具 -&gt; 草图图片</li>
+<li>调整透明度以及大小，移动到合适的位置，确定</li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/draft_picture.gif" srcset="/blog/img/loading.gif" lazyload alt="草图文本"></p>
+<h2 id="4-样条曲线"><a href="#4-样条曲线" class="headerlink" title="4.样条曲线"></a>4.样条曲线</h2><ul>
+<li>点击样条曲线，沿着曲线一个个点绘制，尽量贴合</li>
+<li>如果遇到不够贴合的情况，右键选择<strong>显示控制多边形</strong>，拖动多边形的端点使曲线更加贴合</li>
+<li>拉伸切除，注意草图被线条分割成了不同的轮廓，在<strong>所选轮廓</strong>中选择所有的轮廓，确定</li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/curse_line.gif" srcset="/blog/img/loading.gif" lazyload alt="草图文本"></p>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/select_cut.gif" srcset="/blog/img/loading.gif" lazyload alt="选择轮廓拉伸切除"></p>
+<h2 id="5-补充圆角"><a href="#5-补充圆角" class="headerlink" title="5.补充圆角"></a>5.补充圆角</h2><ul>
+<li>补充4个圆角3mm</li>
+<li>所有边线设置倒角1mm</li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/complementary.gif" srcset="/blog/img/loading.gif" lazyload alt="补充圆角倒角"></p>
+<h2 id="6-导入3D打印机"><a href="#6-导入3D打印机" class="headerlink" title="6.导入3D打印机"></a>6.导入3D打印机</h2><div class="note note-info">
+            <p>这里使用拓竹A1 Mini打印机，精度0.4mm，使用PLA材质打印，其官方的切图软件为<strong>Bambu Studio</strong></p>
+          </div>
+<ul>
+<li>另存为工程为.STL文件</li>
+<li>打开Bambu Studio，导入该STL文件</li>
+<li>点击支撑。勾选<strong>开启支撑</strong>，类型选择<strong>树状(自动)</strong></li>
+<li>点击切片单盘，打印单盘，发送打印任务</li>
+</ul>
+<p><img src="/blog/2024/07/08/sw-9-phone-stand/3d_print.gif" srcset="/blog/img/loading.gif" lazyload alt="3D打印"></p>
+<h2 id="7-打印效果"><a href="#7-打印效果" class="headerlink" title="7.打印效果"></a>7.打印效果</h2><p><img src="/blog/2024/07/08/sw-9-phone-stand/result.png" srcset="/blog/img/loading.gif" lazyload alt="实际打印效果"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Solidworks/" class="category-chain-item">Solidworks</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/Solidworks/" class="print-no-link">#Solidworks</a>
+      
+        <a href="/blog/tags/3D/" class="print-no-link">#3D</a>
+      
+        <a href="/blog/tags/%E7%BB%93%E6%9E%84/" class="print-no-link">#结构</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>9.SW-3D打印手机支架</div>
+      <div>https://orionxer.github.io/blog/2024/07/08/sw-9-phone-stand/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月8日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/08/03/24-08-english/" title="24/Aug 每日英语">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">24/Aug 每日英语</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/07/04/sw-8-features/" title="8.SW-特征成型-4">
+                        <span class="hidden-mobile">8.SW-特征成型-4</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,910 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="通过VSCode插件EIDE以及Cortex-Debug实现华大HC32F460x芯片编译烧录调试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VSCode编译烧录调试HC32F460x">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/09/04/vscode-hc32-develop/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="通过VSCode插件EIDE以及Cortex-Debug实现华大HC32F460x芯片编译烧录调试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/vscode-hc32-develop.jpg">
+<meta property="article:published_time" content="2024-09-03T17:29:01.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:57.231Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="VSCode">
+<meta property="article:tag" content="HC32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/vscode-hc32-develop.jpg">
+  
+  
+  
+  <title>VSCode编译烧录调试HC32F460x - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/vscode-hc32-develop.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="VSCode编译烧录调试HC32F460x"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-09-04 01:29" pubdate>
+          2024年9月4日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">VSCode编译烧录调试HC32F460x</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>通过VSCode的<strong>EIDE</strong>和<strong>Cortex-Debug</strong>插件实现<strong>编译、烧录、调试</strong>华大HC32F460x芯片。EIDE具有独立的工作区，完全兼容MDK工程。分别使用JLink和DapLink进行烧录调试。</p>
+          </div>
+
+<blockquote>
+<p>华大HC32F460x使用的是ARM Cortex M4架构，因此只要配置了正确的芯片支持包，就能够实现与STM32系列芯片一致的开发效果。如果不熟悉EIDE和Cortex Debug的使用方法，建议先阅读<strong>Windows搭建STM32开发环境-进阶篇</strong><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Windows搭建STM32开发环境-进阶篇](https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/)">[1]</span></a></sup>和<strong>cortex-debug 用法</strong><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[cortex-debug 用法](https://discuss.em-ide.com/blog/67-cortex-debug)">[2]</span></a></sup>。</p>
+</blockquote>
+<h2 id="1-编译"><a href="#1-编译" class="headerlink" title="1.编译"></a>1.编译</h2><h3 id="1-1-导入Keil项目"><a href="#1-1-导入Keil项目" class="headerlink" title="1.1 导入Keil项目"></a>1.1 导入Keil项目</h3><p>准备好能够编译成功的Keil项目，VSCode工作区下点击<code>Import Project</code>，选择<strong>MDK</strong>，选择Keil项目。<br><img src="/blog/2024/09/04/vscode-hc32-develop/import_project.gif" srcset="/blog/img/loading.gif" lazyload alt="导入Keil项目"></p>
+<h3 id="1-2-加载芯片支持包"><a href="#1-2-加载芯片支持包" class="headerlink" title="1.2 加载芯片支持包"></a>1.2 加载芯片支持包</h3><p>点击<strong>Chip Support Package</strong>，选择<strong>From Disk</strong>，选择华大提供的芯片支持包(.pack后缀)，再根据自己的芯片选择具体的型号，比如我这里是<code>HC32F460KEUA</code><br><img src="/blog/2024/09/04/vscode-hc32-develop/install_package.gif" srcset="/blog/img/loading.gif" lazyload alt="加载芯片支持包"></p>
+<h3 id="1-3-编译"><a href="#1-3-编译" class="headerlink" title="1.3 编译"></a>1.3 编译</h3><p>点击<strong>Build</strong>，快捷键<strong>F7</strong>，编译成功后会输出已使用的静态RAM&#x2F;ROM信息。其他编译输出信息参考EIDE官方文档<sup id="fnref:3" class="footnote-ref"><a href="#fn:3" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Embedded IDE官方文档](https://em-ide.com/zh-cn/docs/intro/)">[3]</span></a></sup>说明。<br><img src="/blog/2024/09/04/vscode-hc32-develop/compile.png" srcset="/blog/img/loading.gif" lazyload alt="编译结果"></p>
+<h2 id="2-JLink烧录调试"><a href="#2-JLink烧录调试" class="headerlink" title="2.JLink烧录调试"></a>2.JLink烧录调试</h2><h3 id="2-1-添加新设备"><a href="#2-1-添加新设备" class="headerlink" title="2.1 添加新设备"></a>2.1 添加新设备</h3><div class="note note-info">
+            <p>JLink默认的设备列表不包含HC32F460x，因此需要手动添加新设备给JLink的设备列表。</p>
+          </div>
+<ul>
+<li><p>找到EIDE的JLink安装目录，比如<code>C:\Users\Orionxer\.eide\tools\jlink</code>，备份JLinkDevices.xml文件</p>
+</li>
+<li><p>进入Devices文件夹，<strong>新建HDSC文件夹</strong></p>
+</li>
+<li><p>解压Pack包后找到<strong>HC32F460_512K.FLM</strong>文件，将文件复制到HDSC文件夹下，将<strong>HC32F460_512K.FLM</strong>重命名为<strong>HC32F46x.FLM</strong></p>
+</li>
+<li><p>编辑JLinkDevices.xml文件，复制以下内容，<strong>在文件底部添加</strong>新设备</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-8f7bdefe" role="button" aria-expanded="false" aria-controls="collapse-8f7bdefe">
+        <div class="fold-arrow">▶</div>JLinkDevices.xml
+      </div>
+      <div class="fold-collapse collapse" id="collapse-8f7bdefe">
+        <div class="fold-content">
+          <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--                 --&gt;</span><br><span class="hljs-comment">&lt;!-- HDSC (HC32) --&gt;</span><br><span class="hljs-comment">&lt;!--                 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">Device</span>&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">ChipInfo</span> <span class="hljs-attr">Vendor</span>=<span class="hljs-string">&quot;HDSC&quot;</span> <span class="hljs-attr">Name</span>=<span class="hljs-string">&quot;HC32F46x&quot;</span>  <span class="hljs-attr">WorkRAMAddr</span>=<span class="hljs-string">&quot;0x20000000&quot;</span> <span class="hljs-attr">WorkRAMSize</span>=<span class="hljs-string">&quot;0x10000&quot;</span> <span class="hljs-attr">Core</span>=<span class="hljs-string">&quot;JLINK_CORE_CORTEX_M4&quot;</span>/&gt;</span><br>   <span class="hljs-tag">&lt;<span class="hljs-name">FlashBankInfo</span> <span class="hljs-attr">Name</span>=<span class="hljs-string">&quot;Flash_512K&quot;</span> <span class="hljs-attr">BaseAddr</span>=<span class="hljs-string">&quot;0x0&quot;</span> <span class="hljs-attr">MaxSize</span>=<span class="hljs-string">&quot;0x80000&quot;</span> <span class="hljs-attr">Loader</span>=<span class="hljs-string">&quot;Devices/HDSC/HC32F46x.FLM&quot;</span> <span class="hljs-attr">LoaderType</span>=<span class="hljs-string">&quot;FLASH_ALGO_TYPE_OPEN&quot;</span> <span class="hljs-attr">AlwaysPresent</span>=<span class="hljs-string">&quot;1&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">Device</span>&gt;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/add_new_device.png" srcset="/blog/img/loading.gif" lazyload alt="添加新设备到JLink设备列表"></p>
+</li>
+<li><p>VSCode重新加载JLink设备：<code>Ctrl + Shift + P</code>打开命令面板，输入<strong>Reload Jlink Devices List</strong>即可<br><img src="/blog/2024/09/04/vscode-hc32-develop/reload_jlink_devices.png" srcset="/blog/img/loading.gif" lazyload alt="重新加载JLink设备列表"></p>
+</li>
+</ul>
+<div class="note note-warning">
+            <p>如果JLink弹窗提示选择设备，注意华大的缩写是HDSC，输入HC32是找不到的</p>
+          </div>
+
+<h3 id="2-2-烧录"><a href="#2-2-烧录" class="headerlink" title="2.2 烧录"></a>2.2 烧录</h3><p>点击<strong>Flasher Configurations</strong>的切换按钮，确保烧录方式为<strong>JLink</strong>，选择<strong>CPU Name</strong>为<strong>HC32F460x</strong>，点击<strong>Program Flash</strong>按钮尝试烧录<br><img src="/blog/2024/09/04/vscode-hc32-develop/jlink_flash.gif" srcset="/blog/img/loading.gif" lazyload alt="JLink烧录"></p>
+<h3 id="2-3-调试"><a href="#2-3-调试" class="headerlink" title="2.3 调试"></a>2.3 调试</h3><h4 id="2-3-1-Cortex-Debug配置"><a href="#2-3-1-Cortex-Debug配置" class="headerlink" title="2.3.1 Cortex Debug配置"></a>2.3.1 Cortex Debug配置</h4><p>自行确保Cortex Debug插件配置正确，以下提供一个示例配置，请根据自己的实际情况进行修改</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-dcdac752" role="button" aria-expanded="false" aria-controls="collapse-dcdac752">
+        <div class="fold-arrow">▶</div>settings.json
+      </div>
+      <div class="fold-collapse collapse" id="collapse-dcdac752">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;cortex-debug.armToolchainPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;D:\\Program Files (x86)\\Arm GNU Toolchain arm-none-eabi\\12.2 mpacbti-rel1\\bin&quot;</span><span class="hljs-punctuation">,</span><br><span class="hljs-attr">&quot;cortex-debug.JLinkGDBServerPath&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;C:\\Users\\Orionxer\\.eide\\tools\\jlink\\JLinkGDBServerCL.exe&quot;</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<h4 id="2-3-2-生成调试配置"><a href="#2-3-2-生成调试配置" class="headerlink" title="2.3.2 生成调试配置"></a>2.3.2 生成调试配置</h4><ul>
+<li>EIDE中<strong>右键点击</strong>项目，选择<strong>Generate Debugger Configuration</strong>，选择<strong>JLink</strong>，</li>
+<li>一般默认参数不需要修改，点击<strong>Create</strong></li>
+<li><strong>F5</strong>启动调试，调试启动较慢，大概耗时10-20秒不等</li>
+</ul>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/jlink_debug.gif" srcset="/blog/img/loading.gif" lazyload alt="JLink调试"></p>
+<p>关于调试的更多用法，可以参考Linux搭建C开发环境的<sup id="fnref:4" class="footnote-ref"><a href="#fn:4" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Linux搭建C开发环境](https://blog.gogo.uno/2024/02/04/vscode-develop-c/)">[4]</span></a></sup><strong>第4点-调试入门</strong>，详细介绍了各类断点、监控变量、调用堆栈以及常用快捷键说明。</p>
+<blockquote>
+<p>由于EIDE独立安装了JLink，如果Cortex Debug使用的JLink-GDBServer不是EIDE的JLink，因此添加新设备的操作可能需要在其他JLink的安装路径再操作一遍。</p>
+</blockquote>
+<h2 id="3-DapLink烧录调试"><a href="#3-DapLink烧录调试" class="headerlink" title="3.DapLink烧录调试"></a>3.DapLink烧录调试</h2><h3 id="3-1-安装pyOCD"><a href="#3-1-安装pyOCD" class="headerlink" title="3.1 安装pyOCD"></a>3.1 安装pyOCD</h3><p>注意：<strong>Python3.12无法安装pyOCD</strong><sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Python3.12无法安装pyOCD](https://www.ezurio.com/support/faqs/i-am-having-problems-installing-pyocd-for-python)">[5]</span></a></sup>。Python3.10.x满足要求。pyOCD安装命令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">python -m pip install -U pyocd<br></code></pre></td></tr></table></figure>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/py_version.png" srcset="/blog/img/loading.gif" lazyload alt="Python以及pyOCD的版本"></p>
+<h3 id="3-2-烧录"><a href="#3-2-烧录" class="headerlink" title="3.2 烧录"></a>3.2 烧录</h3><div class="note note-info">
+            <p>使用<strong>pyOCD</strong>烧录固件，理论上兼容所有的DapLink。</p>
+          </div>
+<ul>
+<li>点击<strong>Flasher Configurations</strong>的切换按钮，确保烧录方式为<strong>pyOCD</strong></li>
+<li>选择<strong>Target Name</strong>为<strong>hc32f460xe</strong></li>
+<li>修改<strong>Download Speed</strong>为<strong>8M</strong></li>
+<li>点击<strong>Program Flash</strong>按钮尝试烧录，实测烧录速度比JLink快；同等硬件下也比Keil烧录快。</li>
+</ul>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/daplink_flash.gif" srcset="/blog/img/loading.gif" lazyload alt="DapLink烧录"></p>
+<h3 id="3-3-调试"><a href="#3-3-调试" class="headerlink" title="3.3 调试"></a>3.3 调试</h3><h4 id="3-3-1-安装OpenOCD"><a href="#3-3-1-安装OpenOCD" class="headerlink" title="3.3.1 安装OpenOCD"></a>3.3.1 安装OpenOCD</h4><p>点击<strong>Setup Utility Tools</strong>，选择<strong>OpenOCD</strong>，点击安装<br><img src="/blog/2024/09/04/vscode-hc32-develop/install_openocd.png" srcset="/blog/img/loading.gif" lazyload alt="安装OpenOCD"></p>
+<h4 id="3-3-2-新增目标配置"><a href="#3-3-2-新增目标配置" class="headerlink" title="3.3.2 新增目标配置"></a>3.3.2 新增目标配置</h4><p>增加target配置文件：比如在路径<code>C:\Users\Orionxer\.eide\tools\openocd_7a1adfbec_mingw32\share\openocd\scripts\target</code>中，新增<strong>hc32f46x.cfg</strong>文件，<strong>完整复制以下内容并保存</strong>。文件内容来源于羽名大佬<sup id="fnref:5" class="footnote-ref"><a href="#fn:5" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Python3.12无法安装pyOCD](https://www.ezurio.com/support/faqs/i-am-having-problems-installing-pyocd-for-python)">[5]</span></a></sup>，感谢🎉</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-9c51fa20" role="button" aria-expanded="false" aria-controls="collapse-9c51fa20">
+        <div class="fold-arrow">▶</div>hc32f460x.cfg
+      </div>
+      <div class="fold-collapse collapse" id="collapse-9c51fa20">
+        <div class="fold-content">
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs cfg">source [find target/swj-dp.tcl]<br>source [find mem_helper.tcl]<br><br># 设置基本环境<br>if &#123; [info exists CHIPNAME] &#125; &#123;<br>   set _CHIPNAME $CHIPNAME<br>&#125; else &#123;<br>   set _CHIPNAME HC32F460<br>&#125;<br><br>if &#123; [info exists ENDIAN] &#125; &#123;<br>   set _ENDIAN $ENDIAN<br>&#125; else &#123;<br>   set _ENDIAN little<br>&#125;<br><br>if &#123; [info exists WORKAREASIZE] &#125; &#123;<br>   set _WORKAREASIZE $WORKAREASIZE<br>&#125; else &#123;<br>   set _WORKAREASIZE 0x1000<br>&#125;<br><br>if &#123; [info exists CPUTAPID] &#125; &#123;<br>   set _CPUTAPID $CPUTAPID<br>&#125; else &#123;<br>   # set _CPUTAPID 0x2ba01477<br>   # set _CPUTAPID 0x4ba00477<br>   set _CPUTAPID 0x2ba01477<br>&#125;<br><br>swj_newdap $_CHIPNAME cpu -irlen 4 -ircapture 0x1 -irmask 0xf -expected-id $_CPUTAPID<br>dap create $_CHIPNAME.dap -chain-position $_CHIPNAME.cpu<br>set _TARGETNAME $_CHIPNAME.cpu<br>target create $_TARGETNAME cortex_m -endian $_ENDIAN -dap $_CHIPNAME.dap<br><br>$_TARGETNAME configure -work-area-phys 0x20000000 -work-area-size $_WORKAREASIZE -work-area-backup 0<br><br># 设置flash名<br>set _FLASHNAME $_CHIPNAME.bank1<br># flash bank $_FLASHNAME stm32f1x 0x08000000 0 0 0 $_TARGETNAME<br><br>proc test-test &#123; &#125; &#123;<br>    echo 12345<br>&#125;<br><br>adapter srst delay 100<br><br>reset_config srst_nogate<br><br>if &#123;![using_hla]&#125; &#123;<br>    # if srst is not fitted use SYSRESETREQ to<br>    # perform a soft reset<br>    debug_level 2<br>    cortex_m reset_config sysresetreq<br>    # cortex_m reset_config vectreset<br>&#125;<br><br>$_TARGETNAME configure -event examine-end &#123;<br>	# DBGMCU_CR |= DBG_WWDG_STOP | DBG_IWDG_STOP |<br>	#              DBG_STANDBY | DBG_STOP | DBG_SLEEP<br>   # echo 2222222<br>	# mmw 0xE0042004 0x00000307 0<br>&#125;<br><br>$_TARGETNAME configure -event trace-config &#123;<br>	# Set TRACE_IOEN; TRACE_MODE is set to async; when using sync<br>	# change this value accordingly to configure trace pins<br>	# assignment<br>   # echo 333333<br>	# mmw 0xE0042004 0x00000020 0<br>&#125;<br><br># mcu不支持软断点. 这时需要openocd启动时设置<br>#     软断点转为硬件断点, 实际参数有 hard|soft|disable<br>#     详细可以找相关文档 Server-Configuration.html#gdbbreakpointoverride<br>gdb_breakpoint_override hard<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/add_cfg.png" srcset="/blog/img/loading.gif" lazyload alt="新增目标配置"></p>
+<h4 id="3-3-3-生成调试配置"><a href="#3-3-3-生成调试配置" class="headerlink" title="3.3.3 生成调试配置"></a>3.3.3 生成调试配置</h4><div class="note note-warning">
+            <p>启动调试前自行确保Cortex Debug配置正确。</p>
+          </div>
+<ul>
+<li>EIDE中<strong>右键点击</strong>项目，选择<strong>Generate Debugger Configuration</strong>，选择<strong>OpenOCD</strong>，</li>
+<li><strong>Interface</strong>选择<strong>cmsis-dap-v1</strong></li>
+<li><strong>Target</strong>选择<strong>hc32f46x</strong></li>
+<li>一般默认参数不需要修改，点击<strong>Create</strong></li>
+<li><strong>F5</strong>启动调试，调试启动较慢，大概耗时10-20秒不等。如果已经存在JLink等其他调试配置，可以先注释以避免无法启动调试。</li>
+</ul>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/generate_openocd_cfg.png" srcset="/blog/img/loading.gif" lazyload alt="生成OpenOCD调试配置"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/openocd_debug.png" srcset="/blog/img/loading.gif" lazyload alt="OpenOCD启动调试"></p>
+<h4 id="3-3-4-优化调试速度"><a href="#3-3-4-优化调试速度" class="headerlink" title="3.3.4 优化调试速度"></a>3.3.4 优化调试速度</h4><p>成功进入调试后，根据gdbserver的log显示，其速度默认在100KHz；找到并修改<strong>cmsis-dap-v1.cfg</strong>文件：指定速度为8000KHz，即8MHz，能够显著提升进入调试的速度，实测启动调试耗时约<strong>4秒</strong>(与Keil的速度一致)，调试过程中没有延时。完整配置与路径如下：</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-05eef982" role="button" aria-expanded="false" aria-controls="collapse-05eef982">
+        <div class="fold-arrow">▶</div>cmsis-dap-v1.cfg
+      </div>
+      <div class="fold-collapse collapse" id="collapse-05eef982">
+        <div class="fold-content">
+          <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs cfg">#<br># CMSIS-DAP V1 (CMSIS-DAP Compliant Debugger)<br>#<br>adapter driver cmsis-dap<br>transport select swd<br>adapter speed 8000<br>cmsis_dap_backend hid<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/cmsis-dap-path.png" srcset="/blog/img/loading.gif" lazyload alt="cmsis-dap-v1.cfg路径"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/openocd_boost.gif" srcset="/blog/img/loading.gif" lazyload alt="优化调试速度"></p>
+<p><img src="/blog/2024/09/04/vscode-hc32-develop/debug_demo.png" srcset="/blog/img/loading.gif" lazyload alt="调试效果"></p>
+<p>关于更多FreeRTOS调试分析可以参考STM32-FreeRTOS移植与调试<sup id="fnref:7" class="footnote-ref"><a href="#fn:7" rel="footnote"><span class="hint--top hint--rounded" aria-label="[STM32-FreeRTOS移植与调试](https://blog.gogo.uno/2024/03/23/stm32-freertos/)">[7]</span></a></sup>的<strong>第3点-调试FreeRTOS</strong>和<strong>第4点-监控分析</strong></p>
+<div class="note note-warning">
+            <p>不选用PyOCD进行调试是因为实测调试速度特别慢，且重启芯片的时候无法再次停在main函数。</p>
+          </div>
+
+<h2 id="4-参考"><a href="#4-参考" class="headerlink" title="4.参考"></a>4.参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/13/vscode-stm32-develop-pro/">Windows搭建STM32开发环境-进阶篇</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://discuss.em-ide.com/blog/67-cortex-debug">cortex-debug 用法</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://em-ide.com/zh-cn/docs/intro/">Embedded IDE官方文档</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/02/04/vscode-develop-c/">Linux搭建C开发环境</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.ezurio.com/support/faqs/i-am-having-problems-installing-pyocd-for-python">Python3.12无法安装pyOCD</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://gitee.com/uyami/a-hc32-f460_-sdk">羽名&#x2F;aHC32F460_SDK</a>
+<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:7" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.gogo.uno/2024/03/23/stm32-freertos/">STM32-FreeRTOS移植与调试</a>
+<a href="#fnref:7" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Other/" class="category-chain-item">Other</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/VSCode/" class="print-no-link">#VSCode</a>
+      
+        <a href="/blog/tags/HC32/" class="print-no-link">#HC32</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>VSCode编译烧录调试HC32F460x</div>
+      <div>https://orionxer.github.io/blog/2024/09/04/vscode-hc32-develop/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年9月4日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/10/04/24-10-english/" title="24/Oct 每日英语">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">24/Oct 每日英语</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/09/02/24-09-english/" title="24/Sep 每日英语">
+                        <span class="hidden-mobile">24/Sep 每日英语</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,974 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在Win10下搭建VSCode+ESP32开发调试环境，实现串口以及JTAG烧录调试，包含一键自动编译烧录调试，实现优雅地开发ESP32。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VSCode搭建ESP32开发环境">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/01/27/vscode-esp32-develop/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在Win10下搭建VSCode+ESP32开发调试环境，实现串口以及JTAG烧录调试，包含一键自动编译烧录调试，实现优雅地开发ESP32。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/vscode-esp32-develop.png">
+<meta property="article:published_time" content="2024-01-26T18:38:30.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:57.176Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="VSCode">
+<meta property="article:tag" content="ESP32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/vscode-esp32-develop.png">
+  
+  
+  
+  <title>VSCode搭建ESP32开发环境 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/vscode-esp32-develop.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="VSCode搭建ESP32开发环境"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-27 02:38" pubdate>
+          2024年1月27日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">VSCode搭建ESP32开发环境</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>在Win10下搭建VSCode+ESP32开发调试环境，实现串口以及JTAG烧录调试，包含一键自动编译烧录调试，实现优雅地开发ESP32。本篇文章使用<strong>ESP32-S3</strong>模组进行测试，因为S3自带USB转JTAG调试功能；<strong>如果只使用串口烧录调试则所有ESP系列芯片通用</strong>。</p>
+          </div>
+
+<h2 id="1-硬件准备"><a href="#1-硬件准备" class="headerlink" title="1.硬件准备"></a>1.硬件准备</h2><ul>
+<li><code>ESP32-S3-WROOM</code>开发板(双Type-C接口：一个USB转串口，一个USB转JTAG)</li>
+<li>示波器，测量引脚输出波形</li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/s3_dev.png" srcset="/blog/img/loading.gif" lazyload alt="ESP32-S3-WROOM开发板"></p>
+<h2 id="2-VSCode安装ESP-IDF插件"><a href="#2-VSCode安装ESP-IDF插件" class="headerlink" title="2.VSCode安装ESP-IDF插件"></a>2.VSCode安装ESP-IDF插件</h2><h3 id="2-1-根据ESP-IDF插件提示安装环境"><a href="#2-1-根据ESP-IDF插件提示安装环境" class="headerlink" title="2.1 根据ESP-IDF插件提示安装环境"></a>2.1 根据ESP-IDF插件提示安装环境</h3><p>完全按照ESP-IDF的提示进行安装即可，基本上全自动，<strong>全程开启代理确保下载速度最优</strong></p>
+<ul>
+<li>选择侧边栏<code>ESP-IDF</code>选项卡</li>
+<li>选择<code>Configure ESP-IDF Extension</code></li>
+<li>选择<code>EXPRESS</code>(也可以根据个人实际情况选择安装模式)</li>
+<li>选择下载的服务器以及<code>ESP-IDF</code>的版本，一般默认选择最新的，安装路径需要注意：将所有<code>Administrator</code>替换为自己的英文用户名，比如<code>Orionxer</code>，<strong>尽量避免权限问题</strong></li>
+<li>慢慢等待安装结束，大约需要30分钟左右，VSCode会提示下载安装过程</li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/setup_mode.png" srcset="/blog/img/loading.gif" lazyload alt="选择安装模式"><br><img src="/blog/2024/01/27/vscode-esp32-develop/install.png" srcset="/blog/img/loading.gif" lazyload alt="选择下载服务器以及ESP-IDF的版本"></p>
+<h3 id="2-2-新建项目"><a href="#2-2-新建项目" class="headerlink" title="2.2 新建项目"></a>2.2 新建项目</h3><ul>
+<li>ESP-IDF选项卡侧边栏选择<code>Show Examples</code></li>
+<li>选择默认的<code>ESP-IDF</code>环境</li>
+<li>创建<code>blink</code>项目,选择项目文件夹以保存</li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/new_project.gif" srcset="/blog/img/loading.gif" lazyload alt="新建项目"></p>
+<h3 id="2-3-选择目标芯片"><a href="#2-3-选择目标芯片" class="headerlink" title="2.3 选择目标芯片"></a>2.3 选择目标芯片</h3><p>点击底部栏的<code>Set Espressif Target(IDF_TARGET)</code>选择目标芯片</p>
+<ul>
+<li>选择工程<code>blink</code></li>
+<li>选择<code>esps3</code></li>
+<li>选择<code>ESP32-S3 Chip (via built-in USB-JTAG)</code></li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/select_target.gif" srcset="/blog/img/loading.gif" lazyload alt="选择目标芯片"></p>
+<h3 id="2-4-编译项目"><a href="#2-4-编译项目" class="headerlink" title="2.4 编译项目"></a>2.4 编译项目</h3><p>点击底部栏的编译按钮，第一次编译的时间会稍长，后续如果修改了项目的<code>Configuration</code>(即menuconfig)也会导致编译时间变长。编译成功后会输出RAM&#x2F;ROM信息。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/compile.png" srcset="/blog/img/loading.gif" lazyload alt="编译项目"></p>
+<div class="note note-warning">
+            <p>如果VSCode在<code>c_cpp_properties.json</code>文件中提示<code>Cannot find &quot;${env:IDF_TOOLS_PATH}</code>等类似错误，<br>找到<code>compilerPath</code>键值对，将<code>config:idf.toolsPath</code>修改为<code>config:idf.toolsPathWin</code>即可</p>
+          </div>
+
+<h2 id="3-串口"><a href="#3-串口" class="headerlink" title="3.串口"></a>3.串口</h2><h4 id="3-1-烧录"><a href="#3-1-烧录" class="headerlink" title="3.1 烧录"></a>3.1 烧录</h4><p>使用串口烧录前需要将丝印<code>COM</code>接入电脑，正常情况下Win10会自动安装驱动，并识别出正确的端口、选择该端口，比如<code>COM8</code>，点击烧录。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/uart_flash_default.gif" srcset="/blog/img/loading.gif" lazyload alt="串口烧录"></p>
+<h4 id="3-2-监控"><a href="#3-2-监控" class="headerlink" title="3.2 监控"></a>3.2 监控</h4><p>点击监控按钮，<code>ESP-IDF</code>启动串口监控命令行界面，可以观察到每秒打印一个日志。快捷键<code>Ctrl + ]</code>退出串口监控。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/uart_monitor.gif" srcset="/blog/img/loading.gif" lazyload alt="串口监控"></p>
+<h4 id="3-3-一键编译烧录监控"><a href="#3-3-一键编译烧录监控" class="headerlink" title="3.3 一键编译烧录监控"></a>3.3 一键编译烧录监控</h4><p><code>ESP-IDF</code>针对串口方式，提供了一键编译烧录监控的按钮，方便快速调试验证。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/uart_build_flash_monitor.gif" srcset="/blog/img/loading.gif" lazyload alt="串口一键编译烧录监控"></p>
+<h4 id="3-4-提升烧录速度"><a href="#3-4-提升烧录速度" class="headerlink" title="3.4 提升烧录速度"></a>3.4 提升烧录速度</h4><p>在烧录过程中，如果不指定波特率，则烧录速度会默认为<code>460800bps</code>。可以通过<code>settings.json</code>文件修改键值对<code>&quot;idf.flashBaudRate&quot;</code>的值，提升烧录速度，最高速度取决于USB转串口芯片最大支持的波特率。</p>
+<h5 id="3-4-1-ESP32-S3"><a href="#3-4-1-ESP32-S3" class="headerlink" title="3.4.1 ESP32-S3"></a>3.4.1 ESP32-S3</h5><p>以<code>ESP32-S3-WROOM</code>开发板为例，板载<strong>CH343P</strong>USB转串口芯片，根据该芯片的数据手册，理论波特率最高能设置为<code>6Mbps</code><sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Ch343: 支持通讯波特率50bps～6Mbps](https://www.wch.cn/products/CH343.html)">[1]</span></a></sup>，修改为<code>4000000</code>即<code>4Mbps</code>可以烧录。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;idf.flashBaudRate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;4000000&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-dcdac752" role="button" aria-expanded="false" aria-controls="collapse-dcdac752">
+        <div class="fold-arrow">▶</div>settings.json示例
+      </div>
+      <div class="fold-collapse collapse" id="collapse-dcdac752">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;default&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.adapterTargetName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;esp32s3&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.openOcdConfigs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;board/esp32s3-builtin.cfg&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.flashType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;UART&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.portWin&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;COM8&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.flashBaudRate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;4000000&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;files.associations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;task.h&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;freertos.h&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;freertosconfig.h&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<div class="note note-warning">
+            <p>实测修改为<code>6000000</code>即<code>6Mbps</code>，无法烧录，待验证…</p>
+          </div>
+
+<h5 id="3-4-2-ESP32"><a href="#3-4-2-ESP32" class="headerlink" title="3.4.2 ESP32"></a>3.4.2 ESP32</h5><p>以<code>ESP-WROOM-32</code>开发板为例，板载<strong>CP2102</strong>的USB转串口芯片，根据该芯片的数据手册，理论波特率最高能设置为<code>1Mbps</code><sup id="fnref:2" class="footnote-ref"><a href="#fn:2" rel="footnote"><span class="hint--top hint--rounded" aria-label="[CP2102: Baud rates: 300 bps to 1 Mbps](https://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf)">[2]</span></a></sup>。实测修改为<code>1000000</code>即<code>1Mbps</code>，无法烧录，只是<code>921600bps</code>相当接近于<code>1Mbps</code>。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-attr">&quot;idf.flashBaudRate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;921600&quot;</span><br></code></pre></td></tr></table></figure>
+<p>保存并尝试烧录，可以看到终端提示烧录的速度是<code>921600</code><br><img src="/blog/2024/01/27/vscode-esp32-develop/change_baudrate.png" srcset="/blog/img/loading.gif" lazyload alt="修改波特率"></p>
+<h2 id="4-JTAG"><a href="#4-JTAG" class="headerlink" title="4.JTAG"></a>4.JTAG</h2><p><code>ESP32-S3</code>模组<strong>自带USB转JTAG</strong>功能，配合<code>OpenOCD</code>能够实现烧录调试功能。调试功能一般用于不方便串口打印的场景，比如中断函数；另外定位<code>HardFault</code>原因比如指针越界访问等问题也会更加精准。</p>
+<h3 id="4-1-更换驱动"><a href="#4-1-更换驱动" class="headerlink" title="4.1 更换驱动"></a>4.1 更换驱动</h3><p>将丝印<strong>USB</strong>的TypeC接口接入电脑。</p>
+<h4 id="4-1-1-下载Zadig"><a href="#4-1-1-下载Zadig" class="headerlink" title="4.1.1 下载Zadig"></a>4.1.1 下载Zadig</h4><p>进入<a target="_blank" rel="noopener" href="https://zadig.akeo.ie/">Zadig</a>软件官网下载，安装并打开。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/download_zadig.png" srcset="/blog/img/loading.gif" lazyload alt="下载Zadig"></p>
+<h4 id="4-1-2-选择接口"><a href="#4-1-2-选择接口" class="headerlink" title="4.1.2 选择接口"></a>4.1.2 选择接口</h4><ul>
+<li>点击<code>Options</code>，选择<code>List All Devices</code></li>
+<li>选择<code>USB JTAG/serial debug unit(Interface 0)</code>接口，注意一定要选择<strong>Interface 0</strong>接口</li>
+<li>目的驱动选择<code>USB Serial CDC</code></li>
+<li>点击Replace Driver</li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/replace_driver.png" srcset="/blog/img/loading.gif" lazyload alt="选择接口更换驱动"></p>
+<p>更换驱动成功后，重新插拔TypeC接口。设备管理器界面中，<code>Interface 0</code>出现在端口(COM和LPT)处，说明驱动更换成功。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/replace_driver_success.png" srcset="/blog/img/loading.gif" lazyload alt="驱动识别成功"></p>
+<div class="note note-info">
+            <p>该驱动更换仅针对特定的USB端口，如果下次接入的其他的USB端口，则需要再次更换驱动。</p>
+          </div>
+
+<h3 id="4-2-修改优化等级"><a href="#4-2-修改优化等级" class="headerlink" title="4.2 修改优化等级"></a>4.2 修改优化等级</h3><p>进入调试前，确保编译项目的<strong>优化等级为-OG</strong>，否则调试容易出现无法打断点以及断点位置偏移等问题。</p>
+<ul>
+<li>点击底部栏配置按钮(menuconfig)</li>
+<li>输入<code>optimization</code>，将<code>Size (-Os)</code>修改为<code>Size (-OG)</code></li>
+<li>点击<code>Save</code>，重新编译</li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/optimization.gif" srcset="/blog/img/loading.gif" lazyload alt="修改优化等级"></p>
+<h3 id="4-3-烧录"><a href="#4-3-烧录" class="headerlink" title="4.3 烧录"></a>4.3 烧录</h3><ul>
+<li>点击底部栏的烧录方式，选择<code>JTAG</code></li>
+<li>点击启动<code>OpenOCD</code>。如果<code>OpenOCD</code>启动失败可以尝试重启电脑。</li>
+<li>点击烧录，等待提示烧录成功。(启动<code>OpenOCD</code>等待几秒之后再开始烧录)</li>
+</ul>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/jtag_flash.gif" srcset="/blog/img/loading.gif" lazyload alt="JTAG烧录"></p>
+<div class="note note-primary">
+            <p>修改代码后，进入调试前必须<strong>编译</strong>并且<strong>下载</strong>，否则调试容易出现异常。</p>
+          </div>
+
+<h3 id="4-4-启动调试"><a href="#4-4-启动调试" class="headerlink" title="4.4 启动调试"></a>4.4 启动调试</h3>
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-9c51fa20" role="button" aria-expanded="false" aria-controls="collapse-9c51fa20">
+        <div class="fold-arrow">▶</div>适当修改blink_example_main.c以方便调试
+      </div>
+      <div class="fold-collapse collapse" id="collapse-9c51fa20">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">app_main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span><br>&#123;<br>    <span class="hljs-comment">/* Configure the peripheral according to the LED type */</span><br>    configure_led();<br>    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>        <span class="hljs-comment">// ESP_LOGI(TAG, &quot;Turning the LED %s!&quot;, s_led_state == true ? &quot;ON&quot; : &quot;OFF&quot;);</span><br>        blink_led();<br>        <span class="hljs-comment">/* Toggle the LED state */</span><br>        s_led_state = !s_led_state;<br>        <span class="hljs-comment">// vTaskDelay(CONFIG_BLINK_PERIOD / portTICK_PERIOD_MS);</span><br>        vTaskDelay(<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<p>重新编译烧录，在<code>blink_example_main.c</code>文件下按下<code>F5</code>尝试启动调试。一般VSCode会自动生成<code>luanch.json</code>文件配置，如果没有则复制以下的完整示例。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/jtag_debug.gif" srcset="/blog/img/loading.gif" lazyload alt="JTAG调试"></p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-05eef982" role="button" aria-expanded="false" aria-controls="collapse-05eef982">
+        <div class="fold-arrow">▶</div>luanch.json示例
+      </div>
+      <div class="fold-collapse collapse" id="collapse-05eef982">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;configurations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ESP-IDF Debug: Launch&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;espidf&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;request&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;launch&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-90469042" role="button" aria-expanded="false" aria-controls="collapse-90469042">
+        <div class="fold-arrow">▶</div>settings.json示例
+      </div>
+      <div class="fold-collapse collapse" id="collapse-90469042">
+        <div class="fold-content">
+          <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;C_Cpp.intelliSenseEngine&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;default&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.adapterTargetName&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;esp32s3&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.openOcdConfigs&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-string">&quot;board/esp32s3-builtin.cfg&quot;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.flashType&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;JTAG&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.portWin&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;COM8&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;idf.flashBaudRate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;4000000&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;files.associations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;task.h&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;freertos.h&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c&quot;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-attr">&quot;freertosconfig.h&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;c&quot;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<div class="note note-warning">
+            <p>实测JTAG调试经常启动失败，失败报错原因：<code>Debug adapter -&gt; Extension: DEBUG_ADAPTER_READY2CONNECT</code>。如果调试启动失败则多试几次，直至成功为止。暂未找到解决问题的办法。</p>
+          </div>
+
+<h3 id="4-5-波形测量"><a href="#4-5-波形测量" class="headerlink" title="4.5 波形测量"></a>4.5 波形测量</h3><h4 id="4-5-1-100Hz滴答"><a href="#4-5-1-100Hz滴答" class="headerlink" title="4.5.1 100Hz滴答"></a>4.5.1 100Hz滴答</h4><p><code>blink</code>项目默认配置了<code>GPIO48</code>为GPIO输出引脚，且FreeRTOS的滴答频率是100Hz，即中断时间是10ms。修改<code>Blink LED type</code>为<code>GPIO</code>，编译烧录，示波器测量<code>GPIO48</code>引脚，波形如下：</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/100hz.png" srcset="/blog/img/loading.gif" lazyload alt="100Hz滴答-翻转电平"></p>
+<p>根据上述代码分析，<code>vTaskDelay(1);</code>代表延迟一个滴答时间。理论上<code>GPIO48</code>在延迟10ms后会翻转电平。通过测量<strong>正脉宽</strong>参数可以验证该结论。</p>
+<h4 id="4-5-1-1KHz滴答"><a href="#4-5-1-1KHz滴答" class="headerlink" title="4.5.1 1KHz滴答"></a>4.5.1 1KHz滴答</h4><p>在不修改以上测试代码的前提下，修改项目配置的滴答频率为<code>1000Hz</code>，重新编译烧录，再次测量该引脚，此时<strong>正脉宽</strong>应该是1ms。此时<code>vTaskDelay(1);</code>依然代表延迟一个滴答时间，只是该滴答时间为1ms。</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/set_1khz.png" srcset="/blog/img/loading.gif" lazyload alt="设置FreeRTOS的滴答频率为1KHz"></p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/1Khz.png" srcset="/blog/img/loading.gif" lazyload alt="1KHz滴答-翻转电平"></p>
+<h2 id="5-快捷键"><a href="#5-快捷键" class="headerlink" title="5.快捷键"></a>5.快捷键</h2><p>合理使用快捷键能够有效提高效率，ESP-IDF的快捷键有点特殊，比如根据ESP-IDf的插件说明：编译项目快捷键是<code>Ctrl E B</code>，则按住<code>Ctrl + E</code>，<strong>松开</strong>，再按<code>B</code>，才能正确触发快捷键</p>
+<p><img src="/blog/2024/01/27/vscode-esp32-develop/shortcut.png" srcset="/blog/img/loading.gif" lazyload alt="快捷键"></p>
+<p>常用的快捷键参考</p>
+<style>
+.center 
+{
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">英文</th>
+<th align="center">中文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Ctrl + E + B</code></td>
+<td align="center">Build your project</td>
+<td align="center">编译</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl + E + F</code></td>
+<td align="center">Flash your project</td>
+<td align="center">烧录</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl + E + M</code></td>
+<td align="center">Monitor your device</td>
+<td align="center">监控</td>
+</tr>
+<tr>
+<td align="center"><code>Ctrl + E + D</code></td>
+<td align="center">Build, Flash and start a monitor on your device</td>
+<td align="center">编译烧录监控</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2 id="6-参考链接"><a href="#6-参考链接" class="headerlink" title="6.参考链接"></a>6.参考链接</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.wch.cn/products/CH343.html">Ch343: 支持通讯波特率50bps～6Mbps</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.silabs.com/documents/public/data-sheets/CP2102-9.pdf">CP2102: Baud rates: 300 bps to 1 Mbps</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32/api-guides/jtag-debugging/configure-ft2232h-jtag.html">配置 ESP-WROVER-KIT 上的 JTAG 接口</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/ESP32/" class="category-chain-item">ESP32</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/VSCode/" class="print-no-link">#VSCode</a>
+      
+        <a href="/blog/tags/ESP32/" class="print-no-link">#ESP32</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>VSCode搭建ESP32开发环境</div>
+      <div>https://orionxer.github.io/blog/2024/01/27/vscode-esp32-develop/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/02/01/24-02-english/" title="24/Feb 每日英语">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">24/Feb 每日英语</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/01/20/sw-5-features/" title="5.SW-特征成型与设计树">
+                        <span class="hidden-mobile">5.SW-特征成型与设计树</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

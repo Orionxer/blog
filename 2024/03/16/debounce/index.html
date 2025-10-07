@@ -1,0 +1,975 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="分别对比按键去抖的软硬件实现方案，使用STM32 + 示波器测试去抖效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="按键去抖">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/03/16/debounce/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="分别对比按键去抖的软硬件实现方案，使用STM32 + 示波器测试去抖效果">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/debounce.jpg">
+<meta property="article:published_time" content="2024-03-16T14:50:23.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:55.847Z">
+<meta property="article:author" content="Orionxer">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="STM32">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/debounce.jpg">
+  
+  
+  
+  <title>按键去抖 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/debounce.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="按键去抖"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-16 22:50" pubdate>
+          2024年3月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">按键去抖</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>由于机械按键的特性（例如轻触开关），在开关的瞬间，不会稳定地闭合或断开，一连串的抖动信号可以轻易被单片机捕获，因此单片机可能会误判按键状态。为了能够让单片机正确识别按键状态，必须对输入的按键信号进行去抖，分为<strong>硬件去抖</strong>和<strong>软件去抖</strong>。实际项目中最常用的去抖方案就是软件<strong>定时器</strong> + 硬件<strong>电容滤波</strong>。</p>
+          </div>
+
+<h2 id="1-抖动波形"><a href="#1-抖动波形" class="headerlink" title="1.抖动波形"></a>1.抖动波形</h2><div class="note note-primary">
+            <p>正常人类操作按键的时间约几百毫秒到几秒不等，而按键的抖动信号的持续时间约<strong>5ms到20ms</strong>。按键的闭合以及松开的瞬间均会产生抖动信号。</p>
+          </div>
+
+<p><img src="/blog/2024/03/16/debounce/bounce.png" srcset="/blog/img/loading.gif" lazyload alt="按键抖动波形"></p>
+<p>按键在空闲时(稳定松开状态)默认高电平，以下分析<strong>上升沿</strong>：按键在按下状态，松开瞬间的波形，也就是从低电平变为高电平的瞬间。</p>
+<h2 id="2-创建工程"><a href="#2-创建工程" class="headerlink" title="2.创建工程"></a>2.创建工程</h2><p>STM32CubeMX创建工程，设置<code>PA2</code>为<code>GPIO_EXTI2</code>(配置为外部中断触发)，同时设置<code>PC13</code>作为GPIO输出。</p>
+<p><img src="/blog/2024/03/16/debounce/init_project.png" srcset="/blog/img/loading.gif" lazyload alt="初始化工程"></p>
+<p><img src="/blog/2024/03/16/debounce/config_interrupt.png" srcset="/blog/img/loading.gif" lazyload alt="配置触发中断条件"></p>
+<p>生成工程并导入到<code>EIDE</code>中，在<code>/* USER CODE BEGIN 4 */</code>代码块之间插入代码，意思是在GPIO的输入中断里切换<code>PC13</code>的电平（切换LED灯显示），编译烧录到STM32开发板中</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-8f7bdefe" role="button" aria-expanded="false" aria-controls="collapse-8f7bdefe">
+        <div class="fold-arrow">▶</div>USER CODE BEGIN 4
+      </div>
+      <div class="fold-collapse collapse" id="collapse-8f7bdefe">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">HAL_GPIO_EXTI_Callback</span><span class="hljs-params">(<span class="hljs-type">uint16_t</span> GPIO_Pin)</span><br>&#123;<br>    <span class="hljs-comment">// 判断产生中断的引脚</span><br>    <span class="hljs-keyword">if</span> (GPIO_Pin == GPIO_PIN_2)<br>    &#123;<br>        <span class="hljs-comment">// 切换LED灯状态</span><br>        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<h2 id="3-波形分析"><a href="#3-波形分析" class="headerlink" title="3.波形分析"></a>3.波形分析</h2><p>将一个轻触开关的一端接入<code>PA2</code>，另一端接入<code>GND</code>，多次按下按键，观察LED状态，发现不能每次都稳定地切换LED灯状态。将示波器接入<code>PA2</code>，参数设置如下，开启单次触发，观察波形不难看出在按键松开的过程中发生了多次抖动</p>
+<style>
+.center 
+{
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">触发类型</th>
+<th align="center">触发方式</th>
+<th align="center">时基</th>
+<th align="center">幅值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">上升沿</td>
+<td align="center">常规</td>
+<td align="center">100uS</td>
+<td align="center">1V</td>
+</tr>
+</tbody></table>
+</div>
+
+<p><img src="/blog/2024/03/16/debounce/osc_bounce.bmp" srcset="/blog/img/loading.gif" lazyload alt="按键实际抖动波形"></p>
+<h2 id="4-软件去抖"><a href="#4-软件去抖" class="headerlink" title="4.软件去抖"></a>4.软件去抖</h2><h3 id="4-1-延时"><a href="#4-1-延时" class="headerlink" title="4.1 延时"></a>4.1 延时</h3><p>延时的方式相当直观简单，在主循环中，只要检测到<code>PA2</code>为低电平，也就是按键按下，<strong>延迟10ms再次检测</strong>是否为低电平，如果是说明按键按下。</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-dcdac752" role="button" aria-expanded="false" aria-controls="collapse-dcdac752">
+        <div class="fold-arrow">▶</div> USER CODE BEGIN 3
+      </div>
+      <div class="fold-collapse collapse" id="collapse-dcdac752">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 如果检测到低电平，即按键按下</span><br><span class="hljs-keyword">if</span> (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET)<br>&#123;<br>    <span class="hljs-comment">// 延时10ms</span><br>    HAL_Delay(<span class="hljs-number">10</span>);<br>    <span class="hljs-comment">// 再判断一次是否为低电平</span><br>    <span class="hljs-keyword">if</span> (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET)<br>    &#123;<br>        <span class="hljs-comment">// 切换LED显示状态</span><br>        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);<br>        <span class="hljs-comment">// 等待按键松开</span><br>        <span class="hljs-keyword">while</span> (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<p><img src="/blog/2024/03/16/debounce/delay.png" srcset="/blog/img/loading.gif" lazyload alt="延时判断代码"></p>
+<div class="note note-warning">
+            <p>虽然延时判断的方式简单有效，但是会极大影响系统的实时性（系统在延时期间无法处理其他任务）。正常情况下不会应用到实际项目中，除非是简单验证功能或者项目没有实时性的要求。</p>
+          </div>
+
+<h3 id="4-2-定时器"><a href="#4-2-定时器" class="headerlink" title="4.2 定时器"></a>4.2 定时器</h3><p>STM32CubeMX添加定时器<code>TIM1</code>，参数如下。定时器中断去抖的本质上就是检测在某一段时间内是否有连续相同的电平状态。<br><img src="/blog/2024/03/16/debounce/tim1.png" srcset="/blog/img/loading.gif" lazyload alt="定时器TIM1配置"><br><img src="/blog/2024/03/16/debounce/update_interrupt.png" srcset="/blog/img/loading.gif" lazyload alt="启用TIM1中断"></p>
+<p>以下函数均在<code>main.c</code>文件中实现</p>
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-6ae3e036" role="button" aria-expanded="false" aria-controls="collapse-6ae3e036">
+        <div class="fold-arrow">▶</div>USER CODE BEGIN PM
+      </div>
+      <div class="fold-collapse collapse" id="collapse-6ae3e036">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> PRESS_STATE 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> RELEASE_STATE 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DEBOUNCE_TIME 25</span><br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-9c51fa20" role="button" aria-expanded="false" aria-controls="collapse-9c51fa20">
+        <div class="fold-arrow">▶</div>USER CODE BEGIN PV
+      </div>
+      <div class="fold-collapse collapse" id="collapse-9c51fa20">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> old_btn_state = <span class="hljs-number">0</span>;<br><span class="hljs-type">int</span> new_btn_state = <span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-05eef982" role="button" aria-expanded="false" aria-controls="collapse-05eef982">
+        <div class="fold-arrow">▶</div>USER CODE BEGIN 2
+      </div>
+      <div class="fold-collapse collapse" id="collapse-05eef982">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">HAL_TIM_Base_Start_IT(&amp;htim1);<br><span class="hljs-comment">// 按键状态 初始化</span><br>old_btn_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2);<br>new_btn_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2);<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-90469042" role="button" aria-expanded="false" aria-controls="collapse-90469042">
+        <div class="fold-arrow">▶</div>USER CODE BEGIN 3
+      </div>
+      <div class="fold-collapse collapse" id="collapse-90469042">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (old_btn_state != new_btn_state)<br>&#123;<br>    <span class="hljs-comment">// ** 此处可以执行耗时操作</span><br>    <span class="hljs-comment">// 如果按键按下</span><br>    <span class="hljs-keyword">if</span> (new_btn_state == PRESS_STATE)<br>    &#123;<br>        <span class="hljs-comment">// TODO VSCode 添加日志点</span><br>        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-comment">// 按键松开</span><br>    &#123;<br>        <span class="hljs-comment">// TODO VSCode 添加日志点</span><br>    &#125;<br>    <span class="hljs-comment">// 更新按键状态</span><br>    old_btn_state = new_btn_state;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="fold">
+      <div class="fold-title fold-info collapsed" data-toggle="collapse" href="#collapse-738764b7" role="button" aria-expanded="false" aria-controls="collapse-738764b7">
+        <div class="fold-arrow">▶</div>USER CODE BEGIN 4
+      </div>
+      <div class="fold-collapse collapse" id="collapse-738764b7">
+        <div class="fold-content">
+          <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">button_scan</span><span class="hljs-params">(<span class="hljs-type">int</span> *state)</span><br>&#123;<br>    <span class="hljs-comment">// 按下时长</span><br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> press_time = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 松开时长</span><br>    <span class="hljs-type">static</span> <span class="hljs-type">int</span> release_time = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 如果读取到低电平</span><br>    <span class="hljs-keyword">if</span> (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2) == GPIO_PIN_RESET)<br>    &#123;<br>        <span class="hljs-comment">// 清零松开时长</span><br>        release_time = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 累计按下时长</span><br>        press_time++;<br>        <span class="hljs-comment">// 如果定时器检测到连续25ms都是低电平，说明按键按下状态有效</span><br>        <span class="hljs-keyword">if</span> (press_time &gt;= DEBOUNCE_TIME)<br>        &#123;<br>            *state = PRESS_STATE;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-comment">// 如果读取到高电平</span><br>    &#123;<br>        <span class="hljs-comment">// 清零按下时长</span><br>        press_time = <span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// 累计松开时长</span><br>        release_time++;<br>        <span class="hljs-comment">// 如果定时器检测到连续25ms都是高电平，说明按键松开状态有效</span><br>        <span class="hljs-keyword">if</span> (release_time &gt;= DEBOUNCE_TIME)<br>        &#123;<br>            *state = RELEASE_STATE;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">HAL_TIM_PeriodElapsedCallback</span><span class="hljs-params">(TIM_HandleTypeDef *htim)</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (htim == &amp;htim1)<br>    &#123;<br>        <span class="hljs-comment">// 判断并更新按键状态</span><br>        button_scan(&amp;new_btn_state);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+
+<h2 id="5-硬件去抖"><a href="#5-硬件去抖" class="headerlink" title="5.硬件去抖"></a>5.硬件去抖</h2><h3 id="5-1-电容滤波"><a href="#5-1-电容滤波" class="headerlink" title="5.1 电容滤波"></a>5.1 电容滤波</h3><div class="note note-primary">
+            <p>最常见的硬件去抖方式是电容滤波，给按键并联一个电容和串联一个电阻，利用电容的充放电特性实现一定程度的滤波。</p>
+          </div>
+
+<p>以电容取值100nF，电阻取值10KΩ为例，原理图如下，将示波器探头接入<code>PA2</code>，观察按键松开时的波形</p>
+<p><img src="/blog/2024/03/16/debounce/schematic.png" srcset="/blog/img/loading.gif" lazyload alt="电容滤波原理图"></p>
+<p><img src="/blog/2024/03/16/debounce/capacitance.bmp" srcset="/blog/img/loading.gif" lazyload alt="电容滤波结果"></p>
+<p>底部的测量参数<strong>上升沿</strong>1.524ms，实际从低电平爬升至高电平需要3-4ms左右，因此电容的取值不能过大，否则爬升时间太长可能会影响按键的有效判断。</p>
+<h3 id="5-2-RS触发器"><a href="#5-2-RS触发器" class="headerlink" title="5.2 RS触发器"></a>5.2 RS触发器</h3><div class="note note-primary">
+            <p>RS触发器就是使用两个<strong>与非门</strong>的级联，其中一个与非门的输出作为另一个与非门的输入，描述方法是现态$Q^{n}$和次态$Q^{n+1}$，通常用于没有MCU的场合，使用较少。</p>
+          </div>
+
+<p>单击此处可以<a target="_blank" rel="noopener" href="http://scratch.trtos.com/circuitjs.html?cct=$+1+0.000005+20.712724888983452+54+5+43%0A151+160+80+416+80+0+2+5+5%0A151+160+256+416+256+0+2+5+5%0Ar+416+80+496+80+0+1000%0Ag+496+80+544+80+0%0Aw+112+304+112+320+0%0Av+112+448+112+384+0+0+40+5+0+0+0.5%0Ag+112+448+112+496+0%0AS+-208+176+-112+176+0+0+false+0+2%0Ag+-208+176+-240+176+0%0Ar+112+320+112+384+0+1000%0Aw+112+304+112+272+0%0Aw+-48+272+-48+192+0%0Aw+-48+192+-112+192+0%0Ar+112+-32+112+32+0+1000%0Av+112+-112+112+-32+0+0+40+5+0+0+0.5%0Ag+112+-112+112+-144+0%0Aw+112+272+-48+272+0%0Aw+112+32+112+64+0%0Aw+112+64+-48+64+0%0Aw+-48+64+-48+160+0%0Aw+-48+160+-112+160+0%0Aw+160+64+112+64+0%0Aw+160+272+112+272+0%0Aw+160+96+160+144+0%0Aw+160+240+160+208+0%0Aw+160+144+416+208+0%0Aw+416+208+416+256+0%0Aw+160+208+400+128+0%0Aw+400+128+400+80+0%0Ao+2+64+0+4098+5+0.05+0+2+2+3%0A">在线模拟RS触发器</a>按键效果，单击切换开关，观察底部的示波器波形，示意图如下</p>
+<p><img src="/blog/2024/03/16/debounce/rs_schematic.png" srcset="/blog/img/loading.gif" lazyload alt="模拟RS触发器"></p>
+<p>根据与非门的先与后非的运算规则，<strong>只要输入0，一定输出1</strong>，真值表如下</p>
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">R输入</th>
+<th align="center">S输入</th>
+<th align="center">Q输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+</div>
+
+<ul>
+<li><em>当R1稳定连接</em>，<code>R1 = 0</code>，则S2一定稳定断开(单刀双掷开关不能可能同时导通), <code>S2 = 1</code>；根据与非门规则：<code>Q1 = 1</code>；根据图中R2与Q1直连，因此<code>R2 = Q1 = 1</code>, 因此<code>Q2 = 0</code>；S1与Q2直连，因此<code>S1 = Q2 = 0</code></li>
+<li><em>当R1开始断开</em>, R1状态不稳定，随机1或0，但是因为且S2状态不变，<code>S1 = 0</code>也不变，因此Q1状态不变<code>Q1 = 1</code></li>
+<li><em>当R1完全断开</em>，<code>R1 = 1</code>，Q1保持</li>
+<li><em>当S2开始连接</em>，S2状态不稳定，随机1或0；当S2第一次等于0，则<code>Q2 = 1</code>，<code>S1 = Q2 = 1</code>，因为R1稳定断开<code>R1 = 1</code>，因此<code>Q1 = 0</code>，<code>R2 = Q1 = 0</code>，后续就算是S2再变成1，因为R2已经稳定，因此Q1稳定</li>
+<li><em>当S2稳定连接</em>，<code>S2 = 0</code>，Q1不变<code>Q1 = 0</code></li>
+</ul>
+<div class="note note-info">
+            <p>按照目前按键的生产工艺，抖动的情况已经有比较好的改善，甚至有些品质较好的按键都已经不会产生抖动信号。<br>另外，有一些单片机在其GPIO功能上就内置了按键去抖功能，在初始化GPIO输入的时候，设置结构体的<code>deboune</code>成员变量为<strong>10ms</strong>即可。相对与自行实现的按键去抖方案，不仅实现起来简单，而且还节省一个定时器资源。</p>
+          </div>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62213694/article/details/124557870">HAL库 STM32CubeMX—-外部中断与按键中断</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://c.miaowlabs.com/A22.html">Timer 与按键消抖的应用</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/STM32/" class="category-chain-item">STM32</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/C-C/" class="print-no-link">#C/C++</a>
+      
+        <a href="/blog/tags/STM32/" class="print-no-link">#STM32</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>按键去抖</div>
+      <div>https://orionxer.github.io/blog/2024/03/16/debounce/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/03/24/stm32-freertos/" title="STM32-FreeRTOS移植与调试">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">STM32-FreeRTOS移植与调试</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/03/02/stm32-uart/" title="STM32-串口USART">
+                        <span class="hidden-mobile">STM32-串口USART</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

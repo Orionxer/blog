@@ -1,0 +1,967 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/images/ORIONXER-LOGO-128.jpg">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Orionxer">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="介绍如何优雅的使用Clash代理：包含自定义代理规则、局域网设备代理、虚拟网卡等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clash快速入门到精通">
+<meta property="og:url" content="https://orionxer.github.io/blog/2024/03/26/clash/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="介绍如何优雅的使用Clash代理：包含自定义代理规则、局域网设备代理、虚拟网卡等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://orionxer.github.io/blog/images/clash.jpg">
+<meta property="article:published_time" content="2024-03-26T11:28:55.000Z">
+<meta property="article:modified_time" content="2025-10-03T03:09:55.825Z">
+<meta property="article:author" content="Orionxer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://orionxer.github.io/blog/images/clash.jpg">
+  
+  
+  
+  <title>Clash快速入门到精通 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"orionxer.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"moVQN4giVv32OljbfqT4IPmf-MdYXbMMI","app_key":"Vc7crpMyP5RnDw60595JtyaO","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Orionxer&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/todo/" target="_self">
+                <i class="iconfont icon-book"></i>
+                <span>待办</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/images/clash.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Clash快速入门到精通"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-26 19:28" pubdate>
+          2024年3月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> 次
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">Clash快速入门到精通</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <div class="note note-success">
+            <p>代理也可以叫劫持，本质上就是域名解析，通过将请求转发到指定的服务器(通常是海外)来访问被大陆封禁的服务。比如浏览器访问谷歌网站，这是最常见的是应用层HTTP代理。Clash内置规则分流系统，能够自定义代理规则；局域网设备代理可以让同一局域网的设备实现代理而无需在每一台设备上安装Clash；虚拟网卡可以从物理层实现代理。</p>
+          </div> 
+
+<h2 id="1-代理规则"><a href="#1-代理规则" class="headerlink" title="1.代理规则"></a>1.代理规则</h2><p>通过<a target="_blank" rel="noopener" href="https://docs.gtk.pw/">Clash for Windows 代理工具使用说明</a>快速了解Clash</p>
+<h3 id="1-1-代理-Proxies"><a href="#1-1-代理-Proxies" class="headerlink" title="1.1 代理(Proxies)"></a>1.1 代理(Proxies)</h3><p>常见的代理方式有三种：</p>
+<ul>
+<li>全局(Global)： 所有请求<strong>都代理</strong></li>
+<li>规则(Rule): 请求根据配置文件的规则进行<strong>部分代理</strong>，例如：国内网站不走代理，国外网站走代理</li>
+<li>直连(Direct): 所有请求<strong>都不代理</strong></li>
+</ul>
+<p><img src="/blog/2024/03/26/clash/proxy_way.png" srcset="/blog/img/loading.gif" lazyload alt="常见代理方式"></p>
+<h3 id="1-2-配置-Profiles"><a href="#1-2-配置-Profiles" class="headerlink" title="1.2 配置(Profiles)"></a>1.2 配置(Profiles)</h3><p>日常使用最多的配置规则是<code>DOMAIN-SUFFIX</code>域名后缀匹配以及<code>DOMAIN-KEYWORD</code>域名关键字匹配</p>
+<h4 id="1-2-1-DOMAIN-SUFFIX"><a href="#1-2-1-DOMAIN-SUFFIX" class="headerlink" title="1.2.1 DOMAIN-SUFFIX"></a>1.2.1 DOMAIN-SUFFIX</h4><p>域名后缀匹配的意思是请求中的<strong>一级域名等于预设的域名</strong>，则执行代理。比如指定域名<code>google.com</code>的配置为<code>DOMAIN-SUFFIX</code>：</p>
+<style>
+.center 
+{
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">完整域名</th>
+<th align="center">一级域名</th>
+<th align="center">后缀匹配结果</th>
+<th align="center">是否代理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a></td>
+<td align="center">google.com</td>
+<td align="center">匹配</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center">images.google.com</td>
+<td align="center">google.com</td>
+<td align="center">匹配</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.googleapis.com/">www.googleapis.com</a></td>
+<td align="center">googleapis.com</td>
+<td align="center">不匹配</td>
+<td align="center">否</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.google.com.hk/">www.google.com.hk</a></td>
+<td align="center">google.com.hk</td>
+<td align="center">不匹配</td>
+<td align="center">否</td>
+</tr>
+</tbody></table>
+</div>
+
+<h4 id="1-2-2-DOMAIN-KEYWORD"><a href="#1-2-2-DOMAIN-KEYWORD" class="headerlink" title="1.2.2 DOMAIN-KEYWORD"></a>1.2.2 DOMAIN-KEYWORD</h4><p>域名关键字匹配很简单，只要请求中的<strong>域名中包含预设的域名</strong>，则执行代理。比如指定<code>google</code>的配置为<code>DOMAIN-KEYWORD</code></p>
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">完整域名</th>
+<th align="center">关键字包含结果</th>
+<th align="center">是否代理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a></td>
+<td align="center">包含</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.googleapis.com/">www.googleapis.com</a></td>
+<td align="center">包含</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://www.google.co.jp/">www.google.co.jp</a></td>
+<td align="center">包含</td>
+<td align="center">是</td>
+</tr>
+</tbody></table>
+</div>
+
+<h2 id="2-添加订阅"><a href="#2-添加订阅" class="headerlink" title="2.添加订阅"></a>2.添加订阅</h2><p>一般的机场会提供可以直接订阅的链接，复制到Clash导入。</p>
+<p><img src="/blog/2024/03/26/clash/download_clash.png" srcset="/blog/img/loading.gif" lazyload alt="添加订阅"></p>
+<p>主界面开启<strong>系统代理</strong>，正常情况下浏览器就可以访问谷歌了</p>
+<p><img src="/blog/2024/03/26/clash/enable_proxy.png" srcset="/blog/img/loading.gif" lazyload alt="开启系统代理"></p>
+<p><img src="/blog/2024/03/26/clash/google_http.png" srcset="/blog/img/loading.gif" lazyload alt="浏览器访问谷歌"></p>
+<h2 id="3-自定义代理"><a href="#3-自定义代理" class="headerlink" title="3.自定义代理"></a>3.自定义代理</h2><div class="note note-primary">
+            <p>Clash会包含基础的代理规则，也可以自行订阅代理规则，通常这些代理规则足够覆盖日常使用。如果某个域名没有被代理但是实际上被墙了，则临时开启<strong>全局代理</strong>是解决问题的最快方式。但最优解是将该域名加入自定义的代理规则，不然频繁切换代理策略会相当繁琐。</p>
+          </div>
+
+<p>如果是在Clash的<strong>配置</strong>标签页修改某个域名的代理规则，虽然设置后能够有效代理，但是一旦<strong>点击了更新的按钮，则代理规则会失效</strong>。</p>
+<p><img src="/blog/2024/03/26/clash/once_proxy.png" srcset="/blog/img/loading.gif" lazyload alt="仅单次生效的代理规则"></p>
+<p>真正永久有效修改代理规则需要在<strong>设置</strong>标签页的<strong>预处理配置文件</strong>中修改，点击编辑按钮后，Clash会打开编辑器，复制以下的示例配置并根据自己的实际情况修改，保存后退出，<strong>重启Clash</strong>。</p>
+<p><img src="/blog/2024/03/26/clash/eternal_proxy.png" srcset="/blog/img/loading.gif" lazyload alt="永久生效代理规则"></p>
+<p>将域名<code>microsoft.com</code>、<code>office.com</code>、<code>office.net</code>以<code>DOMAIN-SUFFIX</code>的代理方式加入到<code>FreeGecko</code>的代理规则中，<strong>将url替换成自己的订阅链接</strong>，如果有需要添加的规则，继续往下追加即可(注意缩进，需要符合<code>yaml</code>语法)</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs yml"><span class="hljs-attr">parsers:</span> <span class="hljs-comment"># array</span><br><span class="hljs-bullet">-</span> <span class="hljs-attr">url:</span> <span class="hljs-string">http://subscribed_url</span><br>  <span class="hljs-attr">yaml:</span><br>    <span class="hljs-attr">prepend-rules:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">DOMAIN-SUFFIX,microsoft.com,FreeGecko</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">DOMAIN-SUFFIX,office.com,FreeGecko</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">DOMAIN-SUFFIX,office.net,FreeGecko</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/blog/2024/03/26/clash/proxy_success.png" srcset="/blog/img/loading.gif" lazyload alt="代理规则修改成功"></p>
+<div class="note note-info">
+            <p>如果在使用Microsoft的TODO List发现总是无法同步数据，查看Clash的日志就能发现在同步数据的期间访问了和<code>office.com</code>和<code>office.net</code>，这两个域名在不加入代理的情况下不一定能够解析成功。</p>
+          </div>
+
+<h2 id="4-局域网连接"><a href="#4-局域网连接" class="headerlink" title="4.局域网连接"></a>4.局域网连接</h2><p>Clash的<strong>允许局域网连接</strong>功能可以让处于同一个局域网下的所有设备实现代理，只需要在任意一台设备上部署好Clash并开放端口。以下以iPhone实现代理为例，需要确保iPhone与电脑处于同一局域网下：</p>
+<ul>
+<li>打开Clash主界面，点击左侧<strong>常规</strong>选项卡</li>
+<li>确保<strong>允许局域网连接</strong>处于启用状态且<strong>端口</strong>设置为<code>7890</code></li>
+<li>查询本机<strong>内网IP地址</strong>，假设查询到<code>192.168.100.38</code></li>
+<li>iPhone进入无线局域网设置，点击已连接WiFi的ℹ符号</li>
+<li>往下滑动点击<strong>HTTP代理</strong></li>
+<li>点击手动，<strong>服务器</strong>填<code>192.168.100.38</code>，<strong>端口</strong>填<code>7890</code>，点击右上角<strong>存储</strong>按钮</li>
+<li>打开浏览器访问谷歌，iPhone内网代理成功</li>
+</ul>
+<p><img src="/blog/2024/03/26/clash/enable_lan.png" srcset="/blog/img/loading.gif" lazyload alt="启用局域网连接"></p>
+<div class="group-image-container"><div class="group-image-row"><div class="group-image-wrap"><img src="/blog/images/clash/wifi_info.png" srcset="/blog/img/loading.gif" lazyload alt="选择WiFi信息"></div><div class="group-image-wrap"><img src="/blog/images/clash/set_proxy.png" srcset="/blog/img/loading.gif" lazyload alt="选择HTTP代理"></div><div class="group-image-wrap"><img src="/blog/images/clash/proxy_ip_port.png" srcset="/blog/img/loading.gif" lazyload alt="设置并保存内网代理地址和端口"></div></div><div class="group-image-row"><div class="group-image-wrap"><img src="/blog/images/clash/google.png" srcset="/blog/img/loading.gif" lazyload alt="iPhone浏览器成功访问谷歌"></div></div></div>
+
+<h2 id="5-UWP网络限制"><a href="#5-UWP网络限制" class="headerlink" title="5.UWP网络限制"></a>5.UWP网络限制</h2><p><strong>解除UWP网络限制</strong>一般用于解决微软商店无法访问的情况<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Microsoft Store打不开，最好的解决办法](https://zhuanlan.zhihu.com/p/343342776)">[1]</span></a></sup>，其他服务以及应用同理，操作步骤如下：</p>
+<ul>
+<li>打开Clash主界面，点击左侧<strong>常规</strong>选项卡</li>
+<li>找到解除UWP网络限制，点击<strong>启动助手</strong></li>
+<li>往下滑动找到并<strong>选中</strong><code>Microsoft Store</code>(可以顺便把微软相关的应用都选中)</li>
+<li>点击<strong>Save Changes</strong>保存，重新打开微软商店</li>
+</ul>
+<p><img src="/blog/2024/03/26/clash/uwp_microsoft.png" srcset="/blog/img/loading.gif" lazyload alt="解除微软商店的UWP网络限制"></p>
+<p><img src="/blog/2024/03/26/clash/microsoft_success.png" srcset="/blog/img/loading.gif" lazyload alt="成功访问微软商店"></p>
+<h2 id="6-TUN模式"><a href="#6-TUN模式" class="headerlink" title="6.TUN模式"></a>6.TUN模式</h2><div class="note note-primary">
+            <p>Clash提供了一个TUN模式，也就是虚拟网卡模式，能够让整个网络环境从物理层就实现代理，<strong>网卡级代理</strong>。比如可以本机可以PING通谷歌，或者WSL终端环境的代理。</p>
+          </div>
+
+<p>TUN模式打开需要安装服务且Clash会自动重启，启动成功后，系统的网络接入方式就是Clash虚拟的网卡</p>
+<p><img src="/blog/2024/03/26/clash/enable_tun.png" srcset="/blog/img/loading.gif" lazyload alt="启动TUN模式"></p>
+<div class="center">
+
+<table>
+<thead>
+<tr>
+<th align="center">代理类型</th>
+<th align="center">OSI网络层</th>
+<th align="center">网络名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">浏览器访问谷歌</td>
+<td align="center">第七层</td>
+<td align="center">应用层</td>
+</tr>
+<tr>
+<td align="center">长城防火墙拦截</td>
+<td align="center">第三层</td>
+<td align="center">网络层</td>
+</tr>
+<tr>
+<td align="center">虚拟网卡</td>
+<td align="center">第一层</td>
+<td align="center">物理层</td>
+</tr>
+</tbody></table>
+</div>
+
+<p>前面提到的访问谷歌网站，浏览器使用HTTP方式访问谷歌，HTTP属于应用层协议；长城防火墙的拦截方式主要是污染DNS或者封禁IP，使域名无法解析到有效的IP或者使IP失效；而虚拟网卡是在第一层就实现了代理，也就是物理层。</p>
+<p>简单来说，只开启Clash代理的情况下，可以访问谷歌，但是无法Ping通谷歌的域名；如果打开Clash的TUN模式，也就是通过虚拟网卡访问谷歌，也就是可以Ping通。以<code>google.com</code>域名为例，使用WSL执行PING命令，分别测试TUN模式关闭与打开的结果</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">ping google.com<br></code></pre></td></tr></table></figure>
+
+<p><img src="/blog/2024/03/26/clash/ping_tun_off.png" srcset="/blog/img/loading.gif" lazyload alt="关闭TUN模式的PING结果"></p>
+<p><img src="/blog/2024/03/26/clash/ping_tun_on.png" srcset="/blog/img/loading.gif" lazyload alt="打开TUN模式的PING结果"></p>
+<h3 id="6-1-IP定位验证"><a href="#6-1-IP定位验证" class="headerlink" title="6.1 IP定位验证"></a>6.1 IP定位验证</h3><p>根据<a target="_blank" rel="noopener" href="https://ip-api.com/docs/api:json">IP Geolocation</a>文档，客户端尝试请求该API接口<code>ip-api.com/json</code>，如果不指定IP，则该接口会根据客户端的IP地址进行定位并返回相关结果。</p>
+<blockquote>
+<p>If you don’t supply a query the current IP address will be used.</p>
+</blockquote>
+<p>WSL终端测试命令，分别测试TUN模式关闭与打开的结果</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">http ip-api.com/json<br></code></pre></td></tr></table></figure>
+
+<p><img src="/blog/2024/03/26/clash/ip_tun_off.png" srcset="/blog/img/loading.gif" lazyload alt="关闭TUN模式的IP定位结果"></p>
+<p><img src="/blog/2024/03/26/clash/ip_tun_on.png" srcset="/blog/img/loading.gif" lazyload alt="打开TUN模式的IP定位结果"></p>
+<h3 id="6-2-TCP握手验证"><a href="#6-2-TCP握手验证" class="headerlink" title="6.2 TCP握手验证"></a>6.2 TCP握手验证</h3><div class="note note-primary">
+            <p>当客户端发起请求时，客户端就与服务器建立连接。以TCP为例，在成功建立连接后，服务器可以获取客户端的公网IP(一般情况下，真实客户端并不拥有公网IP，而是与许多客户端共用一个公网IP)。服务器根据客户端的公网IP就能粗略判断客户端的IP地址。</p>
+          </div>
+
+<p>测试过程如下(客户端与服务器仅建立了<strong>传输层</strong>的连接)</p>
+<ol>
+<li>服务器自行准备可以监听端口1884的服务，<em>理论上只要能启动基于TCP协议的应用层服务均可，比如HTTP或者MQTT</em></li>
+<li>客户端使用<code>telnet</code>命令与服务器建立连接，例如<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">telnet gogo.uno 1884<br></code></pre></td></tr></table></figure></li>
+<li>服务器使用<code>netstat</code>命令查询1884端口的连接信息(包含客户端的公网IP地址)<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">netstat -tn | grep 1884<br></code></pre></td></tr></table></figure></li>
+<li>服务器查询客户端IP地址信息，根据实际情况替换IP地址<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">http ip-api.com/json/113.109.251.116<br></code></pre></td></tr></table></figure></li>
+</ol>
+<p><img src="/blog/2024/03/26/clash/cleint_ip_tun_off.png" srcset="/blog/img/loading.gif" lazyload alt="关闭TUN模式的查询客户端IP地址信息"></p>
+<p><img src="/blog/2024/03/26/clash/cleint_ip_tun_on.png" srcset="/blog/img/loading.gif" lazyload alt="打开TUN模式的查询客户端IP地址信息"></p>
+<p>也可以使用<code>netstat</code>命令查询连接，提取出IP地址后作为参数传递给IP定位接口</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">http ip-api.com/json/$(netstat -tn | grep <span class="hljs-string">&#x27;:1884&#x27;</span> | awk <span class="hljs-string">&#x27;&#123;print $5&#125;&#x27;</span> | <span class="hljs-built_in">cut</span> -d: -f1 | <span class="hljs-built_in">sort</span> | <span class="hljs-built_in">uniq</span>)<br></code></pre></td></tr></table></figure>
+
+<p><img src="/blog/2024/03/26/clash/ip_combine.png" srcset="/blog/img/loading.gif" lazyload alt="服务器组合命令查询客户端IP地址信息"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/343342776">Microsoft Store打不开，最好的解决办法</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Other/" class="category-chain-item">Other</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Clash快速入门到精通</div>
+      <div>https://orionxer.github.io/blog/2024/03/26/clash/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Orionxer</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年3月26日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年10月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-nc/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="NC - 非商业性使用">
+                    <i class="iconfont icon-cc-nc"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/blog/2024/04/01/24-04-english/" title="24/Apr 每日英语">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">24/Apr 每日英语</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/03/24/stm32-freertos/" title="STM32-FreeRTOS移植与调试">
+                        <span class="hidden-mobile">STM32-FreeRTOS移植与调试</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.utils.listenDOMLoaded(function() {
+      Fluid.events.registerRefreshCallback(function() {
+        if ('mermaid' in window) {
+          mermaid.init();
+        }
+      });
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-users"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a>
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        总访问量 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        总访客数 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
