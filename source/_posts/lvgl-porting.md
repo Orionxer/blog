@@ -237,3 +237,9 @@ file(GLOB CUSTOM_SOURCES src/custom/*.c)
 set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c ${GENERATED_SOURCES} ${CUSTOM_SOURCES})
 ```
 重新编译运行
+
+## 6.直接克隆
+克隆已经移植好的仓库,符合环境要求则可直接编译运行
+```sh
+git clone --recursive https://github.com/orionxer/lv_port_pc_vscode
+```
