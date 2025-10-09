@@ -243,3 +243,48 @@ set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c ${GENERATED_SOURCES} ${CU
 ```sh
 git clone --recursive https://github.com/orionxer/lv_port_pc_vscode
 ```
+
+## 7.VSCode优化
+由于仓库包含了多个子模块，在VSCode中使用Copilot非常容易出现`OOM`（Out Of Memory）错误从而导致闪退。在VSCode工作区中忽略子模块，让Copilot不去索引子模块内容作为上下文。
+创建`.vscode/settings.json`，内容如下
+```json
+{
+  "files.watcherExclude": {
+    "**/config/**": true,
+    "**/lvgl/**": true,
+    "**/FreeRTOS/**": true
+  },
+  "search.exclude": {
+    "**/config/**": true,
+    "**/lvgl/**": true,
+    "**/FreeRTOS/**": true
+  },
+  "files.exclude": {
+  }
+}
+```
+创建`.vscode/c_cpp_properties.json`，内容如下
+```json
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/vcpkg/installed/x64-mingw-static/include/SDL2"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.19041.0",
+            "compilerPath": "D:/mingw64/bin/gcc.exe",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64"
+        }
+    ],
+    "version": 4
+}
+```
